@@ -45,3 +45,15 @@ generate-typescript:
 		sh -c "cp /src/src/types.ts /out/src/types.ts"
 
 generate-clients: generate-go generate-python generate-typescript
+
+ci-check:
+	$(MAKE) all
+	$(MAKE) generate-clients
+	@status=$$(git status --porcelain); \
+	if [ -n "$$status" ]; then \
+		echo "ERROR: generated files are out of date."; \
+		echo "$$status"; \
+		echo ""; \
+		echo "Run 'make all generate-clients' locally and commit the changes."; \
+		exit 1; \
+	fi
