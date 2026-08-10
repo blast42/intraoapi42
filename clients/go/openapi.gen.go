@@ -207,22 +207,23 @@ type CursusUser struct {
 	CreatedAt    IntraTime  `json:"created_at"`
 	Cursus       Cursus     `json:"cursus"`
 	CursusId     int        `json:"cursus_id"`
-	EndAt        IntraTime  `json:"end_at"`
+	EndAt        *IntraTime `json:"end_at"`
 	Grade        string     `json:"grade"`
 	HasCoalition bool       `json:"has_coalition"`
 	Id           int        `json:"id"`
 	Level        float64    `json:"level"`
 	Skills       []Skill    `json:"skills"`
 	UpdatedAt    IntraTime  `json:"updated_at"`
+	User         *LightUser `json:"user,omitempty"`
 }
 
 // Error defines model for Error.
 type Error struct {
 	// Error Error message
-	Error string `json:"error"`
+	Error *string `json:"error,omitempty"`
 
 	// Status HTTP status code
-	Status int `json:"status"`
+	Status *int `json:"status,omitempty"`
 }
 
 // Group defines model for Group.
@@ -370,6 +371,23 @@ type LightProject struct {
 	Slug     string `json:"slug"`
 }
 
+// LightProjectUser defines model for LightProjectUser.
+type LightProjectUser struct {
+	CreatedAt     IntraTime    `json:"created_at"`
+	CurrentTeamId int          `json:"current_team_id"`
+	CursusIds     []int        `json:"cursus_ids"`
+	FinalMark     *int         `json:"final_mark"`
+	Id            int          `json:"id"`
+	Marked        *bool        `json:"marked"`
+	MarkedAt      *IntraTime   `json:"marked_at"`
+	Occurrence    int          `json:"occurrence"`
+	Project       LightProject `json:"project"`
+	RetriableAt   *IntraTime   `json:"retriable_at"`
+	Status        string       `json:"status"`
+	UpdatedAt     IntraTime    `json:"updated_at"`
+	Validated     *bool        `json:"validated?"`
+}
+
 // LightTeam defines model for LightTeam.
 type LightTeam struct {
 	Closed            bool            `json:"closed?"`
@@ -413,7 +431,7 @@ type LightUser struct {
 	Alumni bool `json:"alumni?"`
 
 	// AlumnizedAt The date when the user became an alumnus.
-	AlumnizedAt IntraTime `json:"alumnized_at"`
+	AlumnizedAt *IntraTime `json:"alumnized_at"`
 
 	// AnonymizeDate The date when user data will be anonymized.
 	AnonymizeDate *IntraTime `json:"anonymize_date"`
@@ -425,7 +443,7 @@ type LightUser struct {
 	CreatedAt IntraTime `json:"created_at"`
 
 	// DataErasureDate The date when user data will be erased.
-	DataErasureDate IntraTime `json:"data_erasure_date"`
+	DataErasureDate *IntraTime `json:"data_erasure_date"`
 
 	// Displayname The display name of the user.
 	Displayname string `json:"displayname"`
@@ -493,19 +511,19 @@ type Patronage struct {
 
 // ProjectUser defines model for ProjectUser.
 type ProjectUser struct {
-	CreatedAt     *IntraTime   `json:"created_at,omitempty"`
+	CreatedAt     IntraTime    `json:"created_at"`
 	CurrentTeamId int          `json:"current_team_id"`
 	CursusIds     []int        `json:"cursus_ids"`
-	FinalMark     *int         `json:"final_mark,omitempty"`
+	FinalMark     *int         `json:"final_mark"`
 	Id            int          `json:"id"`
-	Marked        *bool        `json:"marked,omitempty"`
-	MarkedAt      *IntraTime   `json:"marked_at,omitempty"`
+	Marked        *bool        `json:"marked"`
+	MarkedAt      *IntraTime   `json:"marked_at"`
 	Occurrence    int          `json:"occurrence"`
 	Project       LightProject `json:"project"`
-	RetriableAt   *IntraTime   `json:"retriable_at,omitempty"`
+	RetriableAt   *IntraTime   `json:"retriable_at"`
 	Status        string       `json:"status"`
 	Teams         []LightTeam  `json:"teams"`
-	UpdatedAt     *IntraTime   `json:"updated_at,omitempty"`
+	UpdatedAt     IntraTime    `json:"updated_at"`
 	User          LightUser    `json:"user"`
 	Validated     *bool        `json:"validated?"`
 }
@@ -747,7 +765,7 @@ type User struct {
 	Alumni bool `json:"alumni?"`
 
 	// AlumnizedAt The date when the user became an alumnus.
-	AlumnizedAt IntraTime `json:"alumnized_at"`
+	AlumnizedAt *IntraTime `json:"alumnized_at"`
 
 	// AnonymizeDate The date when user data will be anonymized.
 	AnonymizeDate *IntraTime   `json:"anonymize_date"`
@@ -762,7 +780,7 @@ type User struct {
 	CursusUsers []CursusUser `json:"cursus_users"`
 
 	// DataErasureDate The date when user data will be erased.
-	DataErasureDate IntraTime `json:"data_erasure_date"`
+	DataErasureDate *IntraTime `json:"data_erasure_date"`
 
 	// Displayname The display name of the user.
 	Displayname string `json:"displayname"`
@@ -800,9 +818,9 @@ type User struct {
 	PoolMonth string `json:"pool_month"`
 
 	// PoolYear The year of the user's pool.
-	PoolYear      string        `json:"pool_year"`
-	ProjectsUsers []ProjectUser `json:"projects_users"`
-	Roles         []Role        `json:"roles"`
+	PoolYear      string             `json:"pool_year"`
+	ProjectsUsers []LightProjectUser `json:"projects_users"`
+	Roles         []Role             `json:"roles"`
 
 	// Staff Indicates if the user is staff.
 	Staff       bool        `json:"staff?"`
