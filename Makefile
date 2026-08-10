@@ -27,3 +27,21 @@ lint:
 		-v ./redocly.yaml:/redocly.yaml:ro \
 		redocly/cli:2.40.0 \
 		lint --config /redocly.yaml --lint-config error openapi.yaml
+
+generate-python:
+	docker build -f clients/python/Dockerfile -t oapi-gen-py .
+	rm -rf clients/python/intraoapi42
+	docker run --rm --user $(USER_ID):$(GROUP_ID) -v ./clients/python:/out oapi-gen-py \
+		sh -c "cp -r /src/intraoapi42 /out/ && cp /src/custom-templates/custom_client.py.txt /out/intraoapi42/custom_client.py"
+
+generate-go:
+	docker build -f clients/go/Dockerfile -t oapi-gen-go .
+	docker run --rm --user $(USER_ID):$(GROUP_ID) -v ./clients/go:/out oapi-gen-go \
+		sh -c "cp /src/openapi.gen.go /out/openapi.gen.go"
+
+generate-typescript:
+	docker build -f clients/typescript/Dockerfile -t oapi-gen-ts .
+	docker run --rm --user $(USER_ID):$(GROUP_ID) -v ./clients/typescript:/out oapi-gen-ts \
+		sh -c "cp /src/src/types.ts /out/src/types.ts"
+
+generate-clients: generate-go generate-python generate-typescript
