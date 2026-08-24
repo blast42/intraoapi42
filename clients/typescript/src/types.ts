@@ -4,6 +4,74 @@
  */
 
 export interface paths {
+    "/accreditations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of Accreditations */
+        get: operations["getAccreditations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accreditations/{accreditation_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by accreditation */
+        get: operations["getUsersByAccreditationId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accreditations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an accreditation by ID */
+        get: operations["getAccreditationById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/achievements/{achievement_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by achievement */
+        get: operations["getUsersByAchievement"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/closes": {
         parameters: {
             query?: never;
@@ -13,23 +81,6 @@ export interface paths {
         };
         /** Get a list of closes */
         get: operations["getCloses"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/users/{user_id}/closes": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get a list of closes by user id */
-        get: operations["getClosesByUserId"];
         put?: never;
         post?: never;
         delete?: never;
@@ -55,6 +106,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/coalitions/{coalition_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by coalition */
+        get: operations["getUsersByCoalitionId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cursus/{cursus_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by cursus */
+        get: operations["getUsersByCursus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/expertises/{expertise_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by expertise */
+        get: operations["getUsersByExpertiseId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internships": {
         parameters: {
             query?: never;
@@ -64,6 +166,23 @@ export interface paths {
         };
         /** Get a list of internships */
         get: operations["getInternships"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internships/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an internship by ID */
+        get: operations["getInternshipById"];
         put?: never;
         post?: never;
         delete?: never;
@@ -89,15 +208,100 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{user_id}/projects_users": {
+    "/me/teams": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get a list of projects users by a user Id */
-        get: operations["GetProjectsUsersByUserId"];
+        /** Get a list of teams by me */
+        get: operations["GetTeamsByMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/partnerships/{partnership_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by partnership */
+        get: operations["getUsersByPartnershipId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/project_sessions/{project_session_id}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of teams by a project session Id */
+        get: operations["GetTeamsByProjectSessionId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/projects_users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of projects users by a project Id */
+        get: operations["getProjectsUsersByProjectId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of teams by a project Id */
+        get: operations["GetTeamsByProjectId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by project */
+        get: operations["getUsersByProjectId"];
         put?: never;
         post?: never;
         delete?: never;
@@ -113,7 +317,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get a list of projects users */
+        get: operations["getProjectsUsers"];
         put?: never;
         /** Create a project user */
         post: operations["PostProjectsUsers"];
@@ -139,6 +344,40 @@ export interface paths {
         head?: never;
         /** Update a project user */
         patch: operations["PatchProjectUserById"];
+        trace?: never;
+    };
+    "/quests/{quest_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by quest */
+        get: operations["getUsersByQuest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of teams */
+        get: operations["GetTeams"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/teams/{id}": {
@@ -177,15 +416,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/users/{id}/user_candidature": {
+    "/titles/{title_id}/users": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get user candidature information */
-        get: operations["getUserCandidatureById"];
+        /** Get a list of users by title */
+        get: operations["getUsersByTitle"];
         put?: never;
         post?: never;
         delete?: never;
@@ -228,11 +467,130 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/users/{id}/user_candidature": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get user candidature information */
+        get: operations["getUserCandidatureById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/closes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of closes by user id */
+        get: operations["getClosesByUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/internships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of internships by user Id */
+        get: operations["getInternshipsByUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/internships/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an internship by ID and user ID */
+        get: operations["getInternshipByIdAndUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/projects/{project_id}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of teams by a user Id and project Id */
+        get: operations["GetTeamsByUserIdAndProjectId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/projects_users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of projects users by a user Id */
+        get: operations["getProjectsUsersByUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of teams by a user Id */
+        get: operations["GetTeamsByUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        LightAccreditation: {
+        Accreditation: {
             id: number;
             name: string;
             user_id: number;
@@ -988,6 +1346,16 @@ export interface components {
         };
     };
     parameters: {
+        /** @description The sort field. Sorted by id desc by default. */
+        base_sort: string;
+        /** @description Filtering on one or more fields. */
+        base_filter: {
+            [key: string]: string;
+        };
+        /** @description Select on a particular range. */
+        base_range: {
+            [key: string]: string;
+        };
         /**
          * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
          *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1018,22 +1386,161 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    getAccreditations: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of Accreditations */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accreditation"][];
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByAccreditationId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the accreditation */
+                accreditation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getAccreditationById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the accreditation */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description An accreditation object */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Accreditation"];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByAchievement: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the achievement */
+                achievement_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
     getCloses: {
         parameters: {
             query?: {
-                /**
-                 * @description The sort field. Sorted by created_at desc, id desc by default.
-                 *     Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid.
-                 */
-                sort?: "id" | "user_id" | "closer_id" | "reason" | "state" | "created_at" | "updated_at" | "kind" | "end_at" | "jid";
-                /** @description Filtering on one or more fields. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid, campus_id, end. */
-                filter?: {
-                    [key: string]: string;
-                };
-                /** @description Select on a particular range. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid. */
-                range?: {
-                    [key: string]: string;
-                };
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
                 /**
                  * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
                  *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1065,55 +1572,6 @@ export interface operations {
             default: components["responses"]["ErrorResponse"];
         };
     };
-    getClosesByUserId: {
-        parameters: {
-            query?: {
-                /**
-                 * @description The sort field. Sorted by created_at desc, id desc by default.
-                 *     Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid.
-                 */
-                sort?: "id" | "user_id" | "closer_id" | "reason" | "state" | "created_at" | "updated_at" | "kind" | "end_at" | "jid";
-                /** @description Filtering on one or more fields. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid, campus_id, end. */
-                filter?: {
-                    [key: string]: string;
-                };
-                /** @description Select on a particular range. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid. */
-                range?: {
-                    [key: string]: string;
-                };
-                /**
-                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
-                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
-                 */
-                page?: components["parameters"]["page"];
-                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
-                per_page?: components["parameters"]["per_page"];
-                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
-                "page[number]"?: components["parameters"]["page_number"];
-                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
-                "page[size]"?: components["parameters"]["page_size"];
-            };
-            header?: never;
-            path: {
-                /** @description The user id */
-                user_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description A list of closes */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Close"][];
-                };
-            };
-            default: components["responses"]["ErrorResponse"];
-        };
-    };
     getCloseById: {
         parameters: {
             query?: never;
@@ -1138,31 +1596,138 @@ export interface operations {
             default: components["responses"]["ErrorResponse"];
         };
     };
+    getUsersByCoalitionId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the coalition */
+                coalition_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByCursus: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the cursus */
+                cursus_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByExpertiseId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the expertise */
+                expertise_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
     getInternships: {
         parameters: {
             query?: {
-                /**
-                 * @description The sort field. Sorted by id desc by default.
-                 *     Must be one of: id, user_id, administration_id, offer_id, language_id, state, days, user_address, user_postal, user_city, user_country, company_name, company_boss_user_first_name, company_boss_user_last_name, company_boss_user_email, company_boss_user_phone, company_user_first_name, company_user_last_name, company_user_post, company_user_email, company_user_phone, company_address, company_postal, company_city, company_country, company_siret, internship_address, internship_postal, internship_city, internship_country, contract_type, subject, start_at, end_at, duration, nb_days, nb_hours, movement, salary, currency, breach_at, convention, created_at, updated_at, anti_grav_units_user_id.
-                 *     Example: -updated_at,anti_grav_units_user_id (to sort by updated_at descending and anti_grav_units_user_id ascending)
-                 */
-                sort?: string;
-                /**
-                 * @description Filtering on one or more fields.
-                 *     Must be one of: id, user_id, administration_id, offer_id, language_id, state, days, user_address, user_postal, user_city, user_country, company_name, company_boss_user_first_name, company_boss_user_last_name, company_boss_user_email, company_boss_user_phone, company_user_first_name, company_user_last_name, company_user_post, company_user_email, company_user_phone, company_address, company_postal, company_city, company_country, company_siret, internship_address, internship_postal, internship_city, internship_country, contract_type, subject, start_at, end_at, duration, nb_days, nb_hours, movement, salary, currency, breach_at, convention, created_at, updated_at, anti_grav_units_user_id.
-                 *     Example: filter[id]=a_value,another_value (to filter on internships with id matching a_value or another_value)
-                 */
-                filter?: {
-                    [key: string]: string;
-                };
-                /**
-                 * @description Select on a particular range.
-                 *     Must be one of: id, user_id, administration_id, offer_id, language_id, state, days, user_address, user_postal, user_city, user_country, company_name, company_boss_user_first_name, company_boss_user_last_name, company_boss_user_email, company_boss_user_phone, company_user_first_name, company_user_last_name, company_user_post, company_user_email, company_user_phone, company_address, company_postal, company_city, company_country, company_siret, internship_address, internship_postal, internship_city, internship_country, contract_type, subject, start_at, end_at, duration, nb_days, nb_hours, movement, salary, currency, breach_at, convention, created_at, updated_at.
-                 *     Example: range[status]=min_value,max_value (to range on internships with status field between min_value and max_value)
-                 */
-                range?: {
-                    [key: string]: string;
-                };
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
                 /**
                  * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
                  *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1184,22 +1749,62 @@ export interface operations {
             /** @description A list of internships */
             200: {
                 headers: {
-                    Link: components["headers"]["Link"];
-                    "X-Page": components["headers"]["X-Page"];
-                    "X-Per-Page": components["headers"]["X-Per-Page"];
-                    "X-Total": components["headers"]["X-Total"];
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["Internship"][];
                 };
             };
+            400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getInternshipById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The internship id */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description An internship object */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Internship"];
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
             default: components["responses"]["ErrorResponse"];
         };
     };
     getLanguageById: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
             header?: never;
             path: {
                 /** @description The ID of the language */
@@ -1221,25 +1826,99 @@ export interface operations {
             default: components["responses"]["ErrorResponse"];
         };
     };
-    GetProjectsUsersByUserId: {
+    GetTeamsByMe: {
         parameters: {
             query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
                 /**
-                 * @description Filtering on one or more fields.
-                 *     Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status, primary_campus_id, first_name, last_name, alumni?, staff?.
-                 *     Example: filter[id]=a_value,another_value (to filter on users with id matching a_value or another_value)
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
                  */
-                filter?: {
-                    [key: string]: string;
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of teams */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
                 };
-                /**
-                 * @description Select on a particular range.
-                 *     Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status.
-                 *     Example: range[status]=min_value,max_value (to range on users with status field between min_value and max_value)
-                 */
-                range?: {
-                    [key: string]: string;
+                content: {
+                    "application/json": components["schemas"]["LightTeam"][];
                 };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByPartnershipId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the partnership */
+                partnership_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    GetTeamsByProjectSessionId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
                 /**
                  * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
                  *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1254,9 +1933,181 @@ export interface operations {
             };
             header?: never;
             path: {
-                /** @description The ID of the user */
-                user_id: string;
+                /** @description The ID of the project session */
+                project_session_id: string;
             };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of teams */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightTeam"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getProjectsUsersByProjectId: {
+        parameters: {
+            query?: {
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the project */
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of projects users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    GetTeamsByProjectId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the project */
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of teams */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightTeam"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByProjectId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the project */
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getProjectsUsers: {
+        parameters: {
+            query?: {
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -1286,14 +2137,6 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /**
-                 * @example {
-                 *       "projects_user": {
-                 *         "project_id": 1,
-                 *         "user_id": 1
-                 *       }
-                 *     }
-                 */
                 "application/json": {
                     projects_user: components["schemas"]["ProjectUserCreate"];
                 };
@@ -1361,14 +2204,6 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /**
-                 * @example {
-                 *       "projects_user": {
-                 *         "project_id": 1,
-                 *         "user_id": 1
-                 *       }
-                 *     }
-                 */
                 "application/json": {
                     projects_user: components["schemas"]["ProjectUserUpdate"];
                 };
@@ -1383,6 +2218,90 @@ export interface operations {
                 content?: never;
             };
             400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByQuest: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the quest */
+                quest_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    GetTeams: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of teams */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightTeam"][];
+                };
+            };
             default: components["responses"]["ErrorResponse"];
         };
     };
@@ -1422,13 +2341,6 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /**
-                 * @example {
-                 *       "team": {
-                 *         "project_id": 5
-                 *       }
-                 *     }
-                 */
                 "application/json": {
                     team: components["schemas"]["TeamUpdate"];
                 };
@@ -1457,13 +2369,6 @@ export interface operations {
         };
         requestBody: {
             content: {
-                /**
-                 * @example {
-                 *       "team": {
-                 *         "project_id": 5
-                 *       }
-                 *     }
-                 */
                 "application/json": {
                     team: components["schemas"]["TeamUpdate"];
                 };
@@ -1502,25 +2407,42 @@ export interface operations {
             default: components["responses"]["ErrorResponse"];
         };
     };
-    getUserCandidatureById: {
+    getUsersByTitle: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
             header?: never;
             path: {
-                /** @description The ID of the user */
-                id: string;
+                /** @description The ID of the title */
+                title_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description User candidature information */
+            /** @description A list of users */
             200: {
                 headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserCandidature"];
+                    "application/json": components["schemas"]["LightUser"][];
                 };
             };
             default: components["responses"]["ErrorResponse"];
@@ -1529,33 +2451,12 @@ export interface operations {
     getUsers: {
         parameters: {
             query?: {
-                /**
-                 * @description The sort field. Sorted by id desc by default.
-                 *     Must be one of: id, login, email, encrypted_password, reset_password_token, reset_password_sent_at, created_at, updated_at, image, first_name, last_name, pool_year, pool_month, kind, status, otp_secret_key, otp_tmp, otp_activated, otp_backup_passwords, slack_team, slack_login, slack_mail, slack_code_validation, slack_validated_at, token_id, email_stop, linked_user_id, usual_first_name, last_seen_at, password_changed_at, encrypted_single_usage_password, first_warn_anon_sent_at, second_warn_anon_sent_at, alumnized_at, anonymized_at.
-                 *     Example: -alumnized_at,anonymized_at (to sort on alumnized_at descending and anonymized_at ascending)
-                 */
-                sort?: string;
-                /**
-                 * @description Filtering on one or more fields.
-                 *     Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status, primary_campus_id, first_name, last_name, alumni?, staff?.
-                 *     Example: filter[id]=a_value,another_value (to filter on users with id matching a_value or another_value)
-                 */
-                filter?: {
-                    [key: string]: string;
-                };
-                /**
-                 * @description Select on a particular range.
-                 *     Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status.
-                 *     Example: range[status]=min_value,max_value (to range on users with status field between min_value and max_value)
-                 */
-                range?: {
-                    [key: string]: string;
-                };
-                /**
-                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
-                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
-                 */
-                page?: components["parameters"]["page"];
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
                 /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
                 per_page?: components["parameters"]["per_page"];
                 /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
@@ -1590,7 +2491,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The ID of the user */
+                /** @description The ID or Login of the user */
                 id: string;
             };
             cookie?: never;
@@ -1604,6 +2505,281 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["User"];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUserCandidatureById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The ID of the user */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User candidature information */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserCandidature"];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getClosesByUserId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The user id */
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of closes */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Close"][];
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getInternshipsByUserId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The user id */
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of internships */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Internship"][];
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getInternshipByIdAndUserId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The user id */
+                user_id: string;
+                /** @description The internship id */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description An internship object */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Internship"];
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    GetTeamsByUserIdAndProjectId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the user */
+                user_id: string;
+                /** @description The ID of the project */
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of teams */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightTeam"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getProjectsUsersByUserId: {
+        parameters: {
+            query?: {
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the user */
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of projects users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    GetTeamsByUserId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the user */
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of teams */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightTeam"][];
                 };
             };
             default: components["responses"]["ErrorResponse"];

@@ -1,0 +1,26 @@
+/closes/{id}:
+  get:
+    operationId: getCloseById
+    tags:
+        - Closes
+    summary: Get a close by ID
+    security:
+      - OAuth2:
+          - public
+          - tig
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the close
+        schema:
+          type: integer
+    responses:
+      "200":
+        description: A close object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Close"
+      default:
+        $ref: "#/components/responses/ErrorResponse"

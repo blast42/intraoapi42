@@ -16,7 +16,6 @@ def _get_kwargs(
     sort: str | Unset = UNSET,
     filter_: GetUsersFilter | Unset = UNSET,
     range_: GetUsersRange | Unset = UNSET,
-    page: int | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
@@ -37,8 +36,6 @@ def _get_kwargs(
         json_range_ = range_.to_dict()
     if not isinstance(json_range_, Unset):
         params.update(json_range_)
-
-    params["page"] = page
 
     params["per_page"] = per_page
 
@@ -90,7 +87,6 @@ def sync_detailed(
     sort: str | Unset = UNSET,
     filter_: GetUsersFilter | Unset = UNSET,
     range_: GetUsersRange | Unset = UNSET,
-    page: int | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
@@ -101,7 +97,6 @@ def sync_detailed(
         sort (str | Unset):
         filter_ (GetUsersFilter | Unset):
         range_ (GetUsersRange | Unset):
-        page (int | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -118,7 +113,6 @@ def sync_detailed(
         sort=sort,
         filter_=filter_,
         range_=range_,
-        page=page,
         per_page=per_page,
         pagenumber=pagenumber,
         pagesize=pagesize,
@@ -137,7 +131,6 @@ def sync(
     sort: str | Unset = UNSET,
     filter_: GetUsersFilter | Unset = UNSET,
     range_: GetUsersRange | Unset = UNSET,
-    page: int | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
@@ -148,7 +141,6 @@ def sync(
         sort (str | Unset):
         filter_ (GetUsersFilter | Unset):
         range_ (GetUsersRange | Unset):
-        page (int | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -166,7 +158,6 @@ def sync(
         sort=sort,
         filter_=filter_,
         range_=range_,
-        page=page,
         per_page=per_page,
         pagenumber=pagenumber,
         pagesize=pagesize,
@@ -179,7 +170,6 @@ async def asyncio_detailed(
     sort: str | Unset = UNSET,
     filter_: GetUsersFilter | Unset = UNSET,
     range_: GetUsersRange | Unset = UNSET,
-    page: int | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
@@ -190,7 +180,6 @@ async def asyncio_detailed(
         sort (str | Unset):
         filter_ (GetUsersFilter | Unset):
         range_ (GetUsersRange | Unset):
-        page (int | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -207,7 +196,6 @@ async def asyncio_detailed(
         sort=sort,
         filter_=filter_,
         range_=range_,
-        page=page,
         per_page=per_page,
         pagenumber=pagenumber,
         pagesize=pagesize,
@@ -224,7 +212,6 @@ async def asyncio(
     sort: str | Unset = UNSET,
     filter_: GetUsersFilter | Unset = UNSET,
     range_: GetUsersRange | Unset = UNSET,
-    page: int | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
@@ -235,7 +222,6 @@ async def asyncio(
         sort (str | Unset):
         filter_ (GetUsersFilter | Unset):
         range_ (GetUsersRange | Unset):
-        page (int | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -254,7 +240,6 @@ async def asyncio(
             sort=sort,
             filter_=filter_,
             range_=range_,
-            page=page,
             per_page=per_page,
             pagenumber=pagenumber,
             pagesize=pagesize,

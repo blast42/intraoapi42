@@ -117,88 +117,13 @@ func (e UserCandidatureGender) Valid() bool {
 	}
 }
 
-// Defines values for GetClosesParamsSort.
-const (
-	GetClosesParamsSortCloserId  GetClosesParamsSort = "closer_id"
-	GetClosesParamsSortCreatedAt GetClosesParamsSort = "created_at"
-	GetClosesParamsSortEndAt     GetClosesParamsSort = "end_at"
-	GetClosesParamsSortId        GetClosesParamsSort = "id"
-	GetClosesParamsSortJid       GetClosesParamsSort = "jid"
-	GetClosesParamsSortKind      GetClosesParamsSort = "kind"
-	GetClosesParamsSortReason    GetClosesParamsSort = "reason"
-	GetClosesParamsSortState     GetClosesParamsSort = "state"
-	GetClosesParamsSortUpdatedAt GetClosesParamsSort = "updated_at"
-	GetClosesParamsSortUserId    GetClosesParamsSort = "user_id"
-)
-
-// Valid indicates whether the value is a known member of the GetClosesParamsSort enum.
-func (e GetClosesParamsSort) Valid() bool {
-	switch e {
-	case GetClosesParamsSortCloserId:
-		return true
-	case GetClosesParamsSortCreatedAt:
-		return true
-	case GetClosesParamsSortEndAt:
-		return true
-	case GetClosesParamsSortId:
-		return true
-	case GetClosesParamsSortJid:
-		return true
-	case GetClosesParamsSortKind:
-		return true
-	case GetClosesParamsSortReason:
-		return true
-	case GetClosesParamsSortState:
-		return true
-	case GetClosesParamsSortUpdatedAt:
-		return true
-	case GetClosesParamsSortUserId:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for GetClosesByUserIdParamsSort.
-const (
-	GetClosesByUserIdParamsSortCloserId  GetClosesByUserIdParamsSort = "closer_id"
-	GetClosesByUserIdParamsSortCreatedAt GetClosesByUserIdParamsSort = "created_at"
-	GetClosesByUserIdParamsSortEndAt     GetClosesByUserIdParamsSort = "end_at"
-	GetClosesByUserIdParamsSortId        GetClosesByUserIdParamsSort = "id"
-	GetClosesByUserIdParamsSortJid       GetClosesByUserIdParamsSort = "jid"
-	GetClosesByUserIdParamsSortKind      GetClosesByUserIdParamsSort = "kind"
-	GetClosesByUserIdParamsSortReason    GetClosesByUserIdParamsSort = "reason"
-	GetClosesByUserIdParamsSortState     GetClosesByUserIdParamsSort = "state"
-	GetClosesByUserIdParamsSortUpdatedAt GetClosesByUserIdParamsSort = "updated_at"
-	GetClosesByUserIdParamsSortUserId    GetClosesByUserIdParamsSort = "user_id"
-)
-
-// Valid indicates whether the value is a known member of the GetClosesByUserIdParamsSort enum.
-func (e GetClosesByUserIdParamsSort) Valid() bool {
-	switch e {
-	case GetClosesByUserIdParamsSortCloserId:
-		return true
-	case GetClosesByUserIdParamsSortCreatedAt:
-		return true
-	case GetClosesByUserIdParamsSortEndAt:
-		return true
-	case GetClosesByUserIdParamsSortId:
-		return true
-	case GetClosesByUserIdParamsSortJid:
-		return true
-	case GetClosesByUserIdParamsSortKind:
-		return true
-	case GetClosesByUserIdParamsSortReason:
-		return true
-	case GetClosesByUserIdParamsSortState:
-		return true
-	case GetClosesByUserIdParamsSortUpdatedAt:
-		return true
-	case GetClosesByUserIdParamsSortUserId:
-		return true
-	default:
-		return false
-	}
+// Accreditation defines model for Accreditation.
+type Accreditation struct {
+	CursusId  int    `json:"cursus_id"`
+	Id        int    `json:"id"`
+	Name      string `json:"name"`
+	UserId    int    `json:"user_id"`
+	Validated bool   `json:"validated"`
 }
 
 // Achievement defines model for Achievement.
@@ -993,6 +918,15 @@ type UserImage struct {
 	} `json:"versions"`
 }
 
+// BaseFilter defines model for base_filter.
+type BaseFilter map[string]string
+
+// BaseRange defines model for base_range.
+type BaseRange map[string]string
+
+// BaseSort defines model for base_sort.
+type BaseSort = string
+
 // Page defines model for page.
 type Page = int
 
@@ -1008,17 +942,16 @@ type PerPage = int
 // ErrorResponse defines model for ErrorResponse.
 type ErrorResponse = Error
 
-// GetClosesParams defines parameters for GetCloses.
-type GetClosesParams struct {
-	// Sort The sort field. Sorted by created_at desc, id desc by default.
-	// Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid.
-	Sort *GetClosesParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+// GetAccreditationsParams defines parameters for GetAccreditations.
+type GetAccreditationsParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
 
-	// Filter Filtering on one or more fields. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid, campus_id, end.
-	Filter *map[string]string `json:"filter,omitempty"`
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
 
-	// Range Select on a particular range. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid.
-	Range *map[string]string `json:"range,omitempty"`
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
 
 	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
 	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1034,25 +967,332 @@ type GetClosesParams struct {
 	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
 }
 
-// GetClosesParamsSort defines parameters for GetCloses.
-type GetClosesParamsSort string
+// GetUsersByAccreditationIdParams defines parameters for GetUsersByAccreditationId.
+type GetUsersByAccreditationIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetUsersByAchievementParams defines parameters for GetUsersByAchievement.
+type GetUsersByAchievementParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetClosesParams defines parameters for GetCloses.
+type GetClosesParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetUsersByCoalitionIdParams defines parameters for GetUsersByCoalitionId.
+type GetUsersByCoalitionIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetUsersByCursusParams defines parameters for GetUsersByCursus.
+type GetUsersByCursusParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetUsersByExpertiseIdParams defines parameters for GetUsersByExpertiseId.
+type GetUsersByExpertiseIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
 
 // GetInternshipsParams defines parameters for GetInternships.
 type GetInternshipsParams struct {
 	// Sort The sort field. Sorted by id desc by default.
-	// Must be one of: id, user_id, administration_id, offer_id, language_id, state, days, user_address, user_postal, user_city, user_country, company_name, company_boss_user_first_name, company_boss_user_last_name, company_boss_user_email, company_boss_user_phone, company_user_first_name, company_user_last_name, company_user_post, company_user_email, company_user_phone, company_address, company_postal, company_city, company_country, company_siret, internship_address, internship_postal, internship_city, internship_country, contract_type, subject, start_at, end_at, duration, nb_days, nb_hours, movement, salary, currency, breach_at, convention, created_at, updated_at, anti_grav_units_user_id.
-	// Example: -updated_at,anti_grav_units_user_id (to sort by updated_at descending and anti_grav_units_user_id ascending)
-	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
 
 	// Filter Filtering on one or more fields.
-	// Must be one of: id, user_id, administration_id, offer_id, language_id, state, days, user_address, user_postal, user_city, user_country, company_name, company_boss_user_first_name, company_boss_user_last_name, company_boss_user_email, company_boss_user_phone, company_user_first_name, company_user_last_name, company_user_post, company_user_email, company_user_phone, company_address, company_postal, company_city, company_country, company_siret, internship_address, internship_postal, internship_city, internship_country, contract_type, subject, start_at, end_at, duration, nb_days, nb_hours, movement, salary, currency, breach_at, convention, created_at, updated_at, anti_grav_units_user_id.
-	// Example: filter[id]=a_value,another_value (to filter on internships with id matching a_value or another_value)
-	Filter *map[string]string `json:"filter,omitempty"`
+	Filter *BaseFilter `json:"filter,omitempty"`
 
 	// Range Select on a particular range.
-	// Must be one of: id, user_id, administration_id, offer_id, language_id, state, days, user_address, user_postal, user_city, user_country, company_name, company_boss_user_first_name, company_boss_user_last_name, company_boss_user_email, company_boss_user_phone, company_user_first_name, company_user_last_name, company_user_post, company_user_email, company_user_phone, company_address, company_postal, company_city, company_country, company_siret, internship_address, internship_postal, internship_city, internship_country, contract_type, subject, start_at, end_at, duration, nb_days, nb_hours, movement, salary, currency, breach_at, convention, created_at, updated_at.
-	// Example: range[status]=min_value,max_value (to range on internships with status field between min_value and max_value)
-	Range *map[string]string `json:"range,omitempty"`
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetLanguageByIdParams defines parameters for GetLanguageById.
+type GetLanguageByIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetTeamsByMeParams defines parameters for GetTeamsByMe.
+type GetTeamsByMeParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetUsersByPartnershipIdParams defines parameters for GetUsersByPartnershipId.
+type GetUsersByPartnershipIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetTeamsByProjectSessionIdParams defines parameters for GetTeamsByProjectSessionId.
+type GetTeamsByProjectSessionIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetProjectsUsersByProjectIdParams defines parameters for GetProjectsUsersByProjectId.
+type GetProjectsUsersByProjectIdParams struct {
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetTeamsByProjectIdParams defines parameters for GetTeamsByProjectId.
+type GetTeamsByProjectIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetUsersByProjectIdParams defines parameters for GetUsersByProjectId.
+type GetUsersByProjectIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetProjectsUsersParams defines parameters for GetProjectsUsers.
+type GetProjectsUsersParams struct {
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
 
 	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
 	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1083,6 +1323,52 @@ type PutProjectUserByIdJSONBody struct {
 	ProjectsUser ProjectUserUpdate `json:"projects_user"`
 }
 
+// GetUsersByQuestParams defines parameters for GetUsersByQuest.
+type GetUsersByQuestParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetTeamsParams defines parameters for GetTeams.
+type GetTeamsParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
 // PatchTeamByIdJSONBody defines parameters for PatchTeamById.
 type PatchTeamByIdJSONBody struct {
 	Team TeamUpdate `json:"team"`
@@ -1093,26 +1379,37 @@ type PutTeamByIdJSONBody struct {
 	Team TeamUpdate `json:"team"`
 }
 
+// GetUsersByTitleParams defines parameters for GetUsersByTitle.
+type GetUsersByTitleParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
 // GetUsersParams defines parameters for GetUsers.
 type GetUsersParams struct {
 	// Sort The sort field. Sorted by id desc by default.
-	// Must be one of: id, login, email, encrypted_password, reset_password_token, reset_password_sent_at, created_at, updated_at, image, first_name, last_name, pool_year, pool_month, kind, status, otp_secret_key, otp_tmp, otp_activated, otp_backup_passwords, slack_team, slack_login, slack_mail, slack_code_validation, slack_validated_at, token_id, email_stop, linked_user_id, usual_first_name, last_seen_at, password_changed_at, encrypted_single_usage_password, first_warn_anon_sent_at, second_warn_anon_sent_at, alumnized_at, anonymized_at.
-	// Example: -alumnized_at,anonymized_at (to sort on alumnized_at descending and anonymized_at ascending)
-	Sort *string `form:"sort,omitempty" json:"sort,omitempty"`
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
 
 	// Filter Filtering on one or more fields.
-	// Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status, primary_campus_id, first_name, last_name, alumni?, staff?.
-	// Example: filter[id]=a_value,another_value (to filter on users with id matching a_value or another_value)
-	Filter *map[string]string `json:"filter,omitempty"`
+	Filter *BaseFilter `json:"filter,omitempty"`
 
 	// Range Select on a particular range.
-	// Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status.
-	// Example: range[status]=min_value,max_value (to range on users with status field between min_value and max_value)
-	Range *map[string]string `json:"range,omitempty"`
-
-	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
-	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
-	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+	Range *BaseRange `json:"range,omitempty"`
 
 	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
 	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
@@ -1126,15 +1423,14 @@ type GetUsersParams struct {
 
 // GetClosesByUserIdParams defines parameters for GetClosesByUserId.
 type GetClosesByUserIdParams struct {
-	// Sort The sort field. Sorted by created_at desc, id desc by default.
-	// Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid.
-	Sort *GetClosesByUserIdParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
 
-	// Filter Filtering on one or more fields. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid, campus_id, end.
-	Filter *map[string]string `json:"filter,omitempty"`
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
 
-	// Range Select on a particular range. Must be one of: id, user_id, closer_id, reason, state, created_at, updated_at, kind, end_at, jid.
-	Range *map[string]string `json:"range,omitempty"`
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
 
 	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
 	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1150,20 +1446,88 @@ type GetClosesByUserIdParams struct {
 	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
 }
 
-// GetClosesByUserIdParamsSort defines parameters for GetClosesByUserId.
-type GetClosesByUserIdParamsSort string
+// GetInternshipsByUserIdParams defines parameters for GetInternshipsByUserId.
+type GetInternshipsByUserIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetTeamsByUserIdAndProjectIdParams defines parameters for GetTeamsByUserIdAndProjectId.
+type GetTeamsByUserIdAndProjectIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
 
 // GetProjectsUsersByUserIdParams defines parameters for GetProjectsUsersByUserId.
 type GetProjectsUsersByUserIdParams struct {
 	// Filter Filtering on one or more fields.
-	// Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status, primary_campus_id, first_name, last_name, alumni?, staff?.
-	// Example: filter[id]=a_value,another_value (to filter on users with id matching a_value or another_value)
-	Filter *map[string]string `json:"filter,omitempty"`
+	Filter *BaseFilter `json:"filter,omitempty"`
 
 	// Range Select on a particular range.
-	// Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status.
-	// Example: range[status]=min_value,max_value (to range on users with status field between min_value and max_value)
-	Range *map[string]string `json:"range,omitempty"`
+	Range *BaseRange `json:"range,omitempty"`
+
+	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+	Page *Page `form:"page,omitempty" json:"page,omitempty"`
+
+	// PerPage Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons.
+	PerPage *PerPage `form:"per_page,omitempty" json:"per_page,omitempty"`
+
+	// PageNumber Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`.
+	PageNumber *PageNumber `form:"page[number],omitempty" json:"page[number],omitempty"`
+
+	// PageSize Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100).
+	PageSize *PageSize `form:"page[size],omitempty" json:"page[size],omitempty"`
+}
+
+// GetTeamsByUserIdParams defines parameters for GetTeamsByUserId.
+type GetTeamsByUserIdParams struct {
+	// Sort The sort field. Sorted by id desc by default.
+	Sort *BaseSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Filter Filtering on one or more fields.
+	Filter *BaseFilter `json:"filter,omitempty"`
+
+	// Range Select on a particular range.
+	Range *BaseRange `json:"range,omitempty"`
 
 	// Page Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
 	// You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
@@ -1330,6 +1694,26 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 
+	// GetAccreditations Get a list of Accreditations
+	//
+	// Corresponds with GET /accreditations (the `GetAccreditations` operationId).
+	GetAccreditations(ctx context.Context, params *GetAccreditationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUsersByAccreditationId Get a list of users by accreditation
+	//
+	// Corresponds with GET /accreditations/{accreditation_id}/users (the `GetUsersByAccreditationId` operationId).
+	GetUsersByAccreditationId(ctx context.Context, accreditationId string, params *GetUsersByAccreditationIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAccreditationById Get an accreditation by ID
+	//
+	// Corresponds with GET /accreditations/{id} (the `GetAccreditationById` operationId).
+	GetAccreditationById(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUsersByAchievement Get a list of users by achievement
+	//
+	// Corresponds with GET /achievements/{achievement_id}/users (the `GetUsersByAchievement` operationId).
+	GetUsersByAchievement(ctx context.Context, achievementId string, params *GetUsersByAchievementParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetCloses Get a list of closes
 	//
 	// Corresponds with GET /closes (the `GetCloses` operationId).
@@ -1340,15 +1724,70 @@ type ClientInterface interface {
 	// Corresponds with GET /closes/{id} (the `GetCloseById` operationId).
 	GetCloseById(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetUsersByCoalitionId Get a list of users by coalition
+	//
+	// Corresponds with GET /coalitions/{coalition_id}/users (the `GetUsersByCoalitionId` operationId).
+	GetUsersByCoalitionId(ctx context.Context, coalitionId string, params *GetUsersByCoalitionIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUsersByCursus Get a list of users by cursus
+	//
+	// Corresponds with GET /cursus/{cursus_id}/users (the `GetUsersByCursus` operationId).
+	GetUsersByCursus(ctx context.Context, cursusId string, params *GetUsersByCursusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUsersByExpertiseId Get a list of users by expertise
+	//
+	// Corresponds with GET /expertises/{expertise_id}/users (the `GetUsersByExpertiseId` operationId).
+	GetUsersByExpertiseId(ctx context.Context, expertiseId string, params *GetUsersByExpertiseIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetInternships Get a list of internships
 	//
 	// Corresponds with GET /internships (the `GetInternships` operationId).
 	GetInternships(ctx context.Context, params *GetInternshipsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetInternshipById Get an internship by ID
+	//
+	// Corresponds with GET /internships/{id} (the `GetInternshipById` operationId).
+	GetInternshipById(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetLanguageById Get a language by ID
 	//
 	// Corresponds with GET /languages/{id} (the `GetLanguageById` operationId).
-	GetLanguageById(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetLanguageById(ctx context.Context, id int, params *GetLanguageByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTeamsByMe Get a list of teams by me
+	//
+	// Corresponds with GET /me/teams (the `GetTeamsByMe` operationId).
+	GetTeamsByMe(ctx context.Context, params *GetTeamsByMeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUsersByPartnershipId Get a list of users by partnership
+	//
+	// Corresponds with GET /partnerships/{partnership_id}/users (the `GetUsersByPartnershipId` operationId).
+	GetUsersByPartnershipId(ctx context.Context, partnershipId string, params *GetUsersByPartnershipIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTeamsByProjectSessionId Get a list of teams by a project session Id
+	//
+	// Corresponds with GET /project_sessions/{project_session_id}/teams (the `GetTeamsByProjectSessionId` operationId).
+	GetTeamsByProjectSessionId(ctx context.Context, projectSessionId string, params *GetTeamsByProjectSessionIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectsUsersByProjectId Get a list of projects users by a project Id
+	//
+	// Corresponds with GET /projects/{project_id}/projects_users (the `GetProjectsUsersByProjectId` operationId).
+	GetProjectsUsersByProjectId(ctx context.Context, projectId string, params *GetProjectsUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTeamsByProjectId Get a list of teams by a project Id
+	//
+	// Corresponds with GET /projects/{project_id}/teams (the `GetTeamsByProjectId` operationId).
+	GetTeamsByProjectId(ctx context.Context, projectId string, params *GetTeamsByProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetUsersByProjectId Get a list of users by project
+	//
+	// Corresponds with GET /projects/{project_id}/users (the `GetUsersByProjectId` operationId).
+	GetUsersByProjectId(ctx context.Context, projectId string, params *GetUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetProjectsUsers Get a list of projects users
+	//
+	// Corresponds with GET /projects_users (the `GetProjectsUsers` operationId).
+	GetProjectsUsers(ctx context.Context, params *GetProjectsUsersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PostProjectsUsersWithBody Create a project user
 	//
@@ -1392,6 +1831,16 @@ type ClientInterface interface {
 	// Corresponds with PUT /projects_users/{id} (the `PutProjectUserById` operationId).
 	PutProjectUserById(ctx context.Context, id string, body PutProjectUserByIdJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetUsersByQuest Get a list of users by quest
+	//
+	// Corresponds with GET /quests/{quest_id}/users (the `GetUsersByQuest` operationId).
+	GetUsersByQuest(ctx context.Context, questId string, params *GetUsersByQuestParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTeams Get a list of teams
+	//
+	// Corresponds with GET /teams (the `GetTeams` operationId).
+	GetTeams(ctx context.Context, params *GetTeamsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetTeamById Get a team by ID
 	//
 	// Corresponds with GET /teams/{id} (the `GetTeamById` operationId).
@@ -1430,6 +1879,11 @@ type ClientInterface interface {
 	// Corresponds with POST /teams/{id}/reset_team_uploads (the `PostResetTeamUploadsById` operationId).
 	PostResetTeamUploadsById(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetUsersByTitle Get a list of users by title
+	//
+	// Corresponds with GET /titles/{title_id}/users (the `GetUsersByTitle` operationId).
+	GetUsersByTitle(ctx context.Context, titleId string, params *GetUsersByTitleParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetUsers Get a list of users
 	//
 	// Corresponds with GET /users (the `GetUsers` operationId).
@@ -1448,12 +1902,92 @@ type ClientInterface interface {
 	// GetClosesByUserId Get a list of closes by user id
 	//
 	// Corresponds with GET /users/{user_id}/closes (the `GetClosesByUserId` operationId).
-	GetClosesByUserId(ctx context.Context, userId int, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetClosesByUserId(ctx context.Context, userId string, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetInternshipsByUserId Get a list of internships by user Id
+	//
+	// Corresponds with GET /users/{user_id}/internships (the `GetInternshipsByUserId` operationId).
+	GetInternshipsByUserId(ctx context.Context, userId string, params *GetInternshipsByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetInternshipByIdAndUserId Get an internship by ID and user ID
+	//
+	// Corresponds with GET /users/{user_id}/internships/{id} (the `GetInternshipByIdAndUserId` operationId).
+	GetInternshipByIdAndUserId(ctx context.Context, userId string, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTeamsByUserIdAndProjectId Get a list of teams by a user Id and project Id
+	//
+	// Corresponds with GET /users/{user_id}/projects/{project_id}/teams (the `GetTeamsByUserIdAndProjectId` operationId).
+	GetTeamsByUserIdAndProjectId(ctx context.Context, userId string, projectId string, params *GetTeamsByUserIdAndProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetProjectsUsersByUserId Get a list of projects users by a user Id
 	//
 	// Corresponds with GET /users/{user_id}/projects_users (the `GetProjectsUsersByUserId` operationId).
 	GetProjectsUsersByUserId(ctx context.Context, userId string, params *GetProjectsUsersByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTeamsByUserId Get a list of teams by a user Id
+	//
+	// Corresponds with GET /users/{user_id}/teams (the `GetTeamsByUserId` operationId).
+	GetTeamsByUserId(ctx context.Context, userId string, params *GetTeamsByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+// GetAccreditations Get a list of Accreditations
+//
+// Corresponds with GET /accreditations (the `GetAccreditations` operationId).
+func (c *Client) GetAccreditations(ctx context.Context, params *GetAccreditationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccreditationsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetUsersByAccreditationId Get a list of users by accreditation
+//
+// Corresponds with GET /accreditations/{accreditation_id}/users (the `GetUsersByAccreditationId` operationId).
+func (c *Client) GetUsersByAccreditationId(ctx context.Context, accreditationId string, params *GetUsersByAccreditationIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByAccreditationIdRequest(c.Server, accreditationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAccreditationById Get an accreditation by ID
+//
+// Corresponds with GET /accreditations/{id} (the `GetAccreditationById` operationId).
+func (c *Client) GetAccreditationById(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAccreditationByIdRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetUsersByAchievement Get a list of users by achievement
+//
+// Corresponds with GET /achievements/{achievement_id}/users (the `GetUsersByAchievement` operationId).
+func (c *Client) GetUsersByAchievement(ctx context.Context, achievementId string, params *GetUsersByAchievementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByAchievementRequest(c.Server, achievementId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
 }
 
 // GetCloses Get a list of closes
@@ -1486,6 +2020,51 @@ func (c *Client) GetCloseById(ctx context.Context, id int, reqEditors ...Request
 	return c.Client.Do(req)
 }
 
+// GetUsersByCoalitionId Get a list of users by coalition
+//
+// Corresponds with GET /coalitions/{coalition_id}/users (the `GetUsersByCoalitionId` operationId).
+func (c *Client) GetUsersByCoalitionId(ctx context.Context, coalitionId string, params *GetUsersByCoalitionIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByCoalitionIdRequest(c.Server, coalitionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetUsersByCursus Get a list of users by cursus
+//
+// Corresponds with GET /cursus/{cursus_id}/users (the `GetUsersByCursus` operationId).
+func (c *Client) GetUsersByCursus(ctx context.Context, cursusId string, params *GetUsersByCursusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByCursusRequest(c.Server, cursusId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetUsersByExpertiseId Get a list of users by expertise
+//
+// Corresponds with GET /expertises/{expertise_id}/users (the `GetUsersByExpertiseId` operationId).
+func (c *Client) GetUsersByExpertiseId(ctx context.Context, expertiseId string, params *GetUsersByExpertiseIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByExpertiseIdRequest(c.Server, expertiseId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetInternships Get a list of internships
 //
 // Corresponds with GET /internships (the `GetInternships` operationId).
@@ -1501,11 +2080,131 @@ func (c *Client) GetInternships(ctx context.Context, params *GetInternshipsParam
 	return c.Client.Do(req)
 }
 
+// GetInternshipById Get an internship by ID
+//
+// Corresponds with GET /internships/{id} (the `GetInternshipById` operationId).
+func (c *Client) GetInternshipById(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetInternshipByIdRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetLanguageById Get a language by ID
 //
 // Corresponds with GET /languages/{id} (the `GetLanguageById` operationId).
-func (c *Client) GetLanguageById(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetLanguageByIdRequest(c.Server, id)
+func (c *Client) GetLanguageById(ctx context.Context, id int, params *GetLanguageByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetLanguageByIdRequest(c.Server, id, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetTeamsByMe Get a list of teams by me
+//
+// Corresponds with GET /me/teams (the `GetTeamsByMe` operationId).
+func (c *Client) GetTeamsByMe(ctx context.Context, params *GetTeamsByMeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTeamsByMeRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetUsersByPartnershipId Get a list of users by partnership
+//
+// Corresponds with GET /partnerships/{partnership_id}/users (the `GetUsersByPartnershipId` operationId).
+func (c *Client) GetUsersByPartnershipId(ctx context.Context, partnershipId string, params *GetUsersByPartnershipIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByPartnershipIdRequest(c.Server, partnershipId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetTeamsByProjectSessionId Get a list of teams by a project session Id
+//
+// Corresponds with GET /project_sessions/{project_session_id}/teams (the `GetTeamsByProjectSessionId` operationId).
+func (c *Client) GetTeamsByProjectSessionId(ctx context.Context, projectSessionId string, params *GetTeamsByProjectSessionIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTeamsByProjectSessionIdRequest(c.Server, projectSessionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetProjectsUsersByProjectId Get a list of projects users by a project Id
+//
+// Corresponds with GET /projects/{project_id}/projects_users (the `GetProjectsUsersByProjectId` operationId).
+func (c *Client) GetProjectsUsersByProjectId(ctx context.Context, projectId string, params *GetProjectsUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsUsersByProjectIdRequest(c.Server, projectId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetTeamsByProjectId Get a list of teams by a project Id
+//
+// Corresponds with GET /projects/{project_id}/teams (the `GetTeamsByProjectId` operationId).
+func (c *Client) GetTeamsByProjectId(ctx context.Context, projectId string, params *GetTeamsByProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTeamsByProjectIdRequest(c.Server, projectId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetUsersByProjectId Get a list of users by project
+//
+// Corresponds with GET /projects/{project_id}/users (the `GetUsersByProjectId` operationId).
+func (c *Client) GetUsersByProjectId(ctx context.Context, projectId string, params *GetUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByProjectIdRequest(c.Server, projectId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetProjectsUsers Get a list of projects users
+//
+// Corresponds with GET /projects_users (the `GetProjectsUsers` operationId).
+func (c *Client) GetProjectsUsers(ctx context.Context, params *GetProjectsUsersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetProjectsUsersRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -1618,6 +2317,36 @@ func (c *Client) PutProjectUserById(ctx context.Context, id string, body PutProj
 	return c.Client.Do(req)
 }
 
+// GetUsersByQuest Get a list of users by quest
+//
+// Corresponds with GET /quests/{quest_id}/users (the `GetUsersByQuest` operationId).
+func (c *Client) GetUsersByQuest(ctx context.Context, questId string, params *GetUsersByQuestParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByQuestRequest(c.Server, questId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetTeams Get a list of teams
+//
+// Corresponds with GET /teams (the `GetTeams` operationId).
+func (c *Client) GetTeams(ctx context.Context, params *GetTeamsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTeamsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetTeamById Get a team by ID
 //
 // Corresponds with GET /teams/{id} (the `GetTeamById` operationId).
@@ -1716,6 +2445,21 @@ func (c *Client) PostResetTeamUploadsById(ctx context.Context, id string, reqEdi
 	return c.Client.Do(req)
 }
 
+// GetUsersByTitle Get a list of users by title
+//
+// Corresponds with GET /titles/{title_id}/users (the `GetUsersByTitle` operationId).
+func (c *Client) GetUsersByTitle(ctx context.Context, titleId string, params *GetUsersByTitleParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUsersByTitleRequest(c.Server, titleId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetUsers Get a list of users
 //
 // Corresponds with GET /users (the `GetUsers` operationId).
@@ -1764,8 +2508,53 @@ func (c *Client) GetUserCandidatureById(ctx context.Context, id string, reqEdito
 // GetClosesByUserId Get a list of closes by user id
 //
 // Corresponds with GET /users/{user_id}/closes (the `GetClosesByUserId` operationId).
-func (c *Client) GetClosesByUserId(ctx context.Context, userId int, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetClosesByUserId(ctx context.Context, userId string, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetClosesByUserIdRequest(c.Server, userId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetInternshipsByUserId Get a list of internships by user Id
+//
+// Corresponds with GET /users/{user_id}/internships (the `GetInternshipsByUserId` operationId).
+func (c *Client) GetInternshipsByUserId(ctx context.Context, userId string, params *GetInternshipsByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetInternshipsByUserIdRequest(c.Server, userId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetInternshipByIdAndUserId Get an internship by ID and user ID
+//
+// Corresponds with GET /users/{user_id}/internships/{id} (the `GetInternshipByIdAndUserId` operationId).
+func (c *Client) GetInternshipByIdAndUserId(ctx context.Context, userId string, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetInternshipByIdAndUserIdRequest(c.Server, userId, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetTeamsByUserIdAndProjectId Get a list of teams by a user Id and project Id
+//
+// Corresponds with GET /users/{user_id}/projects/{project_id}/teams (the `GetTeamsByUserIdAndProjectId` operationId).
+func (c *Client) GetTeamsByUserIdAndProjectId(ctx context.Context, userId string, projectId string, params *GetTeamsByUserIdAndProjectIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTeamsByUserIdAndProjectIdRequest(c.Server, userId, projectId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -1789,6 +2578,423 @@ func (c *Client) GetProjectsUsersByUserId(ctx context.Context, userId string, pa
 		return nil, err
 	}
 	return c.Client.Do(req)
+}
+
+// GetTeamsByUserId Get a list of teams by a user Id
+//
+// Corresponds with GET /users/{user_id}/teams (the `GetTeamsByUserId` operationId).
+func (c *Client) GetTeamsByUserId(ctx context.Context, userId string, params *GetTeamsByUserIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTeamsByUserIdRequest(c.Server, userId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// NewGetAccreditationsRequest constructs an http.Request for the GetAccreditations method
+func NewGetAccreditationsRequest(server string, params *GetAccreditationsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accreditations")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUsersByAccreditationIdRequest constructs an http.Request for the GetUsersByAccreditationId method
+func NewGetUsersByAccreditationIdRequest(server string, accreditationId string, params *GetUsersByAccreditationIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "accreditation_id", accreditationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accreditations/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetAccreditationByIdRequest constructs an http.Request for the GetAccreditationById method
+func NewGetAccreditationByIdRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accreditations/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUsersByAchievementRequest constructs an http.Request for the GetUsersByAchievement method
+func NewGetUsersByAchievementRequest(server string, achievementId string, params *GetUsersByAchievementParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "achievement_id", achievementId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/achievements/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
 }
 
 // NewGetClosesRequest constructs an http.Request for the GetCloses method
@@ -1951,6 +3157,369 @@ func NewGetCloseByIdRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
+// NewGetUsersByCoalitionIdRequest constructs an http.Request for the GetUsersByCoalitionId method
+func NewGetUsersByCoalitionIdRequest(server string, coalitionId string, params *GetUsersByCoalitionIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "coalition_id", coalitionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/coalitions/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUsersByCursusRequest constructs an http.Request for the GetUsersByCursus method
+func NewGetUsersByCursusRequest(server string, cursusId string, params *GetUsersByCursusParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cursus_id", cursusId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/cursus/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUsersByExpertiseIdRequest constructs an http.Request for the GetUsersByExpertiseId method
+func NewGetUsersByExpertiseIdRequest(server string, expertiseId string, params *GetUsersByExpertiseIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "expertise_id", expertiseId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expertises/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetInternshipsRequest constructs an http.Request for the GetInternships method
 func NewGetInternshipsRequest(server string, params *GetInternshipsParams) (*http.Request, error) {
 	var err error
@@ -2077,8 +3646,42 @@ func NewGetInternshipsRequest(server string, params *GetInternshipsParams) (*htt
 	return req, nil
 }
 
+// NewGetInternshipByIdRequest constructs an http.Request for the GetInternshipById method
+func NewGetInternshipByIdRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/internships/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetLanguageByIdRequest constructs an http.Request for the GetLanguageById method
-func NewGetLanguageByIdRequest(server string, id int) (*http.Request, error) {
+func NewGetLanguageByIdRequest(server string, id int, params *GetLanguageByIdParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2101,6 +3704,974 @@ func NewGetLanguageByIdRequest(server string, id int) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetTeamsByMeRequest constructs an http.Request for the GetTeamsByMe method
+func NewGetTeamsByMeRequest(server string, params *GetTeamsByMeParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/me/teams")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUsersByPartnershipIdRequest constructs an http.Request for the GetUsersByPartnershipId method
+func NewGetUsersByPartnershipIdRequest(server string, partnershipId string, params *GetUsersByPartnershipIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "partnership_id", partnershipId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/partnerships/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetTeamsByProjectSessionIdRequest constructs an http.Request for the GetTeamsByProjectSessionId method
+func NewGetTeamsByProjectSessionIdRequest(server string, projectSessionId string, params *GetTeamsByProjectSessionIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "project_session_id", projectSessionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/project_sessions/%s/teams", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectsUsersByProjectIdRequest constructs an http.Request for the GetProjectsUsersByProjectId method
+func NewGetProjectsUsersByProjectIdRequest(server string, projectId string, params *GetProjectsUsersByProjectIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "project_id", projectId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s/projects_users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetTeamsByProjectIdRequest constructs an http.Request for the GetTeamsByProjectId method
+func NewGetTeamsByProjectIdRequest(server string, projectId string, params *GetTeamsByProjectIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "project_id", projectId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s/teams", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetUsersByProjectIdRequest constructs an http.Request for the GetUsersByProjectId method
+func NewGetUsersByProjectIdRequest(server string, projectId string, params *GetUsersByProjectIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "project_id", projectId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetProjectsUsersRequest constructs an http.Request for the GetProjectsUsers method
+func NewGetProjectsUsersRequest(server string, params *GetProjectsUsersParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/projects_users")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -2241,6 +4812,253 @@ func NewPutProjectUserByIdRequestWithBody(server string, id string, contentType 
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetUsersByQuestRequest constructs an http.Request for the GetUsersByQuest method
+func NewGetUsersByQuestRequest(server string, questId string, params *GetUsersByQuestParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "quest_id", questId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/quests/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetTeamsRequest constructs an http.Request for the GetTeams method
+func NewGetTeamsRequest(server string, params *GetTeamsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/teams")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -2407,6 +5225,127 @@ func NewPostResetTeamUploadsByIdRequest(server string, id string) (*http.Request
 	return req, nil
 }
 
+// NewGetUsersByTitleRequest constructs an http.Request for the GetUsersByTitle method
+func NewGetUsersByTitleRequest(server string, titleId string, params *GetUsersByTitleParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "title_id", titleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/titles/%s/users", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewGetUsersRequest constructs an http.Request for the GetUsers method
 func NewGetUsersRequest(server string, params *GetUsersParams) (*http.Request, error) {
 	var err error
@@ -2462,18 +5401,6 @@ func NewGetUsersRequest(server string, params *GetUsersParams) (*http.Request, e
 		if params.Range != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Page != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -2602,12 +5529,12 @@ func NewGetUserCandidatureByIdRequest(server string, id string) (*http.Request, 
 }
 
 // NewGetClosesByUserIdRequest constructs an http.Request for the GetClosesByUserId method
-func NewGetClosesByUserIdRequest(server string, userId int, params *GetClosesByUserIdParams) (*http.Request, error) {
+func NewGetClosesByUserIdRequest(server string, userId string, params *GetClosesByUserIdParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
 
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "user_id", userId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "user_id", userId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
 	if err != nil {
 		return nil, err
 	}
@@ -2618,6 +5545,320 @@ func NewGetClosesByUserIdRequest(server string, userId int, params *GetClosesByU
 	}
 
 	operationPath := fmt.Sprintf("/users/%s/closes", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetInternshipsByUserIdRequest constructs an http.Request for the GetInternshipsByUserId method
+func NewGetInternshipsByUserIdRequest(server string, userId string, params *GetInternshipsByUserIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "user_id", userId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/%s/internships", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetInternshipByIdAndUserIdRequest constructs an http.Request for the GetInternshipByIdAndUserId method
+func NewGetInternshipByIdAndUserIdRequest(server string, userId string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "user_id", userId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/%s/internships/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetTeamsByUserIdAndProjectIdRequest constructs an http.Request for the GetTeamsByUserIdAndProjectId method
+func NewGetTeamsByUserIdAndProjectIdRequest(server string, userId string, projectId string, params *GetTeamsByUserIdAndProjectIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "user_id", userId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "project_id", projectId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/%s/projects/%s/teams", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -2855,6 +6096,139 @@ func NewGetProjectsUsersByUserIdRequest(server string, userId string, params *Ge
 	return req, nil
 }
 
+// NewGetTeamsByUserIdRequest constructs an http.Request for the GetTeamsByUserId method
+func NewGetTeamsByUserIdRequest(server string, userId string, params *GetTeamsByUserIdParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "user_id", userId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/%s/teams", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Filter != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "filter", *params.Filter, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Range != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("deepObject", true, "range", *params.Range, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "object", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageNumber != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[number]", *params.PageNumber, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PageSize != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page[size]", *params.PageSize, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
 	for _, r := range c.RequestEditors {
 		if err := r(ctx, req); err != nil {
@@ -2899,6 +6273,34 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 
+	// GetAccreditationsWithResponse Get a list of Accreditations
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /accreditations (the `GetAccreditations` operationId).
+	GetAccreditationsWithResponse(ctx context.Context, params *GetAccreditationsParams, reqEditors ...RequestEditorFn) (*GetAccreditationsResponse, error)
+
+	// GetUsersByAccreditationIdWithResponse Get a list of users by accreditation
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /accreditations/{accreditation_id}/users (the `GetUsersByAccreditationId` operationId).
+	GetUsersByAccreditationIdWithResponse(ctx context.Context, accreditationId string, params *GetUsersByAccreditationIdParams, reqEditors ...RequestEditorFn) (*GetUsersByAccreditationIdResponse, error)
+
+	// GetAccreditationByIdWithResponse Get an accreditation by ID
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /accreditations/{id} (the `GetAccreditationById` operationId).
+	GetAccreditationByIdWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetAccreditationByIdResponse, error)
+
+	// GetUsersByAchievementWithResponse Get a list of users by achievement
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /achievements/{achievement_id}/users (the `GetUsersByAchievement` operationId).
+	GetUsersByAchievementWithResponse(ctx context.Context, achievementId string, params *GetUsersByAchievementParams, reqEditors ...RequestEditorFn) (*GetUsersByAchievementResponse, error)
+
 	// GetClosesWithResponse Get a list of closes
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -2913,6 +6315,27 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /closes/{id} (the `GetCloseById` operationId).
 	GetCloseByIdWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetCloseByIdResponse, error)
 
+	// GetUsersByCoalitionIdWithResponse Get a list of users by coalition
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /coalitions/{coalition_id}/users (the `GetUsersByCoalitionId` operationId).
+	GetUsersByCoalitionIdWithResponse(ctx context.Context, coalitionId string, params *GetUsersByCoalitionIdParams, reqEditors ...RequestEditorFn) (*GetUsersByCoalitionIdResponse, error)
+
+	// GetUsersByCursusWithResponse Get a list of users by cursus
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /cursus/{cursus_id}/users (the `GetUsersByCursus` operationId).
+	GetUsersByCursusWithResponse(ctx context.Context, cursusId string, params *GetUsersByCursusParams, reqEditors ...RequestEditorFn) (*GetUsersByCursusResponse, error)
+
+	// GetUsersByExpertiseIdWithResponse Get a list of users by expertise
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /expertises/{expertise_id}/users (the `GetUsersByExpertiseId` operationId).
+	GetUsersByExpertiseIdWithResponse(ctx context.Context, expertiseId string, params *GetUsersByExpertiseIdParams, reqEditors ...RequestEditorFn) (*GetUsersByExpertiseIdResponse, error)
+
 	// GetInternshipsWithResponse Get a list of internships
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -2920,12 +6343,68 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /internships (the `GetInternships` operationId).
 	GetInternshipsWithResponse(ctx context.Context, params *GetInternshipsParams, reqEditors ...RequestEditorFn) (*GetInternshipsResponse, error)
 
+	// GetInternshipByIdWithResponse Get an internship by ID
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /internships/{id} (the `GetInternshipById` operationId).
+	GetInternshipByIdWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetInternshipByIdResponse, error)
+
 	// GetLanguageByIdWithResponse Get a language by ID
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /languages/{id} (the `GetLanguageById` operationId).
-	GetLanguageByIdWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetLanguageByIdResponse, error)
+	GetLanguageByIdWithResponse(ctx context.Context, id int, params *GetLanguageByIdParams, reqEditors ...RequestEditorFn) (*GetLanguageByIdResponse, error)
+
+	// GetTeamsByMeWithResponse Get a list of teams by me
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /me/teams (the `GetTeamsByMe` operationId).
+	GetTeamsByMeWithResponse(ctx context.Context, params *GetTeamsByMeParams, reqEditors ...RequestEditorFn) (*GetTeamsByMeResponse, error)
+
+	// GetUsersByPartnershipIdWithResponse Get a list of users by partnership
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /partnerships/{partnership_id}/users (the `GetUsersByPartnershipId` operationId).
+	GetUsersByPartnershipIdWithResponse(ctx context.Context, partnershipId string, params *GetUsersByPartnershipIdParams, reqEditors ...RequestEditorFn) (*GetUsersByPartnershipIdResponse, error)
+
+	// GetTeamsByProjectSessionIdWithResponse Get a list of teams by a project session Id
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /project_sessions/{project_session_id}/teams (the `GetTeamsByProjectSessionId` operationId).
+	GetTeamsByProjectSessionIdWithResponse(ctx context.Context, projectSessionId string, params *GetTeamsByProjectSessionIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByProjectSessionIdResponse, error)
+
+	// GetProjectsUsersByProjectIdWithResponse Get a list of projects users by a project Id
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /projects/{project_id}/projects_users (the `GetProjectsUsersByProjectId` operationId).
+	GetProjectsUsersByProjectIdWithResponse(ctx context.Context, projectId string, params *GetProjectsUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*GetProjectsUsersByProjectIdResponse, error)
+
+	// GetTeamsByProjectIdWithResponse Get a list of teams by a project Id
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /projects/{project_id}/teams (the `GetTeamsByProjectId` operationId).
+	GetTeamsByProjectIdWithResponse(ctx context.Context, projectId string, params *GetTeamsByProjectIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByProjectIdResponse, error)
+
+	// GetUsersByProjectIdWithResponse Get a list of users by project
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /projects/{project_id}/users (the `GetUsersByProjectId` operationId).
+	GetUsersByProjectIdWithResponse(ctx context.Context, projectId string, params *GetUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*GetUsersByProjectIdResponse, error)
+
+	// GetProjectsUsersWithResponse Get a list of projects users
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /projects_users (the `GetProjectsUsers` operationId).
+	GetProjectsUsersWithResponse(ctx context.Context, params *GetProjectsUsersParams, reqEditors ...RequestEditorFn) (*GetProjectsUsersResponse, error)
 
 	// PostProjectsUsersWithBodyWithResponse Create a project user
 	//
@@ -2969,6 +6448,20 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PUT /projects_users/{id} (the `PutProjectUserById` operationId).
 	PutProjectUserByIdWithResponse(ctx context.Context, id string, body PutProjectUserByIdJSONRequestBody, reqEditors ...RequestEditorFn) (*PutProjectUserByIdResponse, error)
 
+	// GetUsersByQuestWithResponse Get a list of users by quest
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /quests/{quest_id}/users (the `GetUsersByQuest` operationId).
+	GetUsersByQuestWithResponse(ctx context.Context, questId string, params *GetUsersByQuestParams, reqEditors ...RequestEditorFn) (*GetUsersByQuestResponse, error)
+
+	// GetTeamsWithResponse Get a list of teams
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /teams (the `GetTeams` operationId).
+	GetTeamsWithResponse(ctx context.Context, params *GetTeamsParams, reqEditors ...RequestEditorFn) (*GetTeamsResponse, error)
+
 	// GetTeamByIdWithResponse Get a team by ID
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -3011,6 +6504,13 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /teams/{id}/reset_team_uploads (the `PostResetTeamUploadsById` operationId).
 	PostResetTeamUploadsByIdWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*PostResetTeamUploadsByIdResponse, error)
 
+	// GetUsersByTitleWithResponse Get a list of users by title
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /titles/{title_id}/users (the `GetUsersByTitle` operationId).
+	GetUsersByTitleWithResponse(ctx context.Context, titleId string, params *GetUsersByTitleParams, reqEditors ...RequestEditorFn) (*GetUsersByTitleResponse, error)
+
 	// GetUsersWithResponse Get a list of users
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -3037,7 +6537,28 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /users/{user_id}/closes (the `GetClosesByUserId` operationId).
-	GetClosesByUserIdWithResponse(ctx context.Context, userId int, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*GetClosesByUserIdResponse, error)
+	GetClosesByUserIdWithResponse(ctx context.Context, userId string, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*GetClosesByUserIdResponse, error)
+
+	// GetInternshipsByUserIdWithResponse Get a list of internships by user Id
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /users/{user_id}/internships (the `GetInternshipsByUserId` operationId).
+	GetInternshipsByUserIdWithResponse(ctx context.Context, userId string, params *GetInternshipsByUserIdParams, reqEditors ...RequestEditorFn) (*GetInternshipsByUserIdResponse, error)
+
+	// GetInternshipByIdAndUserIdWithResponse Get an internship by ID and user ID
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /users/{user_id}/internships/{id} (the `GetInternshipByIdAndUserId` operationId).
+	GetInternshipByIdAndUserIdWithResponse(ctx context.Context, userId string, id string, reqEditors ...RequestEditorFn) (*GetInternshipByIdAndUserIdResponse, error)
+
+	// GetTeamsByUserIdAndProjectIdWithResponse Get a list of teams by a user Id and project Id
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /users/{user_id}/projects/{project_id}/teams (the `GetTeamsByUserIdAndProjectId` operationId).
+	GetTeamsByUserIdAndProjectIdWithResponse(ctx context.Context, userId string, projectId string, params *GetTeamsByUserIdAndProjectIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByUserIdAndProjectIdResponse, error)
 
 	// GetProjectsUsersByUserIdWithResponse Get a list of projects users by a user Id
 	//
@@ -3045,6 +6566,232 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /users/{user_id}/projects_users (the `GetProjectsUsersByUserId` operationId).
 	GetProjectsUsersByUserIdWithResponse(ctx context.Context, userId string, params *GetProjectsUsersByUserIdParams, reqEditors ...RequestEditorFn) (*GetProjectsUsersByUserIdResponse, error)
+
+	// GetTeamsByUserIdWithResponse Get a list of teams by a user Id
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /users/{user_id}/teams (the `GetTeamsByUserId` operationId).
+	GetTeamsByUserIdWithResponse(ctx context.Context, userId string, params *GetTeamsByUserIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByUserIdResponse, error)
+}
+
+type GetAccreditationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]Accreditation
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ErrorResponse
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAccreditationsResponse) GetJSON200() *[]Accreditation {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetAccreditationsResponse) GetJSON400() *ErrorResponse {
+	return r.JSON400
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetAccreditationsResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAccreditationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAccreditationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAccreditationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAccreditationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByAccreditationIdResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByAccreditationId
+type GetUsersByAccreditationIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByAccreditationIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByAccreditationIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByAccreditationIdResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByAccreditationIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByAccreditationIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByAccreditationIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByAccreditationIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByAccreditationIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAccreditationByIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Accreditation
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAccreditationByIdResponse) GetJSON200() *Accreditation {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetAccreditationByIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAccreditationByIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAccreditationByIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAccreditationByIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAccreditationByIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByAchievementResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByAchievement
+type GetUsersByAchievementResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByAchievementResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByAchievementResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByAchievementResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByAchievementResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByAchievementResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByAchievementResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByAchievementResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByAchievementResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
 }
 
 type GetClosesResponse struct {
@@ -3150,12 +6897,178 @@ func (r GetCloseByIdResponse) ContentType() string {
 	return ""
 }
 
-// GetInternshipsResponse200Headers the declared response headers of an HTTP 200 response for GetInternships
-type GetInternshipsResponse200Headers struct {
+// GetUsersByCoalitionIdResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByCoalitionId
+type GetUsersByCoalitionIdResponse200Headers struct {
 	Link     *string
 	XPage    *int
 	XPerPage *int
 	XTotal   *int
+}
+
+type GetUsersByCoalitionIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByCoalitionIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByCoalitionIdResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByCoalitionIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByCoalitionIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByCoalitionIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByCoalitionIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByCoalitionIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByCursusResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByCursus
+type GetUsersByCursusResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByCursusResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByCursusResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByCursusResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByCursusResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByCursusResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByCursusResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByCursusResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByCursusResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByExpertiseIdResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByExpertiseId
+type GetUsersByExpertiseIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByExpertiseIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByExpertiseIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByExpertiseIdResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByExpertiseIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByExpertiseIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByExpertiseIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByExpertiseIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByExpertiseIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
 }
 
 type GetInternshipsResponse struct {
@@ -3163,15 +7076,20 @@ type GetInternshipsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]Internship
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ErrorResponse
 	// JSONDefault the response for an HTTP default `application/json` response
 	JSONDefault *ErrorResponse
-	// Headers200 the parsed response headers for an HTTP 200 response
-	Headers200 *GetInternshipsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetInternshipsResponse) GetJSON200() *[]Internship {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetInternshipsResponse) GetJSON400() *ErrorResponse {
+	return r.JSON400
 }
 
 // GetJSONDefault returns the response for an HTTP default `application/json` response
@@ -3202,6 +7120,61 @@ func (r GetInternshipsResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetInternshipsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetInternshipByIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Internship
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ErrorResponse
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetInternshipByIdResponse) GetJSON200() *Internship {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetInternshipByIdResponse) GetJSON400() *ErrorResponse {
+	return r.JSON400
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetInternshipByIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetInternshipByIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetInternshipByIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetInternshipByIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetInternshipByIdResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -3250,6 +7223,412 @@ func (r GetLanguageByIdResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetLanguageByIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetTeamsByMeResponse200Headers the declared response headers of an HTTP 200 response for GetTeamsByMe
+type GetTeamsByMeResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetTeamsByMeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightTeam
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetTeamsByMeResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetTeamsByMeResponse) GetJSON200() *[]LightTeam {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetTeamsByMeResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetTeamsByMeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTeamsByMeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTeamsByMeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTeamsByMeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByPartnershipIdResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByPartnershipId
+type GetUsersByPartnershipIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByPartnershipIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByPartnershipIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByPartnershipIdResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByPartnershipIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByPartnershipIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByPartnershipIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByPartnershipIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByPartnershipIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetTeamsByProjectSessionIdResponse200Headers the declared response headers of an HTTP 200 response for GetTeamsByProjectSessionId
+type GetTeamsByProjectSessionIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetTeamsByProjectSessionIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightTeam
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetTeamsByProjectSessionIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetTeamsByProjectSessionIdResponse) GetJSON200() *[]LightTeam {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetTeamsByProjectSessionIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetTeamsByProjectSessionIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTeamsByProjectSessionIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTeamsByProjectSessionIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTeamsByProjectSessionIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetProjectsUsersByProjectIdResponse200Headers the declared response headers of an HTTP 200 response for GetProjectsUsersByProjectId
+type GetProjectsUsersByProjectIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetProjectsUsersByProjectIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]ProjectUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetProjectsUsersByProjectIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetProjectsUsersByProjectIdResponse) GetJSON200() *[]ProjectUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetProjectsUsersByProjectIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetProjectsUsersByProjectIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsUsersByProjectIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsUsersByProjectIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetProjectsUsersByProjectIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetTeamsByProjectIdResponse200Headers the declared response headers of an HTTP 200 response for GetTeamsByProjectId
+type GetTeamsByProjectIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetTeamsByProjectIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightTeam
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetTeamsByProjectIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetTeamsByProjectIdResponse) GetJSON200() *[]LightTeam {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetTeamsByProjectIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetTeamsByProjectIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTeamsByProjectIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTeamsByProjectIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTeamsByProjectIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByProjectIdResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByProjectId
+type GetUsersByProjectIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByProjectIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByProjectIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByProjectIdResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByProjectIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByProjectIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByProjectIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByProjectIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByProjectIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetProjectsUsersResponse200Headers the declared response headers of an HTTP 200 response for GetProjectsUsers
+type GetProjectsUsersResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetProjectsUsersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]ProjectUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetProjectsUsersResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetProjectsUsersResponse) GetJSON200() *[]ProjectUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetProjectsUsersResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetProjectsUsersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetProjectsUsersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetProjectsUsersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetProjectsUsersResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -3394,6 +7773,122 @@ func (r PutProjectUserByIdResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r PutProjectUserByIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetUsersByQuestResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByQuest
+type GetUsersByQuestResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByQuestResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByQuestResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByQuestResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByQuestResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByQuestResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByQuestResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByQuestResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByQuestResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetTeamsResponse200Headers the declared response headers of an HTTP 200 response for GetTeams
+type GetTeamsResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetTeamsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightTeam
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetTeamsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetTeamsResponse) GetJSON200() *[]LightTeam {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetTeamsResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetTeamsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTeamsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTeamsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTeamsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -3571,6 +8066,64 @@ func (r PostResetTeamUploadsByIdResponse) ContentType() string {
 	return ""
 }
 
+// GetUsersByTitleResponse200Headers the declared response headers of an HTTP 200 response for GetUsersByTitle
+type GetUsersByTitleResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetUsersByTitleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightUser
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetUsersByTitleResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetUsersByTitleResponse) GetJSON200() *[]LightUser {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetUsersByTitleResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetUsersByTitleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetUsersByTitleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetUsersByTitleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetUsersByTitleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // GetUsersResponse200Headers the declared response headers of an HTTP 200 response for GetUsers
 type GetUsersResponse200Headers struct {
 	Link     *string
@@ -3730,6 +8283,8 @@ type GetClosesByUserIdResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]Close
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ErrorResponse
 	// JSONDefault the response for an HTTP default `application/json` response
 	JSONDefault *ErrorResponse
 }
@@ -3737,6 +8292,11 @@ type GetClosesByUserIdResponse struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r GetClosesByUserIdResponse) GetJSON200() *[]Close {
 	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetClosesByUserIdResponse) GetJSON400() *ErrorResponse {
+	return r.JSON400
 }
 
 // GetJSONDefault returns the response for an HTTP default `application/json` response
@@ -3767,6 +8327,174 @@ func (r GetClosesByUserIdResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetClosesByUserIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetInternshipsByUserIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]Internship
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ErrorResponse
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetInternshipsByUserIdResponse) GetJSON200() *[]Internship {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetInternshipsByUserIdResponse) GetJSON400() *ErrorResponse {
+	return r.JSON400
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetInternshipsByUserIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetInternshipsByUserIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetInternshipsByUserIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetInternshipsByUserIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetInternshipsByUserIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetInternshipByIdAndUserIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Internship
+	// JSON400 the response for an HTTP 400 `application/json` response
+	JSON400 *ErrorResponse
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetInternshipByIdAndUserIdResponse) GetJSON200() *Internship {
+	return r.JSON200
+}
+
+// GetJSON400 returns the response for an HTTP 400 `application/json` response
+func (r GetInternshipByIdAndUserIdResponse) GetJSON400() *ErrorResponse {
+	return r.JSON400
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetInternshipByIdAndUserIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetInternshipByIdAndUserIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetInternshipByIdAndUserIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetInternshipByIdAndUserIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetInternshipByIdAndUserIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetTeamsByUserIdAndProjectIdResponse200Headers the declared response headers of an HTTP 200 response for GetTeamsByUserIdAndProjectId
+type GetTeamsByUserIdAndProjectIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetTeamsByUserIdAndProjectIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightTeam
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetTeamsByUserIdAndProjectIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetTeamsByUserIdAndProjectIdResponse) GetJSON200() *[]LightTeam {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetTeamsByUserIdAndProjectIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetTeamsByUserIdAndProjectIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTeamsByUserIdAndProjectIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTeamsByUserIdAndProjectIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTeamsByUserIdAndProjectIdResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -3831,6 +8559,116 @@ func (r GetProjectsUsersByUserIdResponse) ContentType() string {
 	return ""
 }
 
+// GetTeamsByUserIdResponse200Headers the declared response headers of an HTTP 200 response for GetTeamsByUserId
+type GetTeamsByUserIdResponse200Headers struct {
+	Link     *string
+	XPage    *int
+	XPerPage *int
+	XTotal   *int
+}
+
+type GetTeamsByUserIdResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]LightTeam
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorResponse
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetTeamsByUserIdResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetTeamsByUserIdResponse) GetJSON200() *[]LightTeam {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetTeamsByUserIdResponse) GetJSONDefault() *ErrorResponse {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetTeamsByUserIdResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTeamsByUserIdResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTeamsByUserIdResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTeamsByUserIdResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetAccreditationsWithResponse Get a list of Accreditations
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /accreditations (the `GetAccreditations` operationId).
+func (c *ClientWithResponses) GetAccreditationsWithResponse(ctx context.Context, params *GetAccreditationsParams, reqEditors ...RequestEditorFn) (*GetAccreditationsResponse, error) {
+	rsp, err := c.GetAccreditations(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAccreditationsResponse(rsp)
+}
+
+// GetUsersByAccreditationIdWithResponse Get a list of users by accreditation
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /accreditations/{accreditation_id}/users (the `GetUsersByAccreditationId` operationId).
+func (c *ClientWithResponses) GetUsersByAccreditationIdWithResponse(ctx context.Context, accreditationId string, params *GetUsersByAccreditationIdParams, reqEditors ...RequestEditorFn) (*GetUsersByAccreditationIdResponse, error) {
+	rsp, err := c.GetUsersByAccreditationId(ctx, accreditationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByAccreditationIdResponse(rsp)
+}
+
+// GetAccreditationByIdWithResponse Get an accreditation by ID
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /accreditations/{id} (the `GetAccreditationById` operationId).
+func (c *ClientWithResponses) GetAccreditationByIdWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetAccreditationByIdResponse, error) {
+	rsp, err := c.GetAccreditationById(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAccreditationByIdResponse(rsp)
+}
+
+// GetUsersByAchievementWithResponse Get a list of users by achievement
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /achievements/{achievement_id}/users (the `GetUsersByAchievement` operationId).
+func (c *ClientWithResponses) GetUsersByAchievementWithResponse(ctx context.Context, achievementId string, params *GetUsersByAchievementParams, reqEditors ...RequestEditorFn) (*GetUsersByAchievementResponse, error) {
+	rsp, err := c.GetUsersByAchievement(ctx, achievementId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByAchievementResponse(rsp)
+}
+
 // GetClosesWithResponse Get a list of closes
 //
 // Returns a wrapper object for the known response body format(s).
@@ -3857,6 +8695,45 @@ func (c *ClientWithResponses) GetCloseByIdWithResponse(ctx context.Context, id i
 	return ParseGetCloseByIdResponse(rsp)
 }
 
+// GetUsersByCoalitionIdWithResponse Get a list of users by coalition
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /coalitions/{coalition_id}/users (the `GetUsersByCoalitionId` operationId).
+func (c *ClientWithResponses) GetUsersByCoalitionIdWithResponse(ctx context.Context, coalitionId string, params *GetUsersByCoalitionIdParams, reqEditors ...RequestEditorFn) (*GetUsersByCoalitionIdResponse, error) {
+	rsp, err := c.GetUsersByCoalitionId(ctx, coalitionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByCoalitionIdResponse(rsp)
+}
+
+// GetUsersByCursusWithResponse Get a list of users by cursus
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /cursus/{cursus_id}/users (the `GetUsersByCursus` operationId).
+func (c *ClientWithResponses) GetUsersByCursusWithResponse(ctx context.Context, cursusId string, params *GetUsersByCursusParams, reqEditors ...RequestEditorFn) (*GetUsersByCursusResponse, error) {
+	rsp, err := c.GetUsersByCursus(ctx, cursusId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByCursusResponse(rsp)
+}
+
+// GetUsersByExpertiseIdWithResponse Get a list of users by expertise
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /expertises/{expertise_id}/users (the `GetUsersByExpertiseId` operationId).
+func (c *ClientWithResponses) GetUsersByExpertiseIdWithResponse(ctx context.Context, expertiseId string, params *GetUsersByExpertiseIdParams, reqEditors ...RequestEditorFn) (*GetUsersByExpertiseIdResponse, error) {
+	rsp, err := c.GetUsersByExpertiseId(ctx, expertiseId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByExpertiseIdResponse(rsp)
+}
+
 // GetInternshipsWithResponse Get a list of internships
 //
 // Returns a wrapper object for the known response body format(s).
@@ -3870,17 +8747,121 @@ func (c *ClientWithResponses) GetInternshipsWithResponse(ctx context.Context, pa
 	return ParseGetInternshipsResponse(rsp)
 }
 
+// GetInternshipByIdWithResponse Get an internship by ID
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /internships/{id} (the `GetInternshipById` operationId).
+func (c *ClientWithResponses) GetInternshipByIdWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetInternshipByIdResponse, error) {
+	rsp, err := c.GetInternshipById(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetInternshipByIdResponse(rsp)
+}
+
 // GetLanguageByIdWithResponse Get a language by ID
 //
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /languages/{id} (the `GetLanguageById` operationId).
-func (c *ClientWithResponses) GetLanguageByIdWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*GetLanguageByIdResponse, error) {
-	rsp, err := c.GetLanguageById(ctx, id, reqEditors...)
+func (c *ClientWithResponses) GetLanguageByIdWithResponse(ctx context.Context, id int, params *GetLanguageByIdParams, reqEditors ...RequestEditorFn) (*GetLanguageByIdResponse, error) {
+	rsp, err := c.GetLanguageById(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetLanguageByIdResponse(rsp)
+}
+
+// GetTeamsByMeWithResponse Get a list of teams by me
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /me/teams (the `GetTeamsByMe` operationId).
+func (c *ClientWithResponses) GetTeamsByMeWithResponse(ctx context.Context, params *GetTeamsByMeParams, reqEditors ...RequestEditorFn) (*GetTeamsByMeResponse, error) {
+	rsp, err := c.GetTeamsByMe(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTeamsByMeResponse(rsp)
+}
+
+// GetUsersByPartnershipIdWithResponse Get a list of users by partnership
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /partnerships/{partnership_id}/users (the `GetUsersByPartnershipId` operationId).
+func (c *ClientWithResponses) GetUsersByPartnershipIdWithResponse(ctx context.Context, partnershipId string, params *GetUsersByPartnershipIdParams, reqEditors ...RequestEditorFn) (*GetUsersByPartnershipIdResponse, error) {
+	rsp, err := c.GetUsersByPartnershipId(ctx, partnershipId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByPartnershipIdResponse(rsp)
+}
+
+// GetTeamsByProjectSessionIdWithResponse Get a list of teams by a project session Id
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /project_sessions/{project_session_id}/teams (the `GetTeamsByProjectSessionId` operationId).
+func (c *ClientWithResponses) GetTeamsByProjectSessionIdWithResponse(ctx context.Context, projectSessionId string, params *GetTeamsByProjectSessionIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByProjectSessionIdResponse, error) {
+	rsp, err := c.GetTeamsByProjectSessionId(ctx, projectSessionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTeamsByProjectSessionIdResponse(rsp)
+}
+
+// GetProjectsUsersByProjectIdWithResponse Get a list of projects users by a project Id
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /projects/{project_id}/projects_users (the `GetProjectsUsersByProjectId` operationId).
+func (c *ClientWithResponses) GetProjectsUsersByProjectIdWithResponse(ctx context.Context, projectId string, params *GetProjectsUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*GetProjectsUsersByProjectIdResponse, error) {
+	rsp, err := c.GetProjectsUsersByProjectId(ctx, projectId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsUsersByProjectIdResponse(rsp)
+}
+
+// GetTeamsByProjectIdWithResponse Get a list of teams by a project Id
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /projects/{project_id}/teams (the `GetTeamsByProjectId` operationId).
+func (c *ClientWithResponses) GetTeamsByProjectIdWithResponse(ctx context.Context, projectId string, params *GetTeamsByProjectIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByProjectIdResponse, error) {
+	rsp, err := c.GetTeamsByProjectId(ctx, projectId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTeamsByProjectIdResponse(rsp)
+}
+
+// GetUsersByProjectIdWithResponse Get a list of users by project
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /projects/{project_id}/users (the `GetUsersByProjectId` operationId).
+func (c *ClientWithResponses) GetUsersByProjectIdWithResponse(ctx context.Context, projectId string, params *GetUsersByProjectIdParams, reqEditors ...RequestEditorFn) (*GetUsersByProjectIdResponse, error) {
+	rsp, err := c.GetUsersByProjectId(ctx, projectId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByProjectIdResponse(rsp)
+}
+
+// GetProjectsUsersWithResponse Get a list of projects users
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /projects_users (the `GetProjectsUsers` operationId).
+func (c *ClientWithResponses) GetProjectsUsersWithResponse(ctx context.Context, params *GetProjectsUsersParams, reqEditors ...RequestEditorFn) (*GetProjectsUsersResponse, error) {
+	rsp, err := c.GetProjectsUsers(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetProjectsUsersResponse(rsp)
 }
 
 // PostProjectsUsersWithBodyWithResponse Create a project user
@@ -3961,6 +8942,32 @@ func (c *ClientWithResponses) PutProjectUserByIdWithResponse(ctx context.Context
 	return ParsePutProjectUserByIdResponse(rsp)
 }
 
+// GetUsersByQuestWithResponse Get a list of users by quest
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /quests/{quest_id}/users (the `GetUsersByQuest` operationId).
+func (c *ClientWithResponses) GetUsersByQuestWithResponse(ctx context.Context, questId string, params *GetUsersByQuestParams, reqEditors ...RequestEditorFn) (*GetUsersByQuestResponse, error) {
+	rsp, err := c.GetUsersByQuest(ctx, questId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByQuestResponse(rsp)
+}
+
+// GetTeamsWithResponse Get a list of teams
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /teams (the `GetTeams` operationId).
+func (c *ClientWithResponses) GetTeamsWithResponse(ctx context.Context, params *GetTeamsParams, reqEditors ...RequestEditorFn) (*GetTeamsResponse, error) {
+	rsp, err := c.GetTeams(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTeamsResponse(rsp)
+}
+
 // GetTeamByIdWithResponse Get a team by ID
 //
 // Returns a wrapper object for the known response body format(s).
@@ -4039,6 +9046,19 @@ func (c *ClientWithResponses) PostResetTeamUploadsByIdWithResponse(ctx context.C
 	return ParsePostResetTeamUploadsByIdResponse(rsp)
 }
 
+// GetUsersByTitleWithResponse Get a list of users by title
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /titles/{title_id}/users (the `GetUsersByTitle` operationId).
+func (c *ClientWithResponses) GetUsersByTitleWithResponse(ctx context.Context, titleId string, params *GetUsersByTitleParams, reqEditors ...RequestEditorFn) (*GetUsersByTitleResponse, error) {
+	rsp, err := c.GetUsersByTitle(ctx, titleId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetUsersByTitleResponse(rsp)
+}
+
 // GetUsersWithResponse Get a list of users
 //
 // Returns a wrapper object for the known response body format(s).
@@ -4083,12 +9103,51 @@ func (c *ClientWithResponses) GetUserCandidatureByIdWithResponse(ctx context.Con
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /users/{user_id}/closes (the `GetClosesByUserId` operationId).
-func (c *ClientWithResponses) GetClosesByUserIdWithResponse(ctx context.Context, userId int, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*GetClosesByUserIdResponse, error) {
+func (c *ClientWithResponses) GetClosesByUserIdWithResponse(ctx context.Context, userId string, params *GetClosesByUserIdParams, reqEditors ...RequestEditorFn) (*GetClosesByUserIdResponse, error) {
 	rsp, err := c.GetClosesByUserId(ctx, userId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetClosesByUserIdResponse(rsp)
+}
+
+// GetInternshipsByUserIdWithResponse Get a list of internships by user Id
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /users/{user_id}/internships (the `GetInternshipsByUserId` operationId).
+func (c *ClientWithResponses) GetInternshipsByUserIdWithResponse(ctx context.Context, userId string, params *GetInternshipsByUserIdParams, reqEditors ...RequestEditorFn) (*GetInternshipsByUserIdResponse, error) {
+	rsp, err := c.GetInternshipsByUserId(ctx, userId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetInternshipsByUserIdResponse(rsp)
+}
+
+// GetInternshipByIdAndUserIdWithResponse Get an internship by ID and user ID
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /users/{user_id}/internships/{id} (the `GetInternshipByIdAndUserId` operationId).
+func (c *ClientWithResponses) GetInternshipByIdAndUserIdWithResponse(ctx context.Context, userId string, id string, reqEditors ...RequestEditorFn) (*GetInternshipByIdAndUserIdResponse, error) {
+	rsp, err := c.GetInternshipByIdAndUserId(ctx, userId, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetInternshipByIdAndUserIdResponse(rsp)
+}
+
+// GetTeamsByUserIdAndProjectIdWithResponse Get a list of teams by a user Id and project Id
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /users/{user_id}/projects/{project_id}/teams (the `GetTeamsByUserIdAndProjectId` operationId).
+func (c *ClientWithResponses) GetTeamsByUserIdAndProjectIdWithResponse(ctx context.Context, userId string, projectId string, params *GetTeamsByUserIdAndProjectIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByUserIdAndProjectIdResponse, error) {
+	rsp, err := c.GetTeamsByUserIdAndProjectId(ctx, userId, projectId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTeamsByUserIdAndProjectIdResponse(rsp)
 }
 
 // GetProjectsUsersByUserIdWithResponse Get a list of projects users by a user Id
@@ -4102,6 +9161,226 @@ func (c *ClientWithResponses) GetProjectsUsersByUserIdWithResponse(ctx context.C
 		return nil, err
 	}
 	return ParseGetProjectsUsersByUserIdResponse(rsp)
+}
+
+// GetTeamsByUserIdWithResponse Get a list of teams by a user Id
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /users/{user_id}/teams (the `GetTeamsByUserId` operationId).
+func (c *ClientWithResponses) GetTeamsByUserIdWithResponse(ctx context.Context, userId string, params *GetTeamsByUserIdParams, reqEditors ...RequestEditorFn) (*GetTeamsByUserIdResponse, error) {
+	rsp, err := c.GetTeamsByUserId(ctx, userId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTeamsByUserIdResponse(rsp)
+}
+
+// ParseGetAccreditationsResponse parses an HTTP response from a GetAccreditationsWithResponse call
+func ParseGetAccreditationsResponse(rsp *http.Response) (*GetAccreditationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAccreditationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []Accreditation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByAccreditationIdResponse parses an HTTP response from a GetUsersByAccreditationIdWithResponse call
+func ParseGetUsersByAccreditationIdResponse(rsp *http.Response) (*GetUsersByAccreditationIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByAccreditationIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByAccreditationIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetAccreditationByIdResponse parses an HTTP response from a GetAccreditationByIdWithResponse call
+func ParseGetAccreditationByIdResponse(rsp *http.Response) (*GetAccreditationByIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAccreditationByIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Accreditation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByAchievementResponse parses an HTTP response from a GetUsersByAchievementWithResponse call
+func ParseGetUsersByAchievementResponse(rsp *http.Response) (*GetUsersByAchievementResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByAchievementResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByAchievementResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
 }
 
 // ParseGetClosesResponse parses an HTTP response from a GetClosesWithResponse call
@@ -4177,22 +9456,22 @@ func ParseGetCloseByIdResponse(rsp *http.Response) (*GetCloseByIdResponse, error
 	return response, nil
 }
 
-// ParseGetInternshipsResponse parses an HTTP response from a GetInternshipsWithResponse call
-func ParseGetInternshipsResponse(rsp *http.Response) (*GetInternshipsResponse, error) {
+// ParseGetUsersByCoalitionIdResponse parses an HTTP response from a GetUsersByCoalitionIdWithResponse call
+func ParseGetUsersByCoalitionIdResponse(rsp *http.Response) (*GetUsersByCoalitionIdResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetInternshipsResponse{
+	response := &GetUsersByCoalitionIdResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []Internship
+		var dest []LightUser
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -4209,7 +9488,7 @@ func ParseGetInternshipsResponse(rsp *http.Response) (*GetInternshipsResponse, e
 
 	switch {
 	case rsp.StatusCode == 200:
-		var headers GetInternshipsResponse200Headers
+		var headers GetUsersByCoalitionIdResponse200Headers
 		if values := rsp.Header.Values("Link"); len(values) > 0 {
 			var value string
 			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
@@ -4244,6 +9523,220 @@ func ParseGetInternshipsResponse(rsp *http.Response) (*GetInternshipsResponse, e
 	return response, nil
 }
 
+// ParseGetUsersByCursusResponse parses an HTTP response from a GetUsersByCursusWithResponse call
+func ParseGetUsersByCursusResponse(rsp *http.Response) (*GetUsersByCursusResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByCursusResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByCursusResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByExpertiseIdResponse parses an HTTP response from a GetUsersByExpertiseIdWithResponse call
+func ParseGetUsersByExpertiseIdResponse(rsp *http.Response) (*GetUsersByExpertiseIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByExpertiseIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByExpertiseIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetInternshipsResponse parses an HTTP response from a GetInternshipsWithResponse call
+func ParseGetInternshipsResponse(rsp *http.Response) (*GetInternshipsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetInternshipsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []Internship
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetInternshipByIdResponse parses an HTTP response from a GetInternshipByIdWithResponse call
+func ParseGetInternshipByIdResponse(rsp *http.Response) (*GetInternshipByIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetInternshipByIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Internship
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetLanguageByIdResponse parses an HTTP response from a GetLanguageByIdWithResponse call
 func ParseGetLanguageByIdResponse(rsp *http.Response) (*GetLanguageByIdResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -4272,6 +9765,475 @@ func ParseGetLanguageByIdResponse(rsp *http.Response) (*GetLanguageByIdResponse,
 		}
 		response.JSONDefault = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseGetTeamsByMeResponse parses an HTTP response from a GetTeamsByMeWithResponse call
+func ParseGetTeamsByMeResponse(rsp *http.Response) (*GetTeamsByMeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTeamsByMeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightTeam
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetTeamsByMeResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByPartnershipIdResponse parses an HTTP response from a GetUsersByPartnershipIdWithResponse call
+func ParseGetUsersByPartnershipIdResponse(rsp *http.Response) (*GetUsersByPartnershipIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByPartnershipIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByPartnershipIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetTeamsByProjectSessionIdResponse parses an HTTP response from a GetTeamsByProjectSessionIdWithResponse call
+func ParseGetTeamsByProjectSessionIdResponse(rsp *http.Response) (*GetTeamsByProjectSessionIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTeamsByProjectSessionIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightTeam
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetTeamsByProjectSessionIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectsUsersByProjectIdResponse parses an HTTP response from a GetProjectsUsersByProjectIdWithResponse call
+func ParseGetProjectsUsersByProjectIdResponse(rsp *http.Response) (*GetProjectsUsersByProjectIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsUsersByProjectIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []ProjectUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetProjectsUsersByProjectIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetTeamsByProjectIdResponse parses an HTTP response from a GetTeamsByProjectIdWithResponse call
+func ParseGetTeamsByProjectIdResponse(rsp *http.Response) (*GetTeamsByProjectIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTeamsByProjectIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightTeam
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetTeamsByProjectIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByProjectIdResponse parses an HTTP response from a GetUsersByProjectIdWithResponse call
+func ParseGetUsersByProjectIdResponse(rsp *http.Response) (*GetUsersByProjectIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByProjectIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByProjectIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetProjectsUsersResponse parses an HTTP response from a GetProjectsUsersWithResponse call
+func ParseGetProjectsUsersResponse(rsp *http.Response) (*GetProjectsUsersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetProjectsUsersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []ProjectUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetProjectsUsersResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -4377,6 +10339,140 @@ func ParsePutProjectUserByIdResponse(rsp *http.Response) (*PutProjectUserByIdRes
 		}
 		response.JSONDefault = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByQuestResponse parses an HTTP response from a GetUsersByQuestWithResponse call
+func ParseGetUsersByQuestResponse(rsp *http.Response) (*GetUsersByQuestResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByQuestResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByQuestResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetTeamsResponse parses an HTTP response from a GetTeamsWithResponse call
+func ParseGetTeamsResponse(rsp *http.Response) (*GetTeamsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTeamsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightTeam
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetTeamsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -4497,6 +10593,73 @@ func ParsePostResetTeamUploadsByIdResponse(rsp *http.Response) (*PostResetTeamUp
 		}
 		response.JSONDefault = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseGetUsersByTitleResponse parses an HTTP response from a GetUsersByTitleWithResponse call
+func ParseGetUsersByTitleResponse(rsp *http.Response) (*GetUsersByTitleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetUsersByTitleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightUser
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetUsersByTitleResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -4656,6 +10819,13 @@ func ParseGetClosesByUserIdResponse(rsp *http.Response) (*GetClosesByUserIdRespo
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4663,6 +10833,153 @@ func ParseGetClosesByUserIdResponse(rsp *http.Response) (*GetClosesByUserIdRespo
 		}
 		response.JSONDefault = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseGetInternshipsByUserIdResponse parses an HTTP response from a GetInternshipsByUserIdWithResponse call
+func ParseGetInternshipsByUserIdResponse(rsp *http.Response) (*GetInternshipsByUserIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetInternshipsByUserIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []Internship
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetInternshipByIdAndUserIdResponse parses an HTTP response from a GetInternshipByIdAndUserIdWithResponse call
+func ParseGetInternshipByIdAndUserIdResponse(rsp *http.Response) (*GetInternshipByIdAndUserIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetInternshipByIdAndUserIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Internship
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetTeamsByUserIdAndProjectIdResponse parses an HTTP response from a GetTeamsByUserIdAndProjectIdWithResponse call
+func ParseGetTeamsByUserIdAndProjectIdResponse(rsp *http.Response) (*GetTeamsByUserIdAndProjectIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTeamsByUserIdAndProjectIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightTeam
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetTeamsByUserIdAndProjectIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -4701,6 +11018,73 @@ func ParseGetProjectsUsersByUserIdResponse(rsp *http.Response) (*GetProjectsUser
 	switch {
 	case rsp.StatusCode == 200:
 		var headers GetProjectsUsersByUserIdResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPage = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotal = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetTeamsByUserIdResponse parses an HTTP response from a GetTeamsByUserIdWithResponse call
+func ParseGetTeamsByUserIdResponse(rsp *http.Response) (*GetTeamsByUserIdResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTeamsByUserIdResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []LightTeam
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetTeamsByUserIdResponse200Headers
 		if values := rsp.Header.Values("Link"); len(values) > 0 {
 			var value string
 			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {

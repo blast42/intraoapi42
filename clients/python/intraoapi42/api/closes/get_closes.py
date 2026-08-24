@@ -7,13 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.get_closes_filter import GetClosesFilter
 from ...models.get_closes_range import GetClosesRange
-from ...models.get_closes_sort import GetClosesSort
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
-    sort: GetClosesSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesFilter | Unset = UNSET,
     range_: GetClosesRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -24,11 +23,7 @@ def _get_kwargs(
 
     params: dict[str, Any] = {}
 
-    json_sort: str | Unset = UNSET
-    if not isinstance(sort, Unset):
-        json_sort = sort
-
-    params["sort"] = json_sort
+    params["sort"] = sort
 
     json_filter_: dict[str, Any] | Unset = UNSET
     if not isinstance(filter_, Unset):
@@ -84,7 +79,7 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    sort: GetClosesSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesFilter | Unset = UNSET,
     range_: GetClosesRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -95,7 +90,7 @@ def sync_detailed(
     """Get a list of closes
 
     Args:
-        sort (GetClosesSort | Unset):
+        sort (str | Unset):
         filter_ (GetClosesFilter | Unset):
         range_ (GetClosesRange | Unset):
         page (int | Unset):
@@ -131,7 +126,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    sort: GetClosesSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesFilter | Unset = UNSET,
     range_: GetClosesRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -142,7 +137,7 @@ def sync(
     """Get a list of closes
 
     Args:
-        sort (GetClosesSort | Unset):
+        sort (str | Unset):
         filter_ (GetClosesFilter | Unset):
         range_ (GetClosesRange | Unset):
         page (int | Unset):
@@ -173,7 +168,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    sort: GetClosesSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesFilter | Unset = UNSET,
     range_: GetClosesRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -184,7 +179,7 @@ async def asyncio_detailed(
     """Get a list of closes
 
     Args:
-        sort (GetClosesSort | Unset):
+        sort (str | Unset):
         filter_ (GetClosesFilter | Unset):
         range_ (GetClosesRange | Unset):
         page (int | Unset):
@@ -218,7 +213,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    sort: GetClosesSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesFilter | Unset = UNSET,
     range_: GetClosesRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -229,7 +224,7 @@ async def asyncio(
     """Get a list of closes
 
     Args:
-        sort (GetClosesSort | Unset):
+        sort (str | Unset):
         filter_ (GetClosesFilter | Unset):
         range_ (GetClosesRange | Unset):
         page (int | Unset):

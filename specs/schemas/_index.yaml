@@ -1,5 +1,5 @@
-LightAccreditation:
-  $ref: accreditations/light_accreditation.yaml#/LightAccreditation
+Accreditation:
+  $ref: accreditations/accreditation.yaml#/Accreditation
 LightAchievementsUser:
   $ref: achievements_users/light_achievements_user.yaml#/LightAchievementsUser
 Achievement:

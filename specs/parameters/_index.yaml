@@ -1,3 +1,9 @@
+base_sort:
+  $ref: base_params.yaml#/base_sort
+base_filter:
+  $ref: base_params.yaml#/base_filter
+base_range:
+  $ref: base_params.yaml#/base_range
 page:
   $ref: pages.yaml#/page
 per_page:

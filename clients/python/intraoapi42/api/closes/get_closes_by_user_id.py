@@ -8,14 +8,13 @@ from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.get_closes_by_user_id_filter import GetClosesByUserIdFilter
 from ...models.get_closes_by_user_id_range import GetClosesByUserIdRange
-from ...models.get_closes_by_user_id_sort import GetClosesByUserIdSort
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
-    user_id: int,
+    user_id: str,
     *,
-    sort: GetClosesByUserIdSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesByUserIdFilter | Unset = UNSET,
     range_: GetClosesByUserIdRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -26,11 +25,7 @@ def _get_kwargs(
 
     params: dict[str, Any] = {}
 
-    json_sort: str | Unset = UNSET
-    if not isinstance(sort, Unset):
-        json_sort = sort
-
-    params["sort"] = json_sort
+    params["sort"] = sort
 
     json_filter_: dict[str, Any] | Unset = UNSET
     if not isinstance(filter_, Unset):
@@ -66,6 +61,11 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error:
+    if response.status_code == 400:
+        response_400 = Error.from_dict(response.json())
+
+        return response_400
+
     response_default = Error.from_dict(response.json())
 
     return response_default
@@ -81,10 +81,10 @@ def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 
 def sync_detailed(
-    user_id: int,
+    user_id: str,
     *,
     client: AuthenticatedClient,
-    sort: GetClosesByUserIdSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesByUserIdFilter | Unset = UNSET,
     range_: GetClosesByUserIdRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -95,8 +95,8 @@ def sync_detailed(
     """Get a list of closes by user id
 
     Args:
-        user_id (int):
-        sort (GetClosesByUserIdSort | Unset):
+        user_id (str):
+        sort (str | Unset):
         filter_ (GetClosesByUserIdFilter | Unset):
         range_ (GetClosesByUserIdRange | Unset):
         page (int | Unset):
@@ -131,10 +131,10 @@ def sync_detailed(
 
 
 def sync(
-    user_id: int,
+    user_id: str,
     *,
     client: AuthenticatedClient,
-    sort: GetClosesByUserIdSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesByUserIdFilter | Unset = UNSET,
     range_: GetClosesByUserIdRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -145,8 +145,8 @@ def sync(
     """Get a list of closes by user id
 
     Args:
-        user_id (int):
-        sort (GetClosesByUserIdSort | Unset):
+        user_id (str):
+        sort (str | Unset):
         filter_ (GetClosesByUserIdFilter | Unset):
         range_ (GetClosesByUserIdRange | Unset):
         page (int | Unset):
@@ -176,10 +176,10 @@ def sync(
 
 
 async def asyncio_detailed(
-    user_id: int,
+    user_id: str,
     *,
     client: AuthenticatedClient,
-    sort: GetClosesByUserIdSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesByUserIdFilter | Unset = UNSET,
     range_: GetClosesByUserIdRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -190,8 +190,8 @@ async def asyncio_detailed(
     """Get a list of closes by user id
 
     Args:
-        user_id (int):
-        sort (GetClosesByUserIdSort | Unset):
+        user_id (str):
+        sort (str | Unset):
         filter_ (GetClosesByUserIdFilter | Unset):
         range_ (GetClosesByUserIdRange | Unset):
         page (int | Unset):
@@ -224,10 +224,10 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    user_id: int,
+    user_id: str,
     *,
     client: AuthenticatedClient,
-    sort: GetClosesByUserIdSort | Unset = UNSET,
+    sort: str | Unset = UNSET,
     filter_: GetClosesByUserIdFilter | Unset = UNSET,
     range_: GetClosesByUserIdRange | Unset = UNSET,
     page: int | Unset = UNSET,
@@ -238,8 +238,8 @@ async def asyncio(
     """Get a list of closes by user id
 
     Args:
-        user_id (int):
-        sort (GetClosesByUserIdSort | Unset):
+        user_id (str):
+        sort (str | Unset):
         filter_ (GetClosesByUserIdFilter | Unset):
         range_ (GetClosesByUserIdRange | Unset):
         page (int | Unset):
