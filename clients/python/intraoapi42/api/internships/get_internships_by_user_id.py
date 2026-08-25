@@ -105,7 +105,7 @@ def sync_detailed(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Response[Error | list[Internship]]:
-    """Get a list of internships by user Id
+    """🔑 Get a list of internships by user Id
 
     Args:
         user_id (str):
@@ -155,7 +155,7 @@ def sync(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Error | list[Internship] | None:
-    """Get a list of internships by user Id
+    """🔑 Get a list of internships by user Id
 
     Args:
         user_id (str):
@@ -200,7 +200,7 @@ async def asyncio_detailed(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Response[Error | list[Internship]]:
-    """Get a list of internships by user Id
+    """🔑 Get a list of internships by user Id
 
     Args:
         user_id (str):
@@ -248,7 +248,7 @@ async def asyncio(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Error | list[Internship] | None:
-    """Get a list of internships by user Id
+    """🔑 Get a list of internships by user Id
 
     Args:
         user_id (str):

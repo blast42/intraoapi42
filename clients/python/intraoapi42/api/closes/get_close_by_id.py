@@ -43,7 +43,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[Error]:
-    """Get a close by ID
+    """🔑 Get a close by ID
 
     Args:
         id (int):
@@ -72,7 +72,7 @@ def sync(
     *,
     client: AuthenticatedClient,
 ) -> Error | None:
-    """Get a close by ID
+    """🔑 Get a close by ID
 
     Args:
         id (int):
@@ -96,7 +96,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[Error]:
-    """Get a close by ID
+    """🔑 Get a close by ID
 
     Args:
         id (int):
@@ -123,7 +123,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
 ) -> Error | None:
-    """Get a close by ID
+    """🔑 Get a close by ID
 
     Args:
         id (int):

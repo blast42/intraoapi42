@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/campus/{campus_id}/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a list of users by campus */
+        get: operations["getUsersByCampus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/closes": {
         parameters: {
             query?: never;
@@ -79,7 +96,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a list of closes */
+        /** 🔑 Get a list of closes */
         get: operations["getCloses"];
         put?: never;
         post?: never;
@@ -96,7 +113,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a close by ID */
+        /** 🔑 Get a close by ID */
         get: operations["getCloseById"];
         put?: never;
         post?: never;
@@ -164,7 +181,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a list of internships */
+        /** 🔑 Get a list of internships */
         get: operations["getInternships"];
         put?: never;
         post?: never;
@@ -181,7 +198,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get an internship by ID */
+        /** 🔑 Get an internship by ID */
         get: operations["getInternshipById"];
         put?: never;
         post?: never;
@@ -491,7 +508,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a list of closes by user id */
+        /** 🔑 Get a list of closes by user id */
         get: operations["getClosesByUserId"];
         put?: never;
         post?: never;
@@ -508,7 +525,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a list of internships by user Id */
+        /** 🔑 Get a list of internships by user Id */
         get: operations["getInternshipsByUserId"];
         put?: never;
         post?: never;
@@ -525,8 +542,25 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get an internship by ID and user ID */
+        /** 🔑 Get an internship by ID and user ID */
         get: operations["getInternshipByIdAndUserId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 👤 Get a list of notes by a user Id */
+        get: operations["GetNotesByUserId"];
         put?: never;
         post?: never;
         delete?: never;
@@ -850,6 +884,36 @@ export interface components {
             position: number;
             /** Format: date-time */
             created_at: string;
+        };
+        /** @description A comment or note left by one user about another (e.g. a scale/feedback note). */
+        LightNote: {
+            /** @description The unique identifier of this note. */
+            id: number;
+            /** @description The user who wrote the note. */
+            from_user: components["schemas"]["LightNoteUser"];
+            /** @description The subject or title of the note. */
+            subject: string;
+            /** @description The body content of the note. */
+            content: string;
+            /**
+             * Format: date-time
+             * @description The timestamp when the note was created.
+             */
+            created_at: string;
+            /** @description The user the note is about. */
+            user: components["schemas"]["LightNoteUser"];
+        };
+        /** @description A minimal reference to a user. */
+        LightNoteUser: {
+            /** @description The user's unique identifier. */
+            id: number;
+            /** @description The user's login. */
+            login: string;
+            /**
+             * Format: uri
+             * @description The URL of the user's resource.
+             */
+            url: string;
         };
         Patronage: {
             id: number;
@@ -1511,6 +1575,47 @@ export interface operations {
             path: {
                 /** @description The ID of the achievement */
                 achievement_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of users */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightUser"][];
+                };
+            };
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    getUsersByCampus: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the campus */
+                campus_id: string;
             };
             cookie?: never;
         };
@@ -2644,6 +2749,52 @@ export interface operations {
                 };
             };
             400: components["responses"]["ErrorResponse"];
+            default: components["responses"]["ErrorResponse"];
+        };
+    };
+    GetNotesByUserId: {
+        parameters: {
+            query?: {
+                /** @description The sort field. Sorted by id desc by default. */
+                sort?: components["parameters"]["base_sort"];
+                /** @description Filtering on one or more fields. */
+                filter?: components["parameters"]["base_filter"];
+                /** @description Select on a particular range. */
+                range?: components["parameters"]["base_range"];
+                /**
+                 * @description Page number (1-based). The 42 API paginates index endpoints and defaults to 30 items per page.
+                 *     You can also use the `per_page` parameter to set the page size (up to 100 for many endpoints).
+                 */
+                page?: components["parameters"]["page"];
+                /** @description Number of items per page. Maximum is generally 100 but some endpoints limit this for technical reasons. */
+                per_page?: components["parameters"]["per_page"];
+                /** @description Alternate pagination style using `page[number]` (1-based page index). Can be used together with `page[size]`. */
+                "page[number]"?: components["parameters"]["page_number"];
+                /** @description Alternate pagination style to set the page size (maximum depends on endpoint, commonly up to 100). */
+                "page[size]"?: components["parameters"]["page_size"];
+            };
+            header?: never;
+            path: {
+                /** @description The ID of the user */
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A list of notes */
+            200: {
+                headers: {
+                    Link: components["headers"]["Link"];
+                    "X-Page": components["headers"]["X-Page"];
+                    "X-Per-Page": components["headers"]["X-Per-Page"];
+                    "X-Total": components["headers"]["X-Total"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LightNote"][];
+                };
+            };
             default: components["responses"]["ErrorResponse"];
         };
     };

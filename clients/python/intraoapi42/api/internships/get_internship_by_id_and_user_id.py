@@ -57,7 +57,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[Error | Internship]:
-    """Get an internship by ID and user ID
+    """🔑 Get an internship by ID and user ID
 
     Args:
         user_id (str):
@@ -89,7 +89,7 @@ def sync(
     *,
     client: AuthenticatedClient,
 ) -> Error | Internship | None:
-    """Get an internship by ID and user ID
+    """🔑 Get an internship by ID and user ID
 
     Args:
         user_id (str):
@@ -116,7 +116,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[Error | Internship]:
-    """Get an internship by ID and user ID
+    """🔑 Get an internship by ID and user ID
 
     Args:
         user_id (str):
@@ -146,7 +146,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
 ) -> Error | Internship | None:
-    """Get an internship by ID and user ID
+    """🔑 Get an internship by ID and user ID
 
     Args:
         user_id (str):

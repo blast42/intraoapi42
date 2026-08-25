@@ -3,10 +3,12 @@
     operationId: getInternshipById
     tags:
       - Internships
-    summary: Get an internship by ID
+    summary: 🔑 Get an internship by ID
     security:
       - OAuth2:
         - public
+    x-roles-required:
+      - Companies manager
     parameters:
       - name: id
         in: path

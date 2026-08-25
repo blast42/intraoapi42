@@ -3,10 +3,12 @@
     operationId: getInternshipsByUserId
     tags:
       - Internships
-    summary: Get a list of internships by user Id
+    summary: 🔑 Get a list of internships by user Id
     security:
       - OAuth2:
         - public
+    x-roles-required:
+      - Companies manager
     parameters:
       - name: user_id
         in: path

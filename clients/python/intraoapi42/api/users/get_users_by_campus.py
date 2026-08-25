@@ -1,22 +1,23 @@
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
 from ...client import AuthenticatedClient, Client
 from ...models.error import Error
-from ...models.get_internships_filter import GetInternshipsFilter
-from ...models.get_internships_range import GetInternshipsRange
-from ...models.internship import Internship
+from ...models.get_users_by_campus_filter import GetUsersByCampusFilter
+from ...models.get_users_by_campus_range import GetUsersByCampusRange
+from ...models.light_user import LightUser
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
+    campus_id: str,
     *,
     sort: str | Unset = UNSET,
-    filter_: GetInternshipsFilter | Unset = UNSET,
-    range_: GetInternshipsRange | Unset = UNSET,
-    page: int | Unset = UNSET,
+    filter_: GetUsersByCampusFilter | Unset = UNSET,
+    range_: GetUsersByCampusRange | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
@@ -38,8 +39,6 @@ def _get_kwargs(
     if not isinstance(json_range_, Unset):
         params.update(json_range_)
 
-    params["page"] = page
-
     params["per_page"] = per_page
 
     params["page[number]"] = pagenumber
@@ -50,28 +49,25 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": "/internships",
+        "url": "/campus/{campus_id}/users".format(
+            campus_id=quote(str(campus_id), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | list[Internship]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | list[LightUser]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
         for response_200_item_data in _response_200:
-            response_200_item = Internship.from_dict(response_200_item_data)
+            response_200_item = LightUser.from_dict(response_200_item_data)
 
             response_200.append(response_200_item)
 
         return response_200
-
-    if response.status_code == 400:
-        response_400 = Error.from_dict(response.json())
-
-        return response_400
 
     response_default = Error.from_dict(response.json())
 
@@ -80,7 +76,7 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
 
 def _build_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[Error | list[Internship]]:
+) -> Response[Error | list[LightUser]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -90,23 +86,23 @@ def _build_response(
 
 
 def sync_detailed(
+    campus_id: str,
     *,
     client: AuthenticatedClient,
     sort: str | Unset = UNSET,
-    filter_: GetInternshipsFilter | Unset = UNSET,
-    range_: GetInternshipsRange | Unset = UNSET,
-    page: int | Unset = UNSET,
+    filter_: GetUsersByCampusFilter | Unset = UNSET,
+    range_: GetUsersByCampusRange | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error | list[Internship]]:
-    """🔑 Get a list of internships
+) -> Response[Error | list[LightUser]]:
+    """Get a list of users by campus
 
     Args:
+        campus_id (str):
         sort (str | Unset):
-        filter_ (GetInternshipsFilter | Unset):
-        range_ (GetInternshipsRange | Unset):
-        page (int | Unset):
+        filter_ (GetUsersByCampusFilter | Unset):
+        range_ (GetUsersByCampusRange | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -116,14 +112,14 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[Internship]]
+        Response[Error | list[LightUser]]
     """
 
     kwargs = _get_kwargs(
+        campus_id=campus_id,
         sort=sort,
         filter_=filter_,
         range_=range_,
-        page=page,
         per_page=per_page,
         pagenumber=pagenumber,
         pagesize=pagesize,
@@ -137,23 +133,23 @@ def sync_detailed(
 
 
 def sync(
+    campus_id: str,
     *,
     client: AuthenticatedClient,
     sort: str | Unset = UNSET,
-    filter_: GetInternshipsFilter | Unset = UNSET,
-    range_: GetInternshipsRange | Unset = UNSET,
-    page: int | Unset = UNSET,
+    filter_: GetUsersByCampusFilter | Unset = UNSET,
+    range_: GetUsersByCampusRange | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | list[Internship] | None:
-    """🔑 Get a list of internships
+) -> Error | list[LightUser] | None:
+    """Get a list of users by campus
 
     Args:
+        campus_id (str):
         sort (str | Unset):
-        filter_ (GetInternshipsFilter | Unset):
-        range_ (GetInternshipsRange | Unset):
-        page (int | Unset):
+        filter_ (GetUsersByCampusFilter | Unset):
+        range_ (GetUsersByCampusRange | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -163,15 +159,15 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[Internship]
+        Error | list[LightUser]
     """
 
     return sync_detailed(
+        campus_id=campus_id,
         client=client,
         sort=sort,
         filter_=filter_,
         range_=range_,
-        page=page,
         per_page=per_page,
         pagenumber=pagenumber,
         pagesize=pagesize,
@@ -179,23 +175,23 @@ def sync(
 
 
 async def asyncio_detailed(
+    campus_id: str,
     *,
     client: AuthenticatedClient,
     sort: str | Unset = UNSET,
-    filter_: GetInternshipsFilter | Unset = UNSET,
-    range_: GetInternshipsRange | Unset = UNSET,
-    page: int | Unset = UNSET,
+    filter_: GetUsersByCampusFilter | Unset = UNSET,
+    range_: GetUsersByCampusRange | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error | list[Internship]]:
-    """🔑 Get a list of internships
+) -> Response[Error | list[LightUser]]:
+    """Get a list of users by campus
 
     Args:
+        campus_id (str):
         sort (str | Unset):
-        filter_ (GetInternshipsFilter | Unset):
-        range_ (GetInternshipsRange | Unset):
-        page (int | Unset):
+        filter_ (GetUsersByCampusFilter | Unset):
+        range_ (GetUsersByCampusRange | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -205,14 +201,14 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[Internship]]
+        Response[Error | list[LightUser]]
     """
 
     kwargs = _get_kwargs(
+        campus_id=campus_id,
         sort=sort,
         filter_=filter_,
         range_=range_,
-        page=page,
         per_page=per_page,
         pagenumber=pagenumber,
         pagesize=pagesize,
@@ -224,23 +220,23 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    campus_id: str,
     *,
     client: AuthenticatedClient,
     sort: str | Unset = UNSET,
-    filter_: GetInternshipsFilter | Unset = UNSET,
-    range_: GetInternshipsRange | Unset = UNSET,
-    page: int | Unset = UNSET,
+    filter_: GetUsersByCampusFilter | Unset = UNSET,
+    range_: GetUsersByCampusRange | Unset = UNSET,
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | list[Internship] | None:
-    """🔑 Get a list of internships
+) -> Error | list[LightUser] | None:
+    """Get a list of users by campus
 
     Args:
+        campus_id (str):
         sort (str | Unset):
-        filter_ (GetInternshipsFilter | Unset):
-        range_ (GetInternshipsRange | Unset):
-        page (int | Unset):
+        filter_ (GetUsersByCampusFilter | Unset):
+        range_ (GetUsersByCampusRange | Unset):
         per_page (int | Unset):
         pagenumber (int | Unset):
         pagesize (int | Unset):
@@ -250,16 +246,16 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[Internship]
+        Error | list[LightUser]
     """
 
     return (
         await asyncio_detailed(
+            campus_id=campus_id,
             client=client,
             sort=sort,
             filter_=filter_,
             range_=range_,
-            page=page,
             per_page=per_page,
             pagenumber=pagenumber,
             pagesize=pagesize,

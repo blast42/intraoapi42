@@ -36,6 +36,10 @@ Language:
   $ref: languages/language.yaml#/Language
 LanguageUser:
   $ref: languages_users/language_user.yaml#/LanguageUser
+LightNote:
+  $ref: notes/light_note.yaml#/LightNote
+LightNoteUser:
+  $ref: notes/light_note.yaml#/LightNoteUser
 Patronage:
   $ref: patronages/patronage.yaml#/Patronage
 LightProject:

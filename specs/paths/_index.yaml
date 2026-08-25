@@ -6,6 +6,8 @@
   $ref: accreditations/{id}/path.yaml#/~1accreditations~1{id}
 /achievements/{achievement_id}/users:
   $ref: achievements/{achievement_id}/users/path.yaml#/~1achievements~1{achievement_id}~1users
+/campus/{campus_id}/users:
+  $ref: campus/{campus_id}/users/path.yaml#/~1campus~1{campus_id}~1users
 /closes:
   $ref: closes/path.yaml#/~1closes
 /closes/{id}:
@@ -60,6 +62,8 @@
   $ref: users/{user_id}/internships/path.yaml#/~1users~1{user_id}~1internships
 /users/{user_id}/internships/{id}:
   $ref: users/{user_id}/internships/{id}/path.yaml#/~1users~1{user_id}~1internships~1{id}
+/users/{user_id}/notes:
+  $ref: users/{user_id}/notes/path.yaml#/~1users~1{user_id}~1notes
 /users/{user_id}/projects/{project_id}/teams:
   $ref: users/{user_id}/projects/{project_id}/teams/path.yaml#/~1users~1{user_id}~1projects~1{project_id}~1teams
 /users/{user_id}/projects_users:

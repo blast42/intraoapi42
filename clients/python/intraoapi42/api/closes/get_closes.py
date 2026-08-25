@@ -87,7 +87,7 @@ def sync_detailed(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Response[Error]:
-    """Get a list of closes
+    """🔑 Get a list of closes
 
     Args:
         sort (str | Unset):
@@ -134,7 +134,7 @@ def sync(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Error | None:
-    """Get a list of closes
+    """🔑 Get a list of closes
 
     Args:
         sort (str | Unset):
@@ -176,7 +176,7 @@ async def asyncio_detailed(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Response[Error]:
-    """Get a list of closes
+    """🔑 Get a list of closes
 
     Args:
         sort (str | Unset):
@@ -221,7 +221,7 @@ async def asyncio(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Error | None:
-    """Get a list of closes
+    """🔑 Get a list of closes
 
     Args:
         sort (str | Unset):

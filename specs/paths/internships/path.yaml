@@ -3,10 +3,12 @@
     operationId: getInternships
     tags:
       - Internships
-    summary: Get a list of internships
+    summary: 🔑 Get a list of internships
     security:
       - OAuth2:
         - public
+    x-roles-required:
+      - Companies manager
     parameters:
       - $ref: "#/components/parameters/base_sort"
         description: |

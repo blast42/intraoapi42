@@ -2,7 +2,14 @@ openapi: 3.1.2
 info:
   title: Intra 42 API
   description: |
-    This is the OpenAPI specification for the Intra 42 API v2.
+    OpenAPI specification for the Intra 42 API v2.
+
+    ## Legend
+
+    - 🔑 — Restricted call. Requires an elevated staff role and/or an application scope beyond `public`.
+    - 👤 — Restricted to the authenticated resource owner. Only accessible with a token belonging to the user whose data is being accessed.
+
+    Some fields within an otherwise accessible response may also be conditionally restricted; these are flagged individually in the field's description rather than in the operation summary.
   version: 1.0.0
 servers:
   - url: https://api.intra.42.fr/v2
@@ -174,12 +181,63 @@ paths:
                   $ref: '#/components/schemas/LightUser'
         default:
           $ref: '#/components/responses/ErrorResponse'
+  /campus/{campus_id}/users:
+    get:
+      operationId: getUsersByCampus
+      tags:
+        - Users
+      summary: Get a list of users by campus
+      security:
+        - OAuth2:
+            - public
+      parameters:
+        - name: campus_id
+          in: path
+          required: true
+          description: The ID of the campus
+          schema:
+            type: string
+        - $ref: '#/components/parameters/base_sort'
+          description: |
+            The sort field. Sorted by id desc by default.
+            Must be one of: id, login, email, encrypted_password, reset_password_token, reset_password_sent_at, created_at, updated_at, image, first_name, last_name, pool_year, pool_month, kind, status, otp_secret_key, otp_tmp, otp_activated, otp_backup_passwords, slack_team, slack_login, slack_mail, slack_code_validation, slack_validated_at, token_id, email_stop, linked_user_id, usual_first_name, last_seen_at, password_changed_at, encrypted_single_usage_password, first_warn_anon_sent_at, second_warn_anon_sent_at, alumnized_at, anonymized_at.
+        - $ref: '#/components/parameters/base_filter'
+          description: |
+            Filtering on one or more fields.
+            Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status, primary_campus_id, first_name, last_name, alumni?, staff?.
+        - $ref: '#/components/parameters/base_range'
+          description: |
+            Select on a particular range.
+            Must be one of: id, login, email, created_at, updated_at, pool_year, pool_month, kind, status.      - $ref: "#/components/parameters/page"
+        - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/page_number'
+        - $ref: '#/components/parameters/page_size'
+      responses:
+        '200':
+          description: A list of users
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+            X-Page:
+              $ref: '#/components/headers/X-Page'
+            X-Per-Page:
+              $ref: '#/components/headers/X-Per-Page'
+            X-Total:
+              $ref: '#/components/headers/X-Total'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightUser'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /closes:
     get:
       operationId: getCloses
       tags:
         - Closes
-      summary: Get a list of closes
+      summary: 🔑 Get a list of closes
       x-roles-required:
         - Basic Staff
       security:
@@ -219,7 +277,9 @@ paths:
       operationId: getCloseById
       tags:
         - Closes
-      summary: Get a close by ID
+      summary: 🔑 Get a close by ID
+      x-roles-required:
+        - Basic Staff
       security:
         - OAuth2:
             - public
@@ -398,10 +458,12 @@ paths:
       operationId: getInternships
       tags:
         - Internships
-      summary: Get a list of internships
+      summary: 🔑 Get a list of internships
       security:
         - OAuth2:
             - public
+      x-roles-required:
+        - Companies manager
       parameters:
         - $ref: '#/components/parameters/base_sort'
           description: |
@@ -435,10 +497,12 @@ paths:
       operationId: getInternshipById
       tags:
         - Internships
-      summary: Get an internship by ID
+      summary: 🔑 Get an internship by ID
       security:
         - OAuth2:
             - public
+      x-roles-required:
+        - Companies manager
       parameters:
         - name: id
           in: path
@@ -1291,7 +1355,7 @@ paths:
       operationId: getClosesByUserId
       tags:
         - Closes
-      summary: Get a list of closes by user id
+      summary: 🔑 Get a list of closes by user id
       x-roles-required:
         - Basic Staff
       security:
@@ -1337,10 +1401,12 @@ paths:
       operationId: getInternshipsByUserId
       tags:
         - Internships
-      summary: Get a list of internships by user Id
+      summary: 🔑 Get a list of internships by user Id
       security:
         - OAuth2:
             - public
+      x-roles-required:
+        - Companies manager
       parameters:
         - name: user_id
           in: path
@@ -1380,10 +1446,12 @@ paths:
       operationId: getInternshipByIdAndUserId
       tags:
         - Internships
-      summary: Get an internship by ID and user ID
+      summary: 🔑 Get an internship by ID and user ID
       security:
         - OAuth2:
             - public
+      x-roles-required:
+        - Companies manager
       parameters:
         - name: user_id
           in: path
@@ -1406,6 +1474,61 @@ paths:
                 $ref: '#/components/schemas/Internship'
         '400':
           $ref: '#/components/responses/ErrorResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /users/{user_id}/notes:
+    get:
+      operationId: GetNotesByUserId
+      tags:
+        - Notes
+      summary: 👤 Get a list of notes by a user Id
+      security:
+        - OAuth2:
+            - public
+      x-roles-scoped:
+        - Notes manager
+        - Advanced notes manager
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: The ID of the user
+          schema:
+            type: string
+        - $ref: '#/components/parameters/base_sort'
+          description: |
+            The sort field. Sorted by id asc by default.
+            Must be one of: id, user_id, from, subject, content, created_at, updated_at, kind, approved_at, approver_id, from_user_id.
+        - $ref: '#/components/parameters/base_filter'
+          description: |
+            Filtering on one or more fields.
+            Must be one of: id, user_id, from, subject, content, created_at, updated_at, kind, approved_at, approver_id, from_user_id, approved.
+        - $ref: '#/components/parameters/base_range'
+          description: |
+            Select on a particular range.
+            Must be one of: id, user_id, from, subject, content, created_at, updated_at, kind, approved_at, approver_id, from_user_id.
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/page_number'
+        - $ref: '#/components/parameters/page_size'
+      responses:
+        '200':
+          description: A list of notes
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+            X-Page:
+              $ref: '#/components/headers/X-Page'
+            X-Per-Page:
+              $ref: '#/components/headers/X-Per-Page'
+            X-Total:
+              $ref: '#/components/headers/X-Total'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightNote'
         default:
           $ref: '#/components/responses/ErrorResponse'
   /users/{user_id}/projects/{project_id}/teams:
@@ -2256,6 +2379,56 @@ components:
         - user_id
         - position
         - created_at
+    LightNote:
+      type: object
+      description: A comment or note left by one user about another (e.g. a scale/feedback note).
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of this note.
+        from_user:
+          allOf:
+            - $ref: '#/components/schemas/LightNoteUser'
+          description: The user who wrote the note.
+        subject:
+          type: string
+          description: The subject or title of the note.
+        content:
+          type: string
+          description: The body content of the note.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp when the note was created.
+        user:
+          allOf:
+            - $ref: '#/components/schemas/LightNoteUser'
+          description: The user the note is about.
+      required:
+        - id
+        - from_user
+        - subject
+        - content
+        - created_at
+        - user
+    LightNoteUser:
+      type: object
+      description: A minimal reference to a user.
+      properties:
+        id:
+          type: integer
+          description: The user's unique identifier.
+        login:
+          type: string
+          description: The user's login.
+        url:
+          type: string
+          format: uri
+          description: The URL of the user's resource.
+      required:
+        - id
+        - login
+        - url
     Patronage:
       type: object
       properties:

@@ -20,6 +20,8 @@ from .get_internships_filter import GetInternshipsFilter
 from .get_internships_range import GetInternshipsRange
 from .get_language_by_id_filter import GetLanguageByIdFilter
 from .get_language_by_id_range import GetLanguageByIdRange
+from .get_notes_by_user_id_filter import GetNotesByUserIdFilter
+from .get_notes_by_user_id_range import GetNotesByUserIdRange
 from .get_projects_users_by_project_id_filter import GetProjectsUsersByProjectIdFilter
 from .get_projects_users_by_project_id_range import GetProjectsUsersByProjectIdRange
 from .get_projects_users_by_user_id_filter import GetProjectsUsersByUserIdFilter
@@ -42,6 +44,8 @@ from .get_users_by_accreditation_id_filter import GetUsersByAccreditationIdFilte
 from .get_users_by_accreditation_id_range import GetUsersByAccreditationIdRange
 from .get_users_by_achievement_filter import GetUsersByAchievementFilter
 from .get_users_by_achievement_range import GetUsersByAchievementRange
+from .get_users_by_campus_filter import GetUsersByCampusFilter
+from .get_users_by_campus_range import GetUsersByCampusRange
 from .get_users_by_coalition_id_filter import GetUsersByCoalitionIdFilter
 from .get_users_by_coalition_id_range import GetUsersByCoalitionIdRange
 from .get_users_by_cursus_filter import GetUsersByCursusFilter
@@ -70,6 +74,8 @@ from .light_campus import LightCampus
 from .light_close import LightClose
 from .light_coalition import LightCoalition
 from .light_community_service import LightCommunityService
+from .light_note import LightNote
+from .light_note_user import LightNoteUser
 from .light_project import LightProject
 from .light_team import LightTeam
 from .light_team_user import LightTeamUser
@@ -125,6 +131,8 @@ __all__ = (
     "GetInternshipsRange",
     "GetLanguageByIdFilter",
     "GetLanguageByIdRange",
+    "GetNotesByUserIdFilter",
+    "GetNotesByUserIdRange",
     "GetProjectsUsersByProjectIdFilter",
     "GetProjectsUsersByProjectIdRange",
     "GetProjectsUsersByUserIdFilter",
@@ -147,6 +155,8 @@ __all__ = (
     "GetUsersByAccreditationIdRange",
     "GetUsersByAchievementFilter",
     "GetUsersByAchievementRange",
+    "GetUsersByCampusFilter",
+    "GetUsersByCampusRange",
     "GetUsersByCoalitionIdFilter",
     "GetUsersByCoalitionIdRange",
     "GetUsersByCursusFilter",
@@ -175,6 +185,8 @@ __all__ = (
     "LightClose",
     "LightCoalition",
     "LightCommunityService",
+    "LightNote",
+    "LightNoteUser",
     "LightProject",
     "LightTeam",
     "LightTeamUser",

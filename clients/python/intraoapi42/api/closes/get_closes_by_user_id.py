@@ -92,7 +92,7 @@ def sync_detailed(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Response[Error]:
-    """Get a list of closes by user id
+    """🔑 Get a list of closes by user id
 
     Args:
         user_id (str):
@@ -142,7 +142,7 @@ def sync(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Error | None:
-    """Get a list of closes by user id
+    """🔑 Get a list of closes by user id
 
     Args:
         user_id (str):
@@ -187,7 +187,7 @@ async def asyncio_detailed(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Response[Error]:
-    """Get a list of closes by user id
+    """🔑 Get a list of closes by user id
 
     Args:
         user_id (str):
@@ -235,7 +235,7 @@ async def asyncio(
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
 ) -> Error | None:
-    """Get a list of closes by user id
+    """🔑 Get a list of closes by user id
 
     Args:
         user_id (str):

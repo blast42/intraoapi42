@@ -3,7 +3,7 @@
     operationId: getCloses
     tags:
       - Closes
-    summary: Get a list of closes
+    summary: 🔑 Get a list of closes
     x-roles-required: ["Basic Staff"]
     security:
       - OAuth2:
