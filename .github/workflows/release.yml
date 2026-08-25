@@ -2,9 +2,21 @@ name: Verify and release monorepo packages
 
 on:
   pull_request:
+    paths:
+      - 'specs/**'
+      - 'clients/**'
+      - 'openapi/**'
+      - 'tool/generate_indexes.py'
+      - '.github/workflows/release.yaml'
   push:
     branches:
       - main
+    paths:
+      - 'specs/**'
+      - 'clients/**'
+      - 'openapi/**'
+      - 'tool/generate_indexes.py'
+      - '.github/workflows/release.yaml'
   workflow_dispatch:
 
 permissions:
