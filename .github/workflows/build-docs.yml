@@ -34,6 +34,7 @@ jobs:
         run: |
           mkdir -p _site
           cp docs/index.html _site/index.html
+          cp docs/scalar-required-roles-plugin.js _site/scalar-required-roles-plugin.js
           cp openapi/openapi.yaml _site/openapi.yaml
 
       - name: Upload Pages artifact

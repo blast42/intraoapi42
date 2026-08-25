@@ -180,9 +180,12 @@ paths:
       tags:
         - Closes
       summary: Get a list of closes
+      x-roles-required:
+        - Basic Staff
       security:
         - OAuth2:
             - public
+            - tig
       parameters:
         - $ref: '#/components/parameters/base_sort'
           description: |
@@ -1289,6 +1292,8 @@ paths:
       tags:
         - Closes
       summary: Get a list of closes by user id
+      x-roles-required:
+        - Basic Staff
       security:
         - OAuth2:
             - public
