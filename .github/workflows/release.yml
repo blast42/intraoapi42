@@ -17,7 +17,6 @@ on:
       - 'openapi/**'
       - 'tool/generate_indexes.py'
       - '.github/workflows/release.yaml'
-  workflow_dispatch:
 
 permissions:
   contents: read
