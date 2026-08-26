@@ -1,4 +1,4 @@
-LightCoalition:
+Expertise:
   type: object
   properties:
     id:
@@ -7,20 +7,18 @@ LightCoalition:
       type: string
     slug:
       type: string
-    image_url:
+    kind:
       type: string
-      format: uri
-    color:
+    created_at:
       type: string
-    score:
-      type: integer
-    user_id:
-      type: integer
+      format: date-time
+      x-go-type: IntraTime
+    updated_at:
+      type: string
+      format: date-time
+      x-go-type: IntraTime
   required:
     - id
     - name
     - slug
-    - image_url
-    - color
-    - score
-    - user_id
+    - kind

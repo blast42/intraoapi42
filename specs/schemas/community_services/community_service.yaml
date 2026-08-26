@@ -1,31 +1,9 @@
 CommunityService:
-  type: object
-  properties:
-    id:
-      type: integer
-    duration:
-      type: integer
-    schedule_at:
-      type: string
-      format: date-time
-      x-go-type: IntraTime
-    occupation:
-      type: string
-    state:
-      type: string
-    created_at:
-      type: string
-      format: date-time
-      x-go-type: IntraTime
-    updated_at:
-      type: string
-    close:
-      $ref: "#/components/schemas/LightClose"
-  required:
-    - id
-    - duration
-    - schedule_at
-    - occupation
-    - state
-    - created_at
-    - updated_at
+  allOf:
+    - $ref: '#/components/schemas/LightCommunityService'
+      type: object
+      properties:
+        close:
+          $ref: "#/components/schemas/LightClose"
+      required:
+        - close

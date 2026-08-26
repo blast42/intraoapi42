@@ -1,54 +1,34 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-if TYPE_CHECKING:
-    from ..models.internship_convention_convention import InternshipConventionConvention
-
-
-T = TypeVar("T", bound="InternshipConvention")
+T = TypeVar("T", bound="EventThemesItem")
 
 
 @_attrs_define
-class InternshipConvention:
-    """
-    Attributes:
-        convention (InternshipConventionConvention):
-    """
+class EventThemesItem:
+    """ """
 
-    convention: InternshipConventionConvention
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        convention = self.convention.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "convention": convention,
-            }
-        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        from ..models.internship_convention_convention import InternshipConventionConvention
-
         d = dict(src_dict)
-        convention = InternshipConventionConvention.from_dict(d.pop("convention"))
+        event_themes_item = cls()
 
-        internship_convention = cls(
-            convention=convention,
-        )
-
-        internship_convention.additional_properties = d
-        return internship_convention
+        event_themes_item.additional_properties = d
+        return event_themes_item
 
     @property
     def additional_keys(self) -> list[str]:

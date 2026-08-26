@@ -633,12 +633,16 @@ export interface components {
         };
         LightAchievementsUser: {
             id: number;
+            achievement_id: number;
             user_id: number;
             login: string;
+            nbr_of_success: number | null;
             /** Format: uri */
             url: string;
             /** Format: date-time */
             created_at: string;
+            /** Format: date-time */
+            updated_at: string;
         };
         Achievement: {
             id: number;
@@ -665,6 +669,16 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
             rate_limit: number;
+        };
+        Bloc: {
+            id: number;
+            campus_id: number;
+            cursus_id: number;
+            squad_size: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
         };
         Campus: {
             id: number;
@@ -719,53 +733,54 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
         };
-        Close: components["schemas"]["LightUser"] & {
-            /** Format: date-time */
-            end_at?: string | null;
-            community_services: components["schemas"]["CommunityService"][];
-            /** @enum {string} */
-            kind: "agu" | "other" | "deserter" | "pace_unknown" | "black_hole" | "serious_misconduct" | "social_security" | "non_admitted";
-            user: components["schemas"]["LightUser"];
-            closer: components["schemas"]["LightUser"];
-        };
+        Close: components["schemas"]["LightClose"];
         LightClose: {
             id: number;
             reason: string;
-            state: string;
+            /** @enum {string} */
+            state: "close" | "unclose";
+            /** @enum {string} */
+            kind: "agu" | "other" | "deserter" | "pace_unknown" | "black_hole" | "serious_misconduct" | "social_security" | "non_admitted";
+            /** Format: date-time */
+            end_at: string | null;
+            primary_campus_id: number;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
         };
-        LightCoalition: {
+        Coalition: {
             id: number;
             name: string;
             slug: string;
             /** Format: uri */
-            image_url: string;
+            image_url?: string | null;
+            /** Format: uri */
+            cover_url?: string | null;
             color: string;
             score: number;
             user_id: number;
         };
-        CommunityService: {
+        CoalitionsUser: {
             id: number;
-            duration: number;
-            /** Format: date-time */
-            schedule_at: string;
-            occupation: string;
-            state: string;
+            coalition_id: number;
+            user_id: number;
+            score: number;
+            rank: number;
             /** Format: date-time */
             created_at: string;
+            /** Format: date-time */
             updated_at: string;
-            close?: components["schemas"]["LightClose"];
         };
+        CommunityService: components["schemas"]["LightCommunityService"];
         LightCommunityService: {
             id: number;
             duration: number;
             /** Format: date-time */
             schedule_at: string;
             occupation: string;
-            state: string;
+            /** @enum {string} */
+            state: "invalidated" | "beginning" | "schedule" | "validated";
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -784,7 +799,7 @@ export interface components {
             /** Format: date-time */
             begin_at: string;
             /** Format: date-time */
-            end_at?: string;
+            end_at: string;
             grade: string;
             /** Format: double */
             level: number;
@@ -793,7 +808,7 @@ export interface components {
             cursus: components["schemas"]["Cursus"];
             has_coalition: boolean;
             /** Format: date-time */
-            blackholed_at?: string | null;
+            blackholed_at: string | null;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -811,9 +826,80 @@ export interface components {
             /** @description Error message */
             error: string;
         };
+        Event: {
+            id: number;
+            name: string;
+            description: string;
+            location?: string | null;
+            kind: string;
+            max_people?: number | null;
+            nbr_subscribers: number;
+            /** Format: date-time */
+            begin_at: string;
+            /** Format: date-time */
+            end_at: string;
+            campus_ids: number[];
+            cursus_ids: number[];
+            themes?: Record<string, never>[];
+            waitlist?: Record<string, never> | null;
+            difficulty?: number | null;
+            prohibition_of_cancellation?: number | null;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+        };
+        EventsUser: {
+            id: number;
+            event_id: number;
+            user_id: number;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+            user?: components["schemas"]["UserPreview"];
+            event?: {
+                id?: number;
+                name?: string;
+            };
+        };
+        Expertise: {
+            id: number;
+            name: string;
+            slug: string;
+            kind: string;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+        };
+        ExpertisesUser: {
+            id: number;
+            expertise_id: number;
+            user_id: number;
+            interested: boolean;
+            value?: number | null;
+            contact_me: boolean;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+            expertise?: components["schemas"]["Expertise"];
+        };
         Group: {
             id: number;
             name: string;
+        };
+        GroupsUser: {
+            id: number;
+            group_id: number;
+            user_id: number;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+            user?: components["schemas"]["UserPreview"];
+            group?: components["schemas"]["Group"];
         };
         Internship: {
             id: number;
@@ -863,7 +949,7 @@ export interface components {
                     url: string | null;
                 };
             };
-            /** Format: url */
+            /** Format: uri */
             convention_uri: string | null;
             projects_user?: number | null;
             user: components["schemas"]["LightUser"];
@@ -884,6 +970,17 @@ export interface components {
             position: number;
             /** Format: date-time */
             created_at: string;
+        };
+        Location: {
+            id: number;
+            /** Format: date-time */
+            begin_at: string;
+            /** Format: date-time */
+            end_at?: string | null;
+            primary: boolean;
+            host: string;
+            campus_id: number;
+            user?: components["schemas"]["UserPreview"];
         };
         /** @description A comment or note left by one user about another (e.g. a scale/feedback note). */
         LightNote: {
@@ -931,6 +1028,34 @@ export interface components {
             name: string;
             slug: string;
             parent_id: number | null;
+        };
+        Project: {
+            id: number;
+            name: string;
+            slug: string;
+            description?: string;
+            exam: boolean;
+            parent?: components["schemas"]["LightProject"];
+            children?: components["schemas"]["LightProject"][];
+            objectives?: string[];
+            tags?: {
+                id?: number;
+                name?: string;
+                kind?: string;
+            }[];
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+            /** Format: uri */
+            repository?: string | null;
+            difficulty?: number | null;
+            cursus?: components["schemas"]["Cursus"][];
+            project_sessions_ids?: number[];
+            project_statistics?: {
+                average_mark?: number | null;
+                count?: number;
+            };
         };
         ProjectUser: {
             id: number;
@@ -1122,6 +1247,29 @@ export interface components {
             /** Format: double */
             level: number;
         };
+        Slot: {
+            id: number;
+            /** Format: date-time */
+            begin_at: string;
+            /** Format: date-time */
+            end_at: string;
+            scale_team_id?: number | null;
+            user?: components["schemas"]["LightUser"];
+            /** Format: date-time */
+            created_at?: string;
+        };
+        SlotCreate: {
+            slot: {
+                /** @description Must match the token owner unless Advanced tutor */
+                user_id: number;
+                /** Format: date-time */
+                begin_at: string;
+                /** Format: date-time */
+                end_at: string;
+                /** @description Optional defense to link to this slot */
+                scale_team_id?: number | null;
+            };
+        };
         LightTeam: {
             id: number;
             name: string;
@@ -1238,6 +1386,22 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
         };
+        Translation: {
+            id: number;
+            translatable_id: number;
+            translatable_type: string;
+            language_id: number;
+            fields: {
+                [key: string]: string;
+            };
+            up_to_date?: boolean;
+            default?: boolean;
+            user_id?: number | null;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+        };
         UserCandidature: {
             id: number;
             user_id: number;
@@ -1279,11 +1443,7 @@ export interface components {
             phone_country_code: string;
             hidden_phone: boolean;
         };
-        LightUser: {
-            /** @description The unique identifier of the user. */
-            id: number;
-            /** @description The login name of the user. */
-            login: string;
+        LightUser: components["schemas"]["LightUser"] & {
             /** @description The first name of the user. */
             first_name: string;
             /** @description The usual first name of the user, first_name if none. */
@@ -1297,11 +1457,6 @@ export interface components {
              * @description The email address of the user.
              */
             email: string;
-            /**
-             * Format: uri
-             * @description The URL to the user's resource.
-             */
-            url: string;
             /** @description The phone number of the user (always hidden). */
             phone?: string;
             /** @description The display name of the user. */
@@ -1396,6 +1551,17 @@ export interface components {
             roles: components["schemas"]["Role"][];
             campus: components["schemas"]["Campus"][];
             campus_users: components["schemas"]["CampusUser"][];
+        };
+        UserPreview: {
+            /** @description The unique identifier of the user. */
+            id: number;
+            /** @description The login name of the user. */
+            login: string;
+            /**
+             * Format: uri
+             * @description The URL to the user's resource.
+             */
+            url: string;
         };
     };
     responses: {

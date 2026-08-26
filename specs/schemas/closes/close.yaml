@@ -1,33 +1,19 @@
 Close:
   allOf:
-    - $ref: "#/components/schemas/LightUser"
-    - type: object
+    - $ref: '#/components/schemas/LightClose'
+      type: object
       properties:
-        end_at:
-          type: [string, "null"]
-          format: date-time
-          x-go-type: IntraTime
+        user:
+          allOf:
+            - $ref: '#/components/schemas/UserPreview'
+        closer:
+          allOf:
+            - $ref: '#/components/schemas/UserPreview'
         community_services:
           type: array
           items:
-            $ref: "#/components/schemas/CommunityService"
-        kind:
-          type: string
-          enum:
-            - agu
-            - other
-            - deserter
-            - pace_unknown
-            - black_hole
-            - serious_misconduct
-            - social_security
-            - non_admitted
-        user:
-          $ref: "#/components/schemas/LightUser"
-        closer:
-          $ref: "#/components/schemas/LightUser"
+            $ref: "#/components/schemas/LightCommunityService"
       required:
-        - community_services
         - user
         - closer
-        - kind
+        - community_services

@@ -6,6 +6,8 @@ Achievement:
   $ref: achivements/achievement.yaml#/Achievement
 LightApp:
   $ref: apps/light_app.yaml#/LightApp
+Bloc:
+  $ref: blocs/bloc.yaml#/Bloc
 Campus:
   $ref: campus/campus.yaml#/Campus
 LightCampus:
@@ -16,8 +18,10 @@ Close:
   $ref: closes/close.yaml#/Close
 LightClose:
   $ref: closes/light_close.yaml#/LightClose
-LightCoalition:
-  $ref: coalitions/light_coalition.yaml#/LightCoalition
+Coalition:
+  $ref: coalitions/coalition.yaml#/Coalition
+CoalitionsUser:
+  $ref: coalitions_users/coalitions_user.yaml#/CoalitionsUser
 CommunityService:
   $ref: community_services/community_service.yaml#/CommunityService
 LightCommunityService:
@@ -28,14 +32,26 @@ CursusUser:
   $ref: cursus_users/cursus_user.yaml#/CursusUser
 Error:
   $ref: error.yaml#/Error
+Event:
+  $ref: events/event.yaml#/Event
+EventsUser:
+  $ref: events_users/events_user.yaml#/EventsUser
+Expertise:
+  $ref: expertises/expertise.yaml#/Expertise
+ExpertisesUser:
+  $ref: expertises_users/expertises_user.yaml#/ExpertisesUser
 Group:
   $ref: groups/group.yaml#/Group
+GroupsUser:
+  $ref: groups_users/groups_user.yaml#/GroupsUser
 Internship:
   $ref: internships/internship.yaml#/Internship
 Language:
   $ref: languages/language.yaml#/Language
 LanguageUser:
   $ref: languages_users/language_user.yaml#/LanguageUser
+Location:
+  $ref: locations/location.yaml#/Location
 LightNote:
   $ref: notes/light_note.yaml#/LightNote
 LightNoteUser:
@@ -44,6 +60,8 @@ Patronage:
   $ref: patronages/patronage.yaml#/Patronage
 LightProject:
   $ref: projects/light_project.yaml#/LightProject
+Project:
+  $ref: projects/project.yaml#/Project
 ProjectUser:
   $ref: projects_users/project_user.yaml#/ProjectUser
 ProjectUserCreate:
@@ -66,6 +84,10 @@ TeamUpload:
   $ref: scale_teams/scale_team.yaml#/TeamUpload
 Skill:
   $ref: skills/skill.yaml#/Skill
+Slot:
+  $ref: slots/slot.yaml#/Slot
+SlotCreate:
+  $ref: slots/slot_create.yaml#/SlotCreate
 LightTeam:
   $ref: teams/light_team.yaml#/LightTeam
 Team:
@@ -78,6 +100,8 @@ Title:
   $ref: titles/title.yaml#/Title
 TitleUser:
   $ref: titles_users/title_user.yaml#/TitleUser
+Translation:
+  $ref: translations/translation.yaml#/Translation
 UserCandidature:
   $ref: user_candidatures/user_candidature.yaml#/UserCandidature
 LightUser:
@@ -86,3 +110,5 @@ UserImage:
   $ref: users/light_user.yaml#/UserImage
 User:
   $ref: users/user.yaml#/User
+UserPreview:
+  $ref: users/user_preview.yaml#/UserPreview

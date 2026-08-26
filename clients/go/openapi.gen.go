@@ -18,36 +18,54 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
-// Defines values for CloseKind.
+// Defines values for LightCloseKind.
 const (
-	CloseKindAgu               CloseKind = "agu"
-	CloseKindBlackHole         CloseKind = "black_hole"
-	CloseKindDeserter          CloseKind = "deserter"
-	CloseKindNonAdmitted       CloseKind = "non_admitted"
-	CloseKindOther             CloseKind = "other"
-	CloseKindPaceUnknown       CloseKind = "pace_unknown"
-	CloseKindSeriousMisconduct CloseKind = "serious_misconduct"
-	CloseKindSocialSecurity    CloseKind = "social_security"
+	LightCloseKindAgu               LightCloseKind = "agu"
+	LightCloseKindBlackHole         LightCloseKind = "black_hole"
+	LightCloseKindDeserter          LightCloseKind = "deserter"
+	LightCloseKindNonAdmitted       LightCloseKind = "non_admitted"
+	LightCloseKindOther             LightCloseKind = "other"
+	LightCloseKindPaceUnknown       LightCloseKind = "pace_unknown"
+	LightCloseKindSeriousMisconduct LightCloseKind = "serious_misconduct"
+	LightCloseKindSocialSecurity    LightCloseKind = "social_security"
 )
 
-// Valid indicates whether the value is a known member of the CloseKind enum.
-func (e CloseKind) Valid() bool {
+// Valid indicates whether the value is a known member of the LightCloseKind enum.
+func (e LightCloseKind) Valid() bool {
 	switch e {
-	case CloseKindAgu:
+	case LightCloseKindAgu:
 		return true
-	case CloseKindBlackHole:
+	case LightCloseKindBlackHole:
 		return true
-	case CloseKindDeserter:
+	case LightCloseKindDeserter:
 		return true
-	case CloseKindNonAdmitted:
+	case LightCloseKindNonAdmitted:
 		return true
-	case CloseKindOther:
+	case LightCloseKindOther:
 		return true
-	case CloseKindPaceUnknown:
+	case LightCloseKindPaceUnknown:
 		return true
-	case CloseKindSeriousMisconduct:
+	case LightCloseKindSeriousMisconduct:
 		return true
-	case CloseKindSocialSecurity:
+	case LightCloseKindSocialSecurity:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LightCloseState.
+const (
+	LightCloseStateClose   LightCloseState = "close"
+	LightCloseStateUnclose LightCloseState = "unclose"
+)
+
+// Valid indicates whether the value is a known member of the LightCloseState enum.
+func (e LightCloseState) Valid() bool {
+	switch e {
+	case LightCloseStateClose:
+		return true
+	case LightCloseStateUnclose:
 		return true
 	default:
 		return false
@@ -171,97 +189,7 @@ type CampusUser struct {
 }
 
 // Close defines model for Close.
-type Close struct {
-	// Active Indicates if the user is active.
-	Active bool `json:"active?"`
-
-	// Alumni Indicates if the user is an alumnus.
-	Alumni bool `json:"alumni?"`
-
-	// AlumnizedAt The date when the user became an alumnus.
-	AlumnizedAt IntraTime `json:"alumnized_at"`
-
-	// AnonymizeDate The date when user data will be anonymized.
-	AnonymizeDate     *IntraTime         `json:"anonymize_date"`
-	Closer            LightUser          `json:"closer"`
-	CommunityServices []CommunityService `json:"community_services"`
-
-	// CorrectionPoint The user's correction points.
-	CorrectionPoint int `json:"correction_point"`
-
-	// CreatedAt The user creation timestamp.
-	CreatedAt IntraTime `json:"created_at"`
-
-	// DataErasureDate The date when user data will be erased.
-	DataErasureDate IntraTime `json:"data_erasure_date"`
-
-	// Displayname The display name of the user.
-	Displayname string `json:"displayname"`
-
-	// Email The email address of the user.
-	Email openapi_types.Email `json:"email"`
-	EndAt *IntraTime          `json:"end_at,omitempty"`
-
-	// FirstName The first name of the user.
-	FirstName string `json:"first_name"`
-
-	// Id The unique identifier of the user.
-	Id    int       `json:"id"`
-	Image UserImage `json:"image"`
-	Kind  CloseKind `json:"kind"`
-
-	// LastName The last name of the user.
-	LastName string `json:"last_name"`
-
-	// Location The location of the user.
-	Location *string `json:"location,omitempty"`
-
-	// Login The login name of the user.
-	Login string `json:"login"`
-
-	// Phone The phone number of the user (always hidden).
-	Phone *string `json:"phone,omitempty"`
-
-	// PoolMonth The month of the user's pool.
-	PoolMonth string `json:"pool_month"`
-
-	// PoolYear The year of the user's pool.
-	PoolYear string `json:"pool_year"`
-
-	// Staff Indicates if the user is staff.
-	Staff bool `json:"staff?"`
-
-	// UpdatedAt The last user update timestamp.
-	UpdatedAt IntraTime `json:"updated_at"`
-
-	// Url The URL to the user's resource.
-	Url  string    `json:"url"`
-	User LightUser `json:"user"`
-
-	// UsualFirstName The usual first name of the user, first_name if none.
-	UsualFirstName *string `json:"usual_first_name,omitempty"`
-
-	// UsualFullName The usual full name of the user, usually usual_first_name or first_name + last_name.
-	UsualFullName string `json:"usual_full_name"`
-
-	// Wallet The user's wallet balance.
-	Wallet int `json:"wallet"`
-}
-
-// CloseKind defines model for Close.Kind.
-type CloseKind string
-
-// CommunityService defines model for CommunityService.
-type CommunityService struct {
-	Close      *LightClose `json:"close,omitempty"`
-	CreatedAt  IntraTime   `json:"created_at"`
-	Duration   int         `json:"duration"`
-	Id         int         `json:"id"`
-	Occupation string      `json:"occupation"`
-	ScheduleAt IntraTime   `json:"schedule_at"`
-	State      string      `json:"state"`
-	UpdatedAt  string      `json:"updated_at"`
-}
+type Close = LightClose
 
 // Cursus defines model for Cursus.
 type Cursus struct {
@@ -275,11 +203,11 @@ type Cursus struct {
 // CursusUser defines model for CursusUser.
 type CursusUser struct {
 	BeginAt      IntraTime  `json:"begin_at"`
-	BlackholedAt *IntraTime `json:"blackholed_at,omitempty"`
+	BlackholedAt *IntraTime `json:"blackholed_at"`
 	CreatedAt    IntraTime  `json:"created_at"`
 	Cursus       Cursus     `json:"cursus"`
 	CursusId     int        `json:"cursus_id"`
-	EndAt        *IntraTime `json:"end_at,omitempty"`
+	EndAt        IntraTime  `json:"end_at"`
 	Grade        string     `json:"grade"`
 	HasCoalition bool       `json:"has_coalition"`
 	Id           int        `json:"id"`
@@ -385,12 +313,21 @@ type LanguageUser struct {
 
 // LightClose defines model for LightClose.
 type LightClose struct {
-	CreatedAt IntraTime `json:"created_at"`
-	Id        int       `json:"id"`
-	Reason    string    `json:"reason"`
-	State     string    `json:"state"`
-	UpdatedAt IntraTime `json:"updated_at"`
+	CreatedAt       IntraTime       `json:"created_at"`
+	EndAt           *IntraTime      `json:"end_at"`
+	Id              int             `json:"id"`
+	Kind            LightCloseKind  `json:"kind"`
+	PrimaryCampusId int             `json:"primary_campus_id"`
+	Reason          string          `json:"reason"`
+	State           LightCloseState `json:"state"`
+	UpdatedAt       IntraTime       `json:"updated_at"`
 }
+
+// LightCloseKind defines model for LightClose.Kind.
+type LightCloseKind string
+
+// LightCloseState defines model for LightClose.State.
+type LightCloseState string
 
 // LightNote A comment or note left by one user about another (e.g. a scale/feedback note).
 type LightNote struct {
@@ -497,11 +434,8 @@ type LightUser struct {
 	Email openapi_types.Email `json:"email"`
 
 	// FirstName The first name of the user.
-	FirstName string `json:"first_name"`
-
-	// Id The unique identifier of the user.
-	Id    int       `json:"id"`
-	Image UserImage `json:"image"`
+	FirstName string    `json:"first_name"`
+	Image     UserImage `json:"image"`
 
 	// Kind The kind of user (e.g., student, admin, external).
 	Kind LightUserKind `json:"kind"`
@@ -511,9 +445,6 @@ type LightUser struct {
 
 	// Location The location of the user.
 	Location *string `json:"location,omitempty"`
-
-	// Login The login name of the user.
-	Login string `json:"login"`
 
 	// Phone The phone number of the user (always hidden).
 	Phone *string `json:"phone,omitempty"`
@@ -529,9 +460,6 @@ type LightUser struct {
 
 	// UpdatedAt The last user update timestamp.
 	UpdatedAt IntraTime `json:"updated_at"`
-
-	// Url The URL to the user's resource.
-	Url string `json:"url"`
 
 	// UsualFirstName The usual first name of the user, first_name if none.
 	UsualFirstName *string `json:"usual_first_name,omitempty"`
@@ -837,12 +765,9 @@ type User struct {
 	Email openapi_types.Email `json:"email"`
 
 	// FirstName The first name of the user.
-	FirstName string  `json:"first_name"`
-	Groups    []Group `json:"groups"`
-
-	// Id The unique identifier of the user.
-	Id    int       `json:"id"`
-	Image UserImage `json:"image"`
+	FirstName string    `json:"first_name"`
+	Groups    []Group   `json:"groups"`
+	Image     UserImage `json:"image"`
 
 	// Kind The kind of user (e.g., student, admin, external).
 	Kind           UserKind       `json:"kind"`
@@ -852,10 +777,7 @@ type User struct {
 	LastName string `json:"last_name"`
 
 	// Location The location of the user.
-	Location *string `json:"location,omitempty"`
-
-	// Login The login name of the user.
-	Login     string      `json:"login"`
+	Location  *string     `json:"location,omitempty"`
 	Patroned  []Patronage `json:"patroned"`
 	Patroning []Patronage `json:"patroning"`
 
@@ -877,9 +799,6 @@ type User struct {
 
 	// UpdatedAt The last user update timestamp.
 	UpdatedAt IntraTime `json:"updated_at"`
-
-	// Url The URL to the user's resource.
-	Url string `json:"url"`
 
 	// UsualFirstName The usual first name of the user, first_name if none.
 	UsualFirstName *string `json:"usual_first_name,omitempty"`

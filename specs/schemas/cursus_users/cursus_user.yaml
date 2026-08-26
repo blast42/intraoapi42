@@ -41,11 +41,13 @@ CursusUser:
   required:
     - id
     - begin_at
+    - end_at
     - grade
     - level
+    - skills
     - cursus_id
     - cursus
     - has_coalition
+    - blackholed_at
     - created_at
     - updated_at
-    - skills

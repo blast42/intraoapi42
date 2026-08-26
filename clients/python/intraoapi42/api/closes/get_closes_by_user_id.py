@@ -8,6 +8,7 @@ from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.get_closes_by_user_id_filter import GetClosesByUserIdFilter
 from ...models.get_closes_by_user_id_range import GetClosesByUserIdRange
+from ...models.light_close import LightClose
 from ...types import UNSET, Response, Unset
 
 
@@ -60,7 +61,17 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | list[LightClose]:
+    if response.status_code == 200:
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = LightClose.from_dict(response_200_item_data)
+
+            response_200.append(response_200_item)
+
+        return response_200
+
     if response.status_code == 400:
         response_400 = Error.from_dict(response.json())
 
@@ -71,7 +82,9 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
     return response_default
 
 
-def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error]:
+def _build_response(
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[Error | list[LightClose]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -91,7 +104,7 @@ def sync_detailed(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error]:
+) -> Response[Error | list[LightClose]]:
     """🔑 Get a list of closes by user id
 
     Args:
@@ -109,7 +122,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error]
+        Response[Error | list[LightClose]]
     """
 
     kwargs = _get_kwargs(
@@ -141,7 +154,7 @@ def sync(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | None:
+) -> Error | list[LightClose] | None:
     """🔑 Get a list of closes by user id
 
     Args:
@@ -159,7 +172,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error
+        Error | list[LightClose]
     """
 
     return sync_detailed(
@@ -186,7 +199,7 @@ async def asyncio_detailed(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error]:
+) -> Response[Error | list[LightClose]]:
     """🔑 Get a list of closes by user id
 
     Args:
@@ -204,7 +217,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error]
+        Response[Error | list[LightClose]]
     """
 
     kwargs = _get_kwargs(
@@ -234,7 +247,7 @@ async def asyncio(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | None:
+) -> Error | list[LightClose] | None:
     """🔑 Get a list of closes by user id
 
     Args:
@@ -252,7 +265,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error
+        Error | list[LightClose]
     """
 
     return (

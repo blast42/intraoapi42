@@ -1,34 +1,35 @@
 from __future__ import annotations
 
+import datetime
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="LightCoalition")
+from ..types import UNSET, Unset
+
+T = TypeVar("T", bound="Expertise")
 
 
 @_attrs_define
-class LightCoalition:
+class Expertise:
     """
     Attributes:
         id (int):
         name (str):
         slug (str):
-        image_url (str):
-        color (str):
-        score (int):
-        user_id (int):
+        kind (str):
+        created_at (datetime.datetime | Unset):
+        updated_at (datetime.datetime | Unset):
     """
 
     id: int
     name: str
     slug: str
-    image_url: str
-    color: str
-    score: int
-    user_id: int
+    kind: str
+    created_at: datetime.datetime | Unset = UNSET
+    updated_at: datetime.datetime | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,13 +39,15 @@ class LightCoalition:
 
         slug = self.slug
 
-        image_url = self.image_url
+        kind = self.kind
 
-        color = self.color
+        created_at: str | Unset = UNSET
+        if not isinstance(self.created_at, Unset):
+            created_at = self.created_at.isoformat()
 
-        score = self.score
-
-        user_id = self.user_id
+        updated_at: str | Unset = UNSET
+        if not isinstance(self.updated_at, Unset):
+            updated_at = self.updated_at.isoformat()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -53,12 +56,13 @@ class LightCoalition:
                 "id": id,
                 "name": name,
                 "slug": slug,
-                "image_url": image_url,
-                "color": color,
-                "score": score,
-                "user_id": user_id,
+                "kind": kind,
             }
         )
+        if created_at is not UNSET:
+            field_dict["created_at"] = created_at
+        if updated_at is not UNSET:
+            field_dict["updated_at"] = updated_at
 
         return field_dict
 
@@ -71,26 +75,33 @@ class LightCoalition:
 
         slug = d.pop("slug")
 
-        image_url = d.pop("image_url")
+        kind = d.pop("kind")
 
-        color = d.pop("color")
+        _created_at = d.pop("created_at", UNSET)
+        created_at: datetime.datetime | Unset
+        if isinstance(_created_at, Unset):
+            created_at = UNSET
+        else:
+            created_at = datetime.datetime.fromisoformat(_created_at)
 
-        score = d.pop("score")
+        _updated_at = d.pop("updated_at", UNSET)
+        updated_at: datetime.datetime | Unset
+        if isinstance(_updated_at, Unset):
+            updated_at = UNSET
+        else:
+            updated_at = datetime.datetime.fromisoformat(_updated_at)
 
-        user_id = d.pop("user_id")
-
-        light_coalition = cls(
+        expertise = cls(
             id=id,
             name=name,
             slug=slug,
-            image_url=image_url,
-            color=color,
-            score=score,
-            user_id=user_id,
+            kind=kind,
+            created_at=created_at,
+            updated_at=updated_at,
         )
 
-        light_coalition.additional_properties = d
-        return light_coalition
+        expertise.additional_properties = d
+        return expertise
 
     @property
     def additional_keys(self) -> list[str]:

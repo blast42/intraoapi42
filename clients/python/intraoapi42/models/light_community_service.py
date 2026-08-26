@@ -7,6 +7,8 @@ from typing import Any, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.light_community_service_state import LightCommunityServiceState, check_light_community_service_state
+
 T = TypeVar("T", bound="LightCommunityService")
 
 
@@ -18,7 +20,7 @@ class LightCommunityService:
         duration (int):
         schedule_at (datetime.datetime):
         occupation (str):
-        state (str):
+        state (LightCommunityServiceState):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
     """
@@ -27,7 +29,7 @@ class LightCommunityService:
     duration: int
     schedule_at: datetime.datetime
     occupation: str
-    state: str
+    state: LightCommunityServiceState
     created_at: datetime.datetime
     updated_at: datetime.datetime
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -41,7 +43,7 @@ class LightCommunityService:
 
         occupation = self.occupation
 
-        state = self.state
+        state: str = self.state
 
         created_at = self.created_at.isoformat()
 
@@ -74,7 +76,7 @@ class LightCommunityService:
 
         occupation = d.pop("occupation")
 
-        state = d.pop("state")
+        state = check_light_community_service_state(d.pop("state"))
 
         created_at = datetime.datetime.fromisoformat(d.pop("created_at"))
 

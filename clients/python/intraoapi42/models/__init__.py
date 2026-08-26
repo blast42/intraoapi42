@@ -2,12 +2,21 @@
 
 from .accreditation import Accreditation
 from .achievement import Achievement
+from .bloc import Bloc
 from .campus import Campus
 from .campus_user import CampusUser
-from .community_service import CommunityService
+from .coalition import Coalition
+from .coalitions_user import CoalitionsUser
 from .cursus import Cursus
 from .cursus_user import CursusUser
 from .error import Error
+from .event import Event
+from .event_themes_item import EventThemesItem
+from .event_waitlist_type_0 import EventWaitlistType0
+from .events_user import EventsUser
+from .events_user_event import EventsUserEvent
+from .expertise import Expertise
+from .expertises_user import ExpertisesUser
 from .get_accreditations_filter import GetAccreditationsFilter
 from .get_accreditations_range import GetAccreditationsRange
 from .get_closes_by_user_id_filter import GetClosesByUserIdFilter
@@ -63,29 +72,30 @@ from .get_users_by_title_range import GetUsersByTitleRange
 from .get_users_filter import GetUsersFilter
 from .get_users_range import GetUsersRange
 from .group import Group
-from .internship import Internship
-from .internship_convention import InternshipConvention
-from .internship_convention_convention import InternshipConventionConvention
+from .groups_user import GroupsUser
 from .language import Language
 from .language_user import LanguageUser
 from .light_achievements_user import LightAchievementsUser
 from .light_app import LightApp
 from .light_campus import LightCampus
 from .light_close import LightClose
-from .light_coalition import LightCoalition
+from .light_close_kind import LightCloseKind
+from .light_close_state import LightCloseState
 from .light_community_service import LightCommunityService
+from .light_community_service_state import LightCommunityServiceState
 from .light_note import LightNote
 from .light_note_user import LightNoteUser
 from .light_project import LightProject
 from .light_team import LightTeam
 from .light_team_user import LightTeamUser
-from .light_user import LightUser
-from .light_user_kind import LightUserKind
+from .location import Location
 from .patch_project_user_by_id_body import PatchProjectUserByIdBody
 from .patch_team_by_id_body import PatchTeamByIdBody
 from .patronage import Patronage
 from .post_projects_users_body import PostProjectsUsersBody
-from .project_user import ProjectUser
+from .project import Project
+from .project_project_statistics import ProjectProjectStatistics
+from .project_tags_item import ProjectTagsItem
 from .project_user_create import ProjectUserCreate
 from .project_user_update import ProjectUserUpdate
 from .put_project_user_by_id_body import PutProjectUserByIdBody
@@ -98,27 +108,40 @@ from .scale_team import ScaleTeam
 from .scale_team_truant import ScaleTeamTruant
 from .scale_user import ScaleUser
 from .skill import Skill
+from .slot_create import SlotCreate
+from .slot_create_slot import SlotCreateSlot
 from .team import Team
 from .team_update import TeamUpdate
 from .team_update_teams_users_attributes_type_0_item import TeamUpdateTeamsUsersAttributesType0Item
 from .team_upload import TeamUpload
 from .title import Title
 from .title_user import TitleUser
-from .user import User
+from .translation import Translation
+from .translation_fields import TranslationFields
 from .user_candidature import UserCandidature
 from .user_candidature_gender import UserCandidatureGender
 from .user_image import UserImage
 from .user_image_versions import UserImageVersions
+from .user_preview import UserPreview
 
 __all__ = (
     "Accreditation",
     "Achievement",
+    "Bloc",
     "Campus",
     "CampusUser",
-    "CommunityService",
+    "Coalition",
+    "CoalitionsUser",
     "Cursus",
     "CursusUser",
     "Error",
+    "Event",
+    "EventsUser",
+    "EventsUserEvent",
+    "EventThemesItem",
+    "EventWaitlistType0",
+    "Expertise",
+    "ExpertisesUser",
     "GetAccreditationsFilter",
     "GetAccreditationsRange",
     "GetClosesByUserIdFilter",
@@ -174,29 +197,30 @@ __all__ = (
     "GetUsersFilter",
     "GetUsersRange",
     "Group",
-    "Internship",
-    "InternshipConvention",
-    "InternshipConventionConvention",
+    "GroupsUser",
     "Language",
     "LanguageUser",
     "LightAchievementsUser",
     "LightApp",
     "LightCampus",
     "LightClose",
-    "LightCoalition",
+    "LightCloseKind",
+    "LightCloseState",
     "LightCommunityService",
+    "LightCommunityServiceState",
     "LightNote",
     "LightNoteUser",
     "LightProject",
     "LightTeam",
     "LightTeamUser",
-    "LightUser",
-    "LightUserKind",
+    "Location",
     "PatchProjectUserByIdBody",
     "PatchTeamByIdBody",
     "Patronage",
     "PostProjectsUsersBody",
-    "ProjectUser",
+    "Project",
+    "ProjectProjectStatistics",
+    "ProjectTagsItem",
     "ProjectUserCreate",
     "ProjectUserUpdate",
     "PutProjectUserByIdBody",
@@ -209,15 +233,19 @@ __all__ = (
     "ScaleTeamTruant",
     "ScaleUser",
     "Skill",
+    "SlotCreate",
+    "SlotCreateSlot",
     "Team",
     "TeamUpdate",
     "TeamUpdateTeamsUsersAttributesType0Item",
     "TeamUpload",
     "Title",
     "TitleUser",
-    "User",
+    "Translation",
+    "TranslationFields",
     "UserCandidature",
     "UserCandidatureGender",
     "UserImage",
     "UserImageVersions",
+    "UserPreview",
 )

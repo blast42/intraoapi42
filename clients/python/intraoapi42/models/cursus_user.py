@@ -7,8 +7,6 @@ from typing import TYPE_CHECKING, Any, TypeVar, cast
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import UNSET, Unset
-
 if TYPE_CHECKING:
     from ..models.cursus import Cursus
     from ..models.skill import Skill
@@ -23,36 +21,38 @@ class CursusUser:
     Attributes:
         id (int):
         begin_at (datetime.datetime):
+        end_at (datetime.datetime):
         grade (str):
         level (float):
         skills (list[Skill]):
         cursus_id (int):
         cursus (Cursus):
         has_coalition (bool):
+        blackholed_at (datetime.datetime | None):
         created_at (datetime.datetime):
         updated_at (datetime.datetime):
-        end_at (datetime.datetime | Unset):
-        blackholed_at (datetime.datetime | None | Unset):
     """
 
     id: int
     begin_at: datetime.datetime
+    end_at: datetime.datetime
     grade: str
     level: float
     skills: list[Skill]
     cursus_id: int
     cursus: Cursus
     has_coalition: bool
+    blackholed_at: datetime.datetime | None
     created_at: datetime.datetime
     updated_at: datetime.datetime
-    end_at: datetime.datetime | Unset = UNSET
-    blackholed_at: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         id = self.id
 
         begin_at = self.begin_at.isoformat()
+
+        end_at = self.end_at.isoformat()
 
         grade = self.grade
 
@@ -69,21 +69,15 @@ class CursusUser:
 
         has_coalition = self.has_coalition
 
-        created_at = self.created_at.isoformat()
-
-        updated_at = self.updated_at.isoformat()
-
-        end_at: str | Unset = UNSET
-        if not isinstance(self.end_at, Unset):
-            end_at = self.end_at.isoformat()
-
-        blackholed_at: None | str | Unset
-        if isinstance(self.blackholed_at, Unset):
-            blackholed_at = UNSET
-        elif isinstance(self.blackholed_at, datetime.datetime):
+        blackholed_at: None | str
+        if isinstance(self.blackholed_at, datetime.datetime):
             blackholed_at = self.blackholed_at.isoformat()
         else:
             blackholed_at = self.blackholed_at
+
+        created_at = self.created_at.isoformat()
+
+        updated_at = self.updated_at.isoformat()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -91,20 +85,18 @@ class CursusUser:
             {
                 "id": id,
                 "begin_at": begin_at,
+                "end_at": end_at,
                 "grade": grade,
                 "level": level,
                 "skills": skills,
                 "cursus_id": cursus_id,
                 "cursus": cursus,
                 "has_coalition": has_coalition,
+                "blackholed_at": blackholed_at,
                 "created_at": created_at,
                 "updated_at": updated_at,
             }
         )
-        if end_at is not UNSET:
-            field_dict["end_at"] = end_at
-        if blackholed_at is not UNSET:
-            field_dict["blackholed_at"] = blackholed_at
 
         return field_dict
 
@@ -117,6 +109,8 @@ class CursusUser:
         id = d.pop("id")
 
         begin_at = datetime.datetime.fromisoformat(d.pop("begin_at"))
+
+        end_at = datetime.datetime.fromisoformat(d.pop("end_at"))
 
         grade = d.pop("grade")
 
@@ -135,21 +129,8 @@ class CursusUser:
 
         has_coalition = d.pop("has_coalition")
 
-        created_at = datetime.datetime.fromisoformat(d.pop("created_at"))
-
-        updated_at = datetime.datetime.fromisoformat(d.pop("updated_at"))
-
-        _end_at = d.pop("end_at", UNSET)
-        end_at: datetime.datetime | Unset
-        if isinstance(_end_at, Unset):
-            end_at = UNSET
-        else:
-            end_at = datetime.datetime.fromisoformat(_end_at)
-
-        def _parse_blackholed_at(data: object) -> datetime.datetime | None | Unset:
+        def _parse_blackholed_at(data: object) -> datetime.datetime | None:
             if data is None:
-                return data
-            if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
@@ -159,23 +140,27 @@ class CursusUser:
                 return blackholed_at_type_0
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(datetime.datetime | None | Unset, data)
+            return cast(datetime.datetime | None, data)
 
-        blackholed_at = _parse_blackholed_at(d.pop("blackholed_at", UNSET))
+        blackholed_at = _parse_blackholed_at(d.pop("blackholed_at"))
+
+        created_at = datetime.datetime.fromisoformat(d.pop("created_at"))
+
+        updated_at = datetime.datetime.fromisoformat(d.pop("updated_at"))
 
         cursus_user = cls(
             id=id,
             begin_at=begin_at,
+            end_at=end_at,
             grade=grade,
             level=level,
             skills=skills,
             cursus_id=cursus_id,
             cursus=cursus,
             has_coalition=has_coalition,
+            blackholed_at=blackholed_at,
             created_at=created_at,
             updated_at=updated_at,
-            end_at=end_at,
-            blackholed_at=blackholed_at,
         )
 
         cursus_user.additional_properties = d

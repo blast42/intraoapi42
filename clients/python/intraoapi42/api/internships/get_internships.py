@@ -7,7 +7,6 @@ from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.get_internships_filter import GetInternshipsFilter
 from ...models.get_internships_range import GetInternshipsRange
-from ...models.internship import Internship
 from ...types import UNSET, Response, Unset
 
 
@@ -57,17 +56,7 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | list[Internship]:
-    if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in _response_200:
-            response_200_item = Internship.from_dict(response_200_item_data)
-
-            response_200.append(response_200_item)
-
-        return response_200
-
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error:
     if response.status_code == 400:
         response_400 = Error.from_dict(response.json())
 
@@ -78,9 +67,7 @@ def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Res
     return response_default
 
 
-def _build_response(
-    *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[Error | list[Internship]]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -99,7 +86,7 @@ def sync_detailed(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error | list[Internship]]:
+) -> Response[Error]:
     """🔑 Get a list of internships
 
     Args:
@@ -116,7 +103,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[Internship]]
+        Response[Error]
     """
 
     kwargs = _get_kwargs(
@@ -146,7 +133,7 @@ def sync(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | list[Internship] | None:
+) -> Error | None:
     """🔑 Get a list of internships
 
     Args:
@@ -163,7 +150,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[Internship]
+        Error
     """
 
     return sync_detailed(
@@ -188,7 +175,7 @@ async def asyncio_detailed(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error | list[Internship]]:
+) -> Response[Error]:
     """🔑 Get a list of internships
 
     Args:
@@ -205,7 +192,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[Internship]]
+        Response[Error]
     """
 
     kwargs = _get_kwargs(
@@ -233,7 +220,7 @@ async def asyncio(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | list[Internship] | None:
+) -> Error | None:
     """🔑 Get a list of internships
 
     Args:
@@ -250,7 +237,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[Internship]
+        Error
     """
 
     return (

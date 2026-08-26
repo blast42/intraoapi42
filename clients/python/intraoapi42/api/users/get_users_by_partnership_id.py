@@ -8,7 +8,6 @@ from ...client import AuthenticatedClient, Client
 from ...models.error import Error
 from ...models.get_users_by_partnership_id_filter import GetUsersByPartnershipIdFilter
 from ...models.get_users_by_partnership_id_range import GetUsersByPartnershipIdRange
-from ...models.light_user import LightUser
 from ...types import UNSET, Response, Unset
 
 
@@ -58,25 +57,13 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error | list[LightUser]:
-    if response.status_code == 200:
-        response_200 = []
-        _response_200 = response.json()
-        for response_200_item_data in _response_200:
-            response_200_item = LightUser.from_dict(response_200_item_data)
-
-            response_200.append(response_200_item)
-
-        return response_200
-
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Error:
     response_default = Error.from_dict(response.json())
 
     return response_default
 
 
-def _build_response(
-    *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[Error | list[LightUser]]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[Error]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -95,7 +82,7 @@ def sync_detailed(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error | list[LightUser]]:
+) -> Response[Error]:
     """Get a list of users by partnership
 
     Args:
@@ -112,7 +99,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[LightUser]]
+        Response[Error]
     """
 
     kwargs = _get_kwargs(
@@ -142,7 +129,7 @@ def sync(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | list[LightUser] | None:
+) -> Error | None:
     """Get a list of users by partnership
 
     Args:
@@ -159,7 +146,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[LightUser]
+        Error
     """
 
     return sync_detailed(
@@ -184,7 +171,7 @@ async def asyncio_detailed(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Response[Error | list[LightUser]]:
+) -> Response[Error]:
     """Get a list of users by partnership
 
     Args:
@@ -201,7 +188,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Error | list[LightUser]]
+        Response[Error]
     """
 
     kwargs = _get_kwargs(
@@ -229,7 +216,7 @@ async def asyncio(
     per_page: int | Unset = UNSET,
     pagenumber: int | Unset = UNSET,
     pagesize: int | Unset = UNSET,
-) -> Error | list[LightUser] | None:
+) -> Error | None:
     """Get a list of users by partnership
 
     Args:
@@ -246,7 +233,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Error | list[LightUser]
+        Error
     """
 
     return (

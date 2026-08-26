@@ -1713,22 +1713,36 @@ components:
       properties:
         id:
           type: integer
+        achievement_id:
+          type: integer
         user_id:
           type: integer
         login:
           type: string
+        nbr_of_success:
+          type:
+            - integer
+            - 'null'
         url:
           type: string
           format: uri
         created_at:
           type: string
           format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
       required:
         - id
+        - achievement_id
         - user_id
         - login
+        - nbr_of_success
         - url
         - created_at
+        - updated_at
     Achievement:
       type: object
       properties:
@@ -1803,6 +1817,32 @@ components:
         - created_at
         - updated_at
         - rate_limit
+    Bloc:
+      type: object
+      properties:
+        id:
+          type: integer
+        campus_id:
+          type: integer
+        cursus_id:
+          type: integer
+        squad_size:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+      required:
+        - id
+        - campus_id
+        - cursus_id
+        - squad_size
+        - created_at
+        - updated_at
     Campus:
       type: object
       properties:
@@ -1937,39 +1977,23 @@ components:
         - updated_at
     Close:
       allOf:
-        - $ref: '#/components/schemas/LightUser'
-        - type: object
+        - $ref: '#/components/schemas/LightClose'
+          type: object
           properties:
-            end_at:
-              type:
-                - string
-                - 'null'
-              format: date-time
-              x-go-type: IntraTime
+            user:
+              allOf:
+                - $ref: '#/components/schemas/UserPreview'
+            closer:
+              allOf:
+                - $ref: '#/components/schemas/UserPreview'
             community_services:
               type: array
               items:
-                $ref: '#/components/schemas/CommunityService'
-            kind:
-              type: string
-              enum:
-                - agu
-                - other
-                - deserter
-                - pace_unknown
-                - black_hole
-                - serious_misconduct
-                - social_security
-                - non_admitted
-            user:
-              $ref: '#/components/schemas/LightUser'
-            closer:
-              $ref: '#/components/schemas/LightUser'
+                $ref: '#/components/schemas/LightCommunityService'
           required:
-            - community_services
             - user
             - closer
-            - kind
+            - community_services
     LightClose:
       type: object
       properties:
@@ -1979,6 +2003,28 @@ components:
           type: string
         state:
           type: string
+          enum:
+            - close
+            - unclose
+        kind:
+          type: string
+          enum:
+            - agu
+            - other
+            - deserter
+            - pace_unknown
+            - black_hole
+            - serious_misconduct
+            - social_security
+            - non_admitted
+        end_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          x-go-type: IntraTime
+        primary_campus_id:
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1991,9 +2037,12 @@ components:
         - id
         - reason
         - state
+        - kind
+        - end_at
+        - primary_campus_id
         - created_at
         - updated_at
-    LightCoalition:
+    Coalition:
       type: object
       properties:
         id:
@@ -2003,7 +2052,14 @@ components:
         slug:
           type: string
         image_url:
-          type: string
+          type:
+            - string
+            - 'null'
+          format: uri
+        cover_url:
+          type:
+            - string
+            - 'null'
           format: uri
         color:
           type: string
@@ -2015,41 +2071,47 @@ components:
         - id
         - name
         - slug
-        - image_url
         - color
         - score
         - user_id
-    CommunityService:
+    CoalitionsUser:
       type: object
       properties:
         id:
           type: integer
-        duration:
+        coalition_id:
           type: integer
-        schedule_at:
-          type: string
-          format: date-time
-          x-go-type: IntraTime
-        occupation:
-          type: string
-        state:
-          type: string
+        user_id:
+          type: integer
+        score:
+          type: integer
+        rank:
+          type: integer
         created_at:
           type: string
           format: date-time
           x-go-type: IntraTime
         updated_at:
           type: string
-        close:
-          $ref: '#/components/schemas/LightClose'
+          format: date-time
+          x-go-type: IntraTime
       required:
         - id
-        - duration
-        - schedule_at
-        - occupation
-        - state
+        - coalition_id
+        - user_id
+        - score
+        - rank
         - created_at
         - updated_at
+    CommunityService:
+      allOf:
+        - $ref: '#/components/schemas/LightCommunityService'
+          type: object
+          properties:
+            close:
+              $ref: '#/components/schemas/LightClose'
+          required:
+            - close
     LightCommunityService:
       type: object
       properties:
@@ -2064,6 +2126,11 @@ components:
           type: string
         state:
           type: string
+          enum:
+            - invalidated
+            - beginning
+            - schedule
+            - validated
         created_at:
           type: string
           format: date-time
@@ -2144,14 +2211,16 @@ components:
       required:
         - id
         - begin_at
+        - end_at
         - grade
         - level
+        - skills
         - cursus_id
         - cursus
         - has_coalition
+        - blackholed_at
         - created_at
         - updated_at
-        - skills
     Error:
       type: object
       properties:
@@ -2167,6 +2236,164 @@ components:
       example:
         status: 401
         error: The access token is invalid
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type:
+            - string
+            - 'null'
+        kind:
+          type: string
+        max_people:
+          type:
+            - integer
+            - 'null'
+        nbr_subscribers:
+          type: integer
+        begin_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        end_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        campus_ids:
+          type: array
+          items:
+            type: integer
+        cursus_ids:
+          type: array
+          items:
+            type: integer
+        themes:
+          type: array
+          items:
+            type: object
+        waitlist:
+          type:
+            - object
+            - 'null'
+        difficulty:
+          type:
+            - integer
+            - 'null'
+        prohibition_of_cancellation:
+          type:
+            - integer
+            - 'null'
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+      required:
+        - id
+        - name
+        - description
+        - kind
+        - nbr_subscribers
+        - begin_at
+        - end_at
+        - campus_ids
+        - cursus_ids
+    EventsUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        event_id:
+          type: integer
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        user:
+          $ref: '#/components/schemas/UserPreview'
+        event:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+      required:
+        - id
+        - event_id
+        - user_id
+    Expertise:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        kind:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+      required:
+        - id
+        - name
+        - slug
+        - kind
+    ExpertisesUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        expertise_id:
+          type: integer
+        user_id:
+          type: integer
+        interested:
+          type: boolean
+        value:
+          type:
+            - integer
+            - 'null'
+        contact_me:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        expertise:
+          $ref: '#/components/schemas/Expertise'
+      required:
+        - id
+        - expertise_id
+        - user_id
+        - interested
+        - contact_me
     Group:
       type: object
       properties:
@@ -2177,6 +2404,31 @@ components:
       required:
         - id
         - name
+    GroupsUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        group_id:
+          type: integer
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        user:
+          $ref: '#/components/schemas/UserPreview'
+        group:
+          $ref: '#/components/schemas/Group'
+      required:
+        - id
+        - group_id
+        - user_id
     Internship:
       type: object
       properties:
@@ -2285,7 +2537,7 @@ components:
           type:
             - string
             - 'null'
-          format: url
+          format: uri
         projects_user:
           type:
             - integer
@@ -2379,6 +2631,35 @@ components:
         - user_id
         - position
         - created_at
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+        begin_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        end_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          x-go-type: IntraTime
+        primary:
+          type: boolean
+        host:
+          type: string
+        campus_id:
+          type: integer
+        user:
+          $ref: '#/components/schemas/UserPreview'
+      required:
+        - id
+        - begin_at
+        - primary
+        - host
+        - campus_id
     LightNote:
       type: object
       description: A comment or note left by one user about another (e.g. a scale/feedback note).
@@ -2473,6 +2754,79 @@ components:
         - name
         - slug
         - parent_id
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        exam:
+          type: boolean
+        parent:
+          $ref: '#/components/schemas/LightProject'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/LightProject'
+        objectives:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              kind:
+                type: string
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        repository:
+          type:
+            - string
+            - 'null'
+          format: uri
+        difficulty:
+          type:
+            - integer
+            - 'null'
+        cursus:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cursus'
+        project_sessions_ids:
+          type: array
+          items:
+            type: integer
+        project_statistics:
+          type: object
+          properties:
+            average_mark:
+              type:
+                - number
+                - 'null'
+            count:
+              type: integer
+      required:
+        - id
+        - name
+        - slug
+        - exam
     ProjectUser:
       type: object
       properties:
@@ -2877,6 +3231,61 @@ components:
         - id
         - name
         - level
+    Slot:
+      type: object
+      properties:
+        id:
+          type: integer
+        begin_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        end_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        scale_team_id:
+          type:
+            - integer
+            - 'null'
+        user:
+          $ref: '#/components/schemas/LightUser'
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+      required:
+        - id
+        - begin_at
+        - end_at
+    SlotCreate:
+      type: object
+      required:
+        - slot
+      properties:
+        slot:
+          type: object
+          properties:
+            user_id:
+              type: integer
+              description: Must match the token owner unless Advanced tutor
+            begin_at:
+              type: string
+              format: date-time
+              x-go-type: IntraTime
+            end_at:
+              type: string
+              format: date-time
+              x-go-type: IntraTime
+            scale_team_id:
+              type:
+                - integer
+                - 'null'
+              description: Optional defense to link to this slot
+          required:
+            - user_id
+            - begin_at
+            - end_at
     LightTeam:
       type: object
       properties:
@@ -3141,6 +3550,43 @@ components:
         - selected
         - created_at
         - updated_at
+    Translation:
+      type: object
+      properties:
+        id:
+          type: integer
+        translatable_id:
+          type: integer
+        translatable_type:
+          type: string
+        language_id:
+          type: integer
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+        up_to_date:
+          type: boolean
+        default:
+          type: boolean
+        user_id:
+          type:
+            - integer
+            - 'null'
+        created_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+        updated_at:
+          type: string
+          format: date-time
+          x-go-type: IntraTime
+      required:
+        - id
+        - translatable_id
+        - translatable_type
+        - language_id
+        - fields
     UserCandidature:
       type: object
       properties:
@@ -3264,127 +3710,116 @@ components:
         - phone_country_code
         - hidden_phone
     LightUser:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The unique identifier of the user.
-        login:
-          type: string
-          description: The login name of the user.
-        first_name:
-          type: string
-          description: The first name of the user.
-        usual_first_name:
-          type:
-            - string
-            - 'null'
-          description: The usual first name of the user, first_name if none.
-        usual_full_name:
-          type: string
-          description: The usual full name of the user, usually usual_first_name or first_name + last_name.
-        last_name:
-          type: string
-          description: The last name of the user.
-        email:
-          type: string
-          description: The email address of the user.
-          format: email
-        url:
-          type: string
-          format: uri
-          description: The URL to the user's resource.
-        phone:
-          type: string
-          description: The phone number of the user (always hidden).
-        displayname:
-          type: string
-          description: The display name of the user.
-        kind:
-          type: string
-          description: The kind of user (e.g., student, admin, external).
-          enum:
-            - student
-            - admin
-            - external
-        image:
-          $ref: '#/components/schemas/UserImage'
-        staff?:
-          type: boolean
-          description: Indicates if the user is staff.
-        correction_point:
-          type: integer
-          description: The user's correction points.
-        pool_month:
-          type: string
-          description: The month of the user's pool.
-        pool_year:
-          type: string
-          description: The year of the user's pool.
-        location:
-          type:
-            - string
-            - 'null'
-          description: The location of the user.
-        wallet:
-          type: integer
-          description: The user's wallet balance.
-        anonymize_date:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          x-go-type: IntraTime
-          description: The date when user data will be anonymized.
-        data_erasure_date:
-          type: string
-          format: date-time
-          x-go-type: IntraTime
-          description: The date when user data will be erased.
-        created_at:
-          type: string
-          format: date-time
-          x-go-type: IntraTime
-          description: The user creation timestamp.
-        updated_at:
-          type: string
-          format: date-time
-          x-go-type: IntraTime
-          description: The last user update timestamp.
-        alumnized_at:
-          description: The date when the user became an alumnus.
-          type: string
-          format: date-time
-          x-go-type: IntraTime
-        alumni?:
-          type: boolean
-          description: Indicates if the user is an alumnus.
-        active?:
-          type: boolean
-          description: Indicates if the user is active.
-      required:
-        - id
-        - login
-        - first_name
-        - last_name
-        - usual_full_name
-        - email
-        - url
-        - displayname
-        - kind
-        - image
-        - staff?
-        - correction_point
-        - pool_month
-        - pool_year
-        - wallet
-        - anonymize_date
-        - data_erasure_date
-        - created_at
-        - updated_at
-        - alumnized_at
-        - alumni?
-        - active?
+      allOf:
+        - $ref: '#/components/schemas/LightUser'
+        - type: object
+          properties:
+            first_name:
+              type: string
+              description: The first name of the user.
+            usual_first_name:
+              type:
+                - string
+                - 'null'
+              description: The usual first name of the user, first_name if none.
+            usual_full_name:
+              type: string
+              description: The usual full name of the user, usually usual_first_name or first_name + last_name.
+            last_name:
+              type: string
+              description: The last name of the user.
+            email:
+              type: string
+              description: The email address of the user.
+              format: email
+            phone:
+              type: string
+              description: The phone number of the user (always hidden).
+            displayname:
+              type: string
+              description: The display name of the user.
+            kind:
+              type: string
+              description: The kind of user (e.g., student, admin, external).
+              enum:
+                - student
+                - admin
+                - external
+            image:
+              $ref: '#/components/schemas/UserImage'
+            staff?:
+              type: boolean
+              description: Indicates if the user is staff.
+            correction_point:
+              type: integer
+              description: The user's correction points.
+            pool_month:
+              type: string
+              description: The month of the user's pool.
+            pool_year:
+              type: string
+              description: The year of the user's pool.
+            location:
+              type:
+                - string
+                - 'null'
+              description: The location of the user.
+            wallet:
+              type: integer
+              description: The user's wallet balance.
+            anonymize_date:
+              type:
+                - string
+                - 'null'
+              format: date-time
+              x-go-type: IntraTime
+              description: The date when user data will be anonymized.
+            data_erasure_date:
+              type: string
+              format: date-time
+              x-go-type: IntraTime
+              description: The date when user data will be erased.
+            created_at:
+              type: string
+              format: date-time
+              x-go-type: IntraTime
+              description: The user creation timestamp.
+            updated_at:
+              type: string
+              format: date-time
+              x-go-type: IntraTime
+              description: The last user update timestamp.
+            alumnized_at:
+              description: The date when the user became an alumnus.
+              type: string
+              format: date-time
+              x-go-type: IntraTime
+            alumni?:
+              type: boolean
+              description: Indicates if the user is an alumnus.
+            active?:
+              type: boolean
+              description: Indicates if the user is active.
+          required:
+            - first_name
+            - last_name
+            - usual_full_name
+            - email
+            - displayname
+            - kind
+            - image
+            - staff?
+            - correction_point
+            - pool_month
+            - pool_year
+            - wallet
+            - anonymize_date
+            - data_erasure_date
+            - created_at
+            - updated_at
+            - alumnized_at
+            - alumni?
+            - active?
     UserImage:
       type: object
       properties:
@@ -3485,6 +3920,23 @@ components:
             - roles
             - campus
             - campus_users
+    UserPreview:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the user.
+        login:
+          type: string
+          description: The login name of the user.
+        url:
+          type: string
+          format: uri
+          description: The URL to the user's resource.
+      required:
+        - id
+        - login
+        - url
   parameters:
     base_sort:
       name: sort
