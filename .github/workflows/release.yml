@@ -92,12 +92,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      - name: Release Python
-        working-directory: clients/python
-        run: npx --no-install semantic-release -e semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+    # !WARN: Comment until python organization is created
+    #   - name: Release Python
+    #     working-directory: clients/python
+    #     run: npx --no-install semantic-release -e semantic-release-monorepo
+    #     env:
+    #       GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+    #       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
       - name: Release TypeScript
         working-directory: clients/typescript
